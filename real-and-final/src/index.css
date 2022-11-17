@@ -1,0 +1,28 @@
+@import url('https://fonts.googleapis.com/css2?family=Sarabun:wght@100;200;400&display=swap');
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+:root{
+  --primary-color: #EB6440  ;
+  --background-color: #D6E4E5  ;
+  --font-color:#23222F;
+  --main-page-color:#FFFFFF;
+}
+
+#root{
+  background-color: var(--background-color);
+  width: 100vw;
+  height: 100vh;
+  color: var(--font-color);
+  font-family: 'Sarabun', sans-serif;
+}

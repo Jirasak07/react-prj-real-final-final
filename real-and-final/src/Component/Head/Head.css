@@ -1,0 +1,18 @@
+.nav-head {
+  display: flex;
+  flex-wrap: nowrap;
+  background-color: var(--main-page-color);
+  height: 60px;
+  box-shadow: 3px 0px 9px 5px rgba(0, 0, 0, 0.18);
+  font-size: calc(0.5rem + 0.390625vw);
+}
+.bars{
+    display: flex;
+    align-items: center;
+    font-size: large;
+}
+.name-d{
+    font-weight: 500;
+    font-size: calc(0.3rem + 0.390625vw) !important;
+}
+
