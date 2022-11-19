@@ -7,6 +7,7 @@ function User_Add() {
     <div>
         <MDBInput label="username" outline  />
         <MDBInput label="password" outline />
+        <MDBInput type='file' label="555" outline />
         <div className='btn btn-success' >เพิ่ม</div>
     </div>
   )
