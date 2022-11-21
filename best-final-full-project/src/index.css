@@ -1,0 +1,24 @@
+@import url("https://fonts.googleapis.com/css2?family=Sarabun:wght@100;200;300;400;500;600&display=swap");
+body {
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  /* font-size: 100%; */
+  text-decoration: none;
+}
+
+#root {
+  position:relative;
+  font-family: "Sarabun", sans-serif;
+  background: #d6e4e5;
+}
+a {
+  text-decoration: none !important;
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+}
