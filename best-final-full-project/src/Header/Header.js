@@ -11,7 +11,9 @@ import { NavLink } from "react-router-dom";
 import { MdLogout } from "react-icons/md";
 import "../style.css";
 
+
 function Header() {
+ 
   const [side, setSide] = useState(false);
   const setSidebar = () => {
     setSide(!side);
@@ -20,7 +22,7 @@ function Header() {
     <>
       <div className="nav">
         <div className="col-12 sname">
-          <FaBars onClick={setSidebar} className="icon" /> ระบบตรวจสอบครุภัณฑ์
+          <FaBars onClick={setSidebar} className="icon" /> <NavLink to="/product" className="text-dark" > ระบบตรวจสอบครุภัณฑ์ </NavLink> 
         </div>
       </div>
       {/*  sidenav */}
@@ -57,7 +59,10 @@ function Header() {
             </div>
           </div>
         </div>
+        
       </div>
+     
+    
     </>
   );
 }

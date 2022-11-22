@@ -7,11 +7,38 @@
 }
 .img{
 background-color: #EB6440;
+box-shadow: 2px 2px 8px 4px rgba(0, 0, 0, 0.315);
 }
 @media screen and (max-width:575px) {
     .img{
         display: none !important;
     }
+}
+@media screen and (max-width:376px) {
+    .LoginPage{
+        font-size: 4rem !important;
+    }
+    .swal2-icon.swal2-icon-show{
+        /* width: auto;
+        height: auto; */
+        /* font-size: 5em !important; */
+        /* border: none;
+        margin: 0px;
+        margin-top: 20px;
+        padding: 0px;
+        color: #d32727; */
+        font-weight: bold;
+
+  
+    }
+    /* .swal2-popup.swal2-modal.swal2-show{
+        /* background-color: #2196f3 !important;
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content:space-evenly !important;
+        align-items:center !important; */
+       
+    
 }
 .form{
     background-color: #FFFFFF;

@@ -5,7 +5,7 @@ import LoginPage from "./Component/Auth/LoginPage";
 
 function Router() {
   return (
-    <div className='route' >
+    <div className='route mt-4' >
         <Routes>
             <Route exact path='/' element={<LoginPage/>} />
             <Route exact path='/product' element={<ProductPage/>} />
