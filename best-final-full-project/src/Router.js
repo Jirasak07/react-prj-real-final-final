@@ -3,7 +3,6 @@ import ProductPage from "./Component/Product/ProductPage";
 import { Route, Routes } from "react-router-dom";
 import LoginPage from "./Component/Auth/LoginPage";
 import { useLocation } from "react-router-dom";
-import axios from "axios";
 function Router() {
   const location = useLocation();
   useEffect(() => {
@@ -15,8 +14,8 @@ function Router() {
       })
         .then((res) => res.json())
         .then((data) => {
-          if (data.status == "ok") {
-          } else if (location.pathname == "/") {
+          if (data.status === "ok") {
+          } else if (location.pathname === "/") {
           } else {
             window.location = "/";
           }

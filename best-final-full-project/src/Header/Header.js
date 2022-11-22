@@ -15,7 +15,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 function Header() {
-  const [user, setUser] = useState(" text ");
+  const [user, setUser] = useState("  ");
   const uid = localStorage.getItem("user_id");
   const navi = useNavigate();
   const logout = () => {
@@ -38,7 +38,7 @@ function Header() {
         setUser(res.data[0].name);
         // console.log(res.data[0].name)
       });
-  }, []);
+  });
   // console.log(window.location.href);
   return (
     <>

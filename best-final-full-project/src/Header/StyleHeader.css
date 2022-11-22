@@ -12,7 +12,7 @@
 }
 .icon {
   position: absolute;
-  justify-self: start;
+  justify-self: flex-start;
   left: 20px;
 }
 .sname {
@@ -57,7 +57,7 @@
 }
 .bar-icon {
   display: flex;
-  justify-content: end;
+  justify-content: flex-end;
   z-index: 1001;
   margin-right: 15px;
   margin-top: 10%;
@@ -103,7 +103,7 @@
   }
   .bar-icon {
     display: flex;
-    justify-content: end;
+    justify-content: flex-end;
     z-index: 1001;
     margin-right: 15px;
     margin-top: 10%;
