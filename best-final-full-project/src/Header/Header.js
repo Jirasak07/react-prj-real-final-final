@@ -13,23 +13,12 @@ import "../style.css";
 
 function Header() {
   const [side, setSide] = useState(false);
-  const [navbar, setNavbar] = useState(false);
-  const changeBackground = () => {
-    if (window.scrollY >= 80) {
-      setNavbar(true);
-    } else {
-      setNavbar(false);
-    }
-  };
-  console.log(window.scrollY);
-  window.addEventListener("scroll", changeBackground);
-
   const setSidebar = () => {
     setSide(!side);
   };
   return (
     <>
-      <div className={navbar ? "nav active " : "nav "}>
+      <div className="nav">
         <div className="col-12 sname">
           <FaBars onClick={setSidebar} className="icon" /> ระบบตรวจสอบครุภัณฑ์
         </div>
