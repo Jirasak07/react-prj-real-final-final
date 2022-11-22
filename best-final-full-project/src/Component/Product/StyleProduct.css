@@ -52,6 +52,14 @@
   div.col-sm-12.col-md-6 div.dataTables_length.bs-select label {
     font-size: 1rem !important;
   }
+  div.dataTables_wrapper.dt-bootstrap4.mx-2 > div.row > div.col-sm-12.col-md-5 div.dataTables_info {
+    border-top: 0.5px solid rgba(0, 0, 0, 0.144);
+    font-size: 1rem !important;
+  }
+  div.dataTables_wrapper.dt-bootstrap4.mx-2 > div.row > div.col-sm-12.col-md-7 div.dataTables_paginate ul.pagination li {
+    font-size: 1.5rem !important;
+   
+  }
 }
 table.table.table-hover.table-striped.dataTable > thead.thead-dark > tr > th {
   width: 60vw;
