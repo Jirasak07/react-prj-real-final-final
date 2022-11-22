@@ -1,5 +1,5 @@
 import axios from "axios";
-import { MDBCol, MDBDataTable, MDBRow } from "mdbreact";
+import { MDBCol, MDBDataTable, MDBRow, MDBInput } from "mdbreact";
 import React, { useEffect, useState } from "react";
 import "../../style.css";
 import {
@@ -10,8 +10,8 @@ import {
   MDBModalHeader,
   MDBModalFooter,
 } from "mdbreact";
-import AddProductGroup from './AddEditProduct/AddProductGroup'
-import AddProductSingle from './AddEditProduct/AddProductSingle'
+import AddProductGroup from "./AddEditProduct/AddProductGroup";
+import AddProductSingle from "./AddEditProduct/AddProductSingle";
 
 import "./StyleProduct.css";
 function ProductPage() {
@@ -31,17 +31,14 @@ function ProductPage() {
           {
             label: "หมายเลขครุภัณฑ์",
             field: "pid",
-            width: 150,
           },
           {
             label: "รายการ",
             field: "pname",
-            width: 270,
           },
           {
             label: "หน่วยงาน",
             field: "sub_aid",
-            width: 270,
           },
           {
             label: "ตรวจล่าสุด",
@@ -51,7 +48,6 @@ function ProductPage() {
           {
             label: "สถานะ",
             field: "pstatus_id",
-            width: 100,
           },
           {
             label: "ผู้ตรวจ",
@@ -60,7 +56,6 @@ function ProductPage() {
           {
             label: "Manage",
             field: "manage",
-            with: 300,
           },
         ],
         rows: [
@@ -83,7 +78,7 @@ function ProductPage() {
         ],
       });
     });
-  });
+  },[]);
 
   return (
     <>
@@ -93,19 +88,21 @@ function ProductPage() {
             <div className="btn btn-primary btn-sm" onClick={toggleSingle}>
               เพิ่มครุภัณฑ์แบบเดี่ยว
             </div>
-            <div className="btn btn-grey btn-sm" onClick={toggleGroup} >เพิ่มครุภัณฑ์แบบกลุ่ม</div>
+            <div className="btn btn-grey btn-sm" onClick={toggleGroup}>
+              เพิ่มครุภัณฑ์แบบกลุ่ม
+            </div>
           </div>
 
           <MDBRow>
             <MDBCol sm="12">
               <MDBDataTable
+                sortable={false}
+                noBottomColumns
                 theadColor="dark"
                 striped
                 entriesLabel="จำนวนครุภัณฑ์ที่แสดง"
-                searchTop
-                searchBottom={false}
-                borderless
                 hover
+                entries={20}
                 data={data}
                 paginationLabel={["ก่อนหน้า", "ถัดไป"]}
                 infoLabel={[
@@ -114,16 +111,19 @@ function ProductPage() {
                   "รายการ จากทั้งหมด",
                   "รายการ",
                 ]}
+                className="mx-2"
               />
             </MDBCol>
           </MDBRow>
         </div>
       </div>
-      <MDBModal isOpen={modalSingle} toggle={toggleSingle}>
+      <MDBModal size="xl" isOpen={modalSingle} toggle={toggleSingle}>
         <MDBModalHeader toggle={toggleSingle}>
           เพิ่มครุภัณฑ์แบบเดี่ยว
         </MDBModalHeader>
-        <MDBModalBody><AddProductSingle/></MDBModalBody>
+        <MDBModalBody>
+          <AddProductSingle />
+        </MDBModalBody>
         <MDBModalFooter>
           {/* <MDBBtn color="secondary" onClick={toggleSingle}>
               Close
@@ -132,11 +132,13 @@ function ProductPage() {
         </MDBModalFooter>
       </MDBModal>
       {/* //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */}
-      <MDBModal isOpen={modalGroup} toggle={toggleGroup}>
+      <MDBModal size="xl" isOpen={modalGroup} toggle={toggleGroup}>
         <MDBModalHeader toggle={toggleGroup}>
           เพิ่มครุภัณฑ์แบบกลุ่ม
         </MDBModalHeader>
-        <MDBModalBody><AddProductGroup/></MDBModalBody>
+        <MDBModalBody>
+          <AddProductGroup />
+        </MDBModalBody>
         <MDBModalFooter>
           {/* <MDBBtn color="secondary" onClick={toggleSingle}>
               Close

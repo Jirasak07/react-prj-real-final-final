@@ -12,7 +12,6 @@ function App() {
   useEffect(()=>{
     document.body.style.backgroundColor = " #f0f2f5"
     axios.get(URL).then((res)=>{
-      console.log(res.data[0])
       setP(res.data)
     })
   })
