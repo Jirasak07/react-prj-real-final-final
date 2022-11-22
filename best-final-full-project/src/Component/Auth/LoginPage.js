@@ -81,7 +81,7 @@ function LoginPage() {
       {loading ? (
         <>
           <div className="load">
-            <div class="loading">
+            <div className="loading">
               <span></span>
               <span></span>
               <span></span>

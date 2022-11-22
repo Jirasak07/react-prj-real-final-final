@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./StyleHeader.css";
 import { FaBars } from "react-icons/fa";
+import { BsDot } from "react-icons/bs";
 import {
   HiOutlineDesktopComputer,
   HiOutlineOfficeBuilding,
@@ -10,24 +11,44 @@ import {
 import { NavLink } from "react-router-dom";
 import { MdLogout } from "react-icons/md";
 import "../style.css";
-import {useNavigate} from 'react-router-dom'
-
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 function Header() {
+  const [user, setUser] = useState(" text ");
+  const uid = localStorage.getItem("user_id");
   const navi = useNavigate();
-  const logout = () =>{
-    navi("/")
-  }
- 
+  const logout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user_id");
+    localStorage.removeItem("login");
+    navi("/");
+  };
+
   const [side, setSide] = useState(false);
   const setSidebar = () => {
     setSide(!side);
   };
+  useEffect(() => {
+    axios
+      .post("http://localhost:3333/show-user-login", {
+        user_id: uid,
+      })
+      .then((res) => {
+        setUser(res.data[0].name);
+        // console.log(res.data[0].name)
+      });
+  }, []);
+  // console.log(window.location.href);
   return (
     <>
       <div className="nav">
         <div className="col-12 sname">
-          <FaBars onClick={setSidebar} className="icon" /> <NavLink to="/product" className=" text-dark stname" > ระบบตรวจสอบครุภัณฑ์ </NavLink> 
+          <FaBars onClick={setSidebar} className="icon" />{" "}
+          <NavLink to="/product" className=" stname">
+            {" "}
+            ระบบตรวจสอบครุภัณฑ์{" "}
+          </NavLink>
         </div>
       </div>
       {/*  sidenav */}
@@ -37,7 +58,9 @@ function Header() {
             <FaBars onClick={setSidebar} />{" "}
           </div>
           <div className="nav-group">
-            User: จิรศักดิ์ สิงหบุตร
+            <div className="text-secondary">
+              <BsDot className="iccc text-success" /> {user}
+            </div>
             <NavLink to="/product" className="nav-item">
               &nbsp;
               <HiOutlineDesktopComputer /> ครุภัณฑ์
@@ -59,15 +82,12 @@ function Header() {
             </NavLink>
             <div className="nav-item logout" onClick={logout}>
               &nbsp;
-              <MdLogout  />
+              <MdLogout />
               ออกจากระบบ
             </div>
           </div>
         </div>
-        
       </div>
-     
-    
     </>
   );
 }

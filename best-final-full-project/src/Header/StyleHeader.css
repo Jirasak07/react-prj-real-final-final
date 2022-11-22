@@ -121,4 +121,9 @@
 }
 .stname{
   font-weight: bolder;
+  color: #000000bd;
+}
+.stname:hover{
+  font-weight: bolder;
+  color: #000000bd;
 }

@@ -30,6 +30,10 @@
   width: max-content !important;
 }
 @media screen and (max-width: 376px) {
+  .iccc{
+    font-size: 3rem !important;
+    
+  }
   * {
     font-size: 0.8em !important;
   }
@@ -65,4 +69,8 @@ table.table.table-hover.table-striped.dataTable > thead.thead-dark > tr > th {
   width: 60vw;
   border: none !important;
   font-size: 1rem !important;
+}
+.iccc{
+  font-size: 2rem;
+
 }
