@@ -38,7 +38,7 @@ function LoginPage() {
           }).then((value) => {
             localStorage.setItem("token", res.data.token);
             localStorage.setItem("user_id", res.data.userid);
-            localStorage.setItem("login", "ok");
+            localStorage.setItem("main_aid", res.data.mid);
             setLoading(true);
             setTimeout(() => {
               setLoading(false);

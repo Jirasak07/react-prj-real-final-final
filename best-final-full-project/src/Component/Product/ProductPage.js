@@ -23,9 +23,13 @@ function ProductPage() {
   const toggleGroup = () => {
     setModalGroup(!modalGroup);
   };
+
   const [data, setData] = useState({});
+  const mid = localStorage.getItem('main_aid')
   useEffect(() => {
-    axios.get("http://localhost:3333/product").then((res) => {
+    axios.post("http://localhost:3333/product",{
+    main_aid:mid
+    }).then((res) => {
       setData({
         columns: [
           {
@@ -122,7 +126,7 @@ function ProductPage() {
           เพิ่มครุภัณฑ์แบบเดี่ยว
         </MDBModalHeader>
         <MDBModalBody>
-          <AddProductSingle />
+          <AddProductSingle close={toggleSingle} />
         </MDBModalBody>
         <MDBModalFooter>
           {/* <MDBBtn color="secondary" onClick={toggleSingle}>
