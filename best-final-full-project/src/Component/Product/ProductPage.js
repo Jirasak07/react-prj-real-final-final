@@ -76,6 +76,7 @@ function ProductPage() {
                 <div className="btn btn-secondary btn-sm but ">ตรวจสอบ</div>
                 <div className="btn btn-success btn-sm but ">อัพเดท</div>
                 <div className="btn btn-info btn-sm but ">QRCode</div>
+               {/* <img src={`http://localhost:3333/img/${item.image}`} width="150px"/> */}
               </div>
             ),
           })),

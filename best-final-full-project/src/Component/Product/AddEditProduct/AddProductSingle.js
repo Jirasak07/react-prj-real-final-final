@@ -66,7 +66,9 @@ function AddProductSingle(props) {
     //   });
       const url = "http://localhost:3333/upload";
     const formData = new FormData();
-    formData.append("photo", file);
+    
+    formData.append("photo", file,input.pid+typename);
+
     // formData.append("fileName", );
     console.log(file)
     // const config = {
@@ -87,6 +89,7 @@ function AddProductSingle(props) {
   const [images, setImages] = useState([]);
   const [imageURLs, setImageURLs] = useState([]);
   const [file, setFile] = useState();
+  const [typename, setTypeName] =useState("")
   useEffect(() => {
     if (images.length < 1) return;
     const newImageUrls = [];
@@ -96,6 +99,8 @@ function AddProductSingle(props) {
   const onImageChange=(e)=> {
     setImages([...e.target.files]);
     setFile(e.target.files[0]);
+    console.log("."+e.target.files[0].type.split("image/")[1]);
+    setTypeName("."+e.target.files[0].type.split("image/")[1])
 
   }
   return (

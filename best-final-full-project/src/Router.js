@@ -3,6 +3,7 @@ import ProductPage from "./Component/Product/ProductPage";
 import { Route, Routes } from "react-router-dom";
 import LoginPage from "./Component/Auth/LoginPage";
 import { useLocation } from "react-router-dom";
+import ShowProductDetail from "./Component/Product/ShowProductDetail";
 function Router() {
   const location = useLocation();
   useEffect(() => {
@@ -24,10 +25,11 @@ function Router() {
     Auth().catch(console.error);
   });
   return (
-    <div className="route mt-4">
+    <div className="route mt-2">
       <Routes>
         <Route exact path="/" element={<LoginPage />} />
         <Route exact path="/product" element={<ProductPage />} />
+        <Route exact path="/product-detail" element={<ShowProductDetail/>} />
       </Routes>
       {/* <LoginPage/> */}
     </div>
