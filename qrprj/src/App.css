@@ -1,0 +1,44 @@
+.Scanner {
+  margin-top: 2rem;
+  width: 90%;
+  max-width: 350px;
+  height: 60vh;
+  max-height: 450px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  grid-row: 2/3;
+  box-shadow: 2px 2px 8px 4px rgba(0, 0, 0, 0.61);
+  position: relative;
+  z-index: 2;
+}
+.Scanner > #reader {
+  min-width: 500px;
+  height: 500px;
+}
+.bg {
+  flex-direction: column;
+  gap: 20px;
+  width: 100vw;
+  background-color: rgb(230, 231, 231);
+  height: 100vh;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+}
+.btext {
+  color: rgb(20, 19, 19);
+  font-size: 2rem;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+
+.image {
+  opacity: 0.5;
+  position: absolute;
+  z-index: 50;
+  width: 250px;
+}

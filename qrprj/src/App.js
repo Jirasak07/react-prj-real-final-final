@@ -1,37 +1,79 @@
 import React, { useEffect, useState } from "react";
-import { Html5QrcodeScanner } from "html5-qrcode";
-
+import { Html5Qrcode } from "html5-qrcode";
+import { useNavigate } from "react-router-dom";
+import { isMobile } from "react-device-detect";
+import "./App.css";
+import imqr from "./image/QR_Code01.png";
+let html5QrCode;
+const config = {
+  fps: 10,
+  qrbox: {
+    width: 300,
+    height: 300,
+  },
+  aspectRatio: 1.0,
+};
 function App() {
+  const navigate = useNavigate();
   const [link, setLink] = useState("");
+  const qrCodeSuccessCallback = (decodedText, decodedResult) => {
+    setLink(decodedText);
+    console.log("from Qr const", decodedText);
+    window.location.href = decodedText;
+  };
+
+  const handleStop = () => {
+    try {
+    } catch (err) {
+      // console.log(err);
+    }
+  };
 
   useEffect(() => {
-    let html5QrcodeScanner = new Html5QrcodeScanner(
-      "reader",
-      { fps: 10, qrbox: { width: 250, height: 250 } },
-      /* verbose= */ false
-    );
-    html5QrcodeScanner.render(onScanSuccess, onScanFailure);
-    function onScanSuccess(decodedText, decodedResult) {
-      // handle the scanned code as you like, for example:
-      setLink(decodedResult.decodedText);
-      console.log(`Code matched = ${decodedText}`, decodedResult);
-    }
-
-    function onScanFailure(error) {
-      try {
-        if(error){
-          return 0;
+    Html5Qrcode.getCameras().then((devices) => {
+      html5QrCode = new Html5Qrcode("reader");
+      if (devices && devices.length) {
+        var cameraId = devices[0].id;
+        if (isMobile) {
+          html5QrCode.start(
+            { facingMode: { exact: "user" } },
+            // { facingMode: { exact: "environment" } },
+            config,
+            qrCodeSuccessCallback
+          );
+          return;
+        } else {
+          html5QrCode.start(
+            { facingMode: { exact: "user" } },
+            config,
+            qrCodeSuccessCallback
+          );
         }
-        // handle scan failure, usually better to ignore and keep scanning.
-        // for example:
-      } catch (err) {
-        // console.warn(`Code scan error = ${error}`);
       }
-    }
-  }, [link]);
+    });
+  });
+  // This method will trigger user permissions
+
   return (
     <>
-      <div id="reader" width="600px"></div>
+      {isMobile ? (
+        <>
+          {" "}
+          <div className="bg">
+            <div className="Scanner">
+            <img src={imqr} className="image" />
+              <div id="reader"></div>
+            </div>
+            <div className="btext">
+              <div>สแกน QR Code </div>
+              <div>เพื่อจัดการครุภัณฑ์</div>
+            </div>
+            <div className="btn btn-danger">ย้อนกลับ</div>
+          </div>  
+        </>
+      ) : (
+        <>For Mobile</>
+      )}
     </>
   );
 }
