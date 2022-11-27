@@ -1,0 +1,9 @@
+.product {
+  color: var(--thirty);
+}
+.container-sm {
+  background-color: var(--sixty);
+  margin-top: 2rem;
+  box-shadow: 0px 10px 10px 5px rgba(0, 0, 0, 0.15);
+  overflow: auto;
+}
