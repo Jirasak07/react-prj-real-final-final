@@ -7,7 +7,7 @@ import {BiBuildingHouse,BiUser,BiLogOut} from 'react-icons/bi'
 import {TbReportAnalytics} from 'react-icons/tb'
 
 function Header() {
-  const [side, setSide] = useState(true);
+  const [side, setSide] = useState(false);
   const clickside = () => {
     setSide(!side);
   };
@@ -16,7 +16,7 @@ function Header() {
       <div className={side ? "bg-overlay  " : "bg-overlay active"}></div>
       <div className="navhead">
         <div className="nav iconbar icon col-1 " onClick={clickside}>
-          <AiOutlineBars />
+          <AiOutlineBars className="iconbar2" />
         </div>
         <div className="nav headname col ">ระบบตรวจสอบครุภัณฑ์</div>
       </div>

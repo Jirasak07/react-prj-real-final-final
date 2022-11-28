@@ -8,11 +8,13 @@ import {
   HiOutlineUserGroup,
   HiOutlinePrinter,
 } from "react-icons/hi";
+import { MdOutlineQrCodeScanner } from "react-icons/md";
 import { NavLink } from "react-router-dom";
 import { MdLogout } from "react-icons/md";
 import "../style.css";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import ScanCheck from "../Component/Scan/ScanCheck";
 
 function Header() {
   const [user, setUser] = useState("  ");
@@ -64,6 +66,10 @@ function Header() {
             <NavLink to="/product" className="nav-item">
               &nbsp;
               <HiOutlineDesktopComputer /> ครุภัณฑ์
+            </NavLink>
+            <NavLink to="/scan" className="nav-item">
+              &nbsp;
+              <MdOutlineQrCodeScanner /> สแกน
             </NavLink>
             <NavLink to="/agen" className="nav-item">
               &nbsp;

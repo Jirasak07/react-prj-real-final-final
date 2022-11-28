@@ -32,9 +32,15 @@ a {
   max-width: 100vw;
   max-height: 100%;
 }
+:root {
+  --thirty: #ffffff;
+  --sixty: #1e212b;
+  --sixty-2:#343a40;
+  --ten: #fb5607;
+}
 @media screen and (max-width:376px) {
   .route{
-    max-height: 85vh;
+    max-height: 90vh;
     overflow: scroll;
   }
 }

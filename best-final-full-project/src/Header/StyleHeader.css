@@ -9,6 +9,8 @@
   justify-content: space-evenly;
   font-size: 1rem;
   box-shadow: 2px 2px 8px 4px rgba(0, 0, 0, 0.1);
+  background-color: var(--sixty-2);
+  color: var(--thirty);
 }
 .icon {
   position: absolute;
@@ -33,10 +35,9 @@
   transition: 0.5s;
   /* From https://css.glass */
   /* From https://css.glass */
-  background: rgba(255, 255, 255, 0.76);
-  border-radius: 16px;
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.21);
+  background:var(--sixty);
+  border-radius: 3px;
+  box-shadow: 0 4px 30px rgb(0, 0, 0);
   filter: blur(0px);
   backdrop-filter: blur(10px);
 }
@@ -62,6 +63,7 @@
   margin-right: 15px;
   margin-top: 10%;
   font-size: 1rem !important;
+  color: var(--thirty);
 }
 .nav-group {
   font-size: 1rem !important;
@@ -73,7 +75,7 @@
   /* justify-content: space-evenly; */
 }
 .nav-item {
-  color: rgba(22, 22, 22, 0.774);
+  color: var(--thirty);
   font-weight: bolder;
   display: flex;
 
@@ -121,9 +123,9 @@
 }
 .stname{
   font-weight: bolder;
-  color: #000000bd;
+  color: var(--thirty);
 }
 .stname:hover{
   font-weight: bolder;
-  color: #000000bd;
+  color: var(--thirty);
 }

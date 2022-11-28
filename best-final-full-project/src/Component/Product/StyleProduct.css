@@ -1,5 +1,5 @@
 .product-table {
-  background-color: rgb(255, 255, 255);
+  background-color: var(--sixty-2);
   border-radius: 5px;
   box-shadow: 0px 5px 9px 2px rgba(0, 0, 0, 0.16);
   margin-left: 5px;
@@ -29,6 +29,15 @@
 .btn.btn-secondary.btn-sm.but {
   width: max-content !important;
 }
+table.table.table-hover.table-striped.dataTable tbody tr{
+  color: var(--thirty);
+}
+div.col-sm-12.col-md-6 div.dataTables_length.bs-select label{
+  color: var(--thirty);
+}
+div.dataTables_wrapper.dt-bootstrap4.mx-2 > div.row > div.col-sm-12.col-md-5 div.dataTables_info{
+  color: var(--thirty);
+}
 @media screen and (max-width: 376px) {
   .iccc{
     font-size: 3rem !important;
@@ -52,9 +61,11 @@
   }
   table.table.table-hover.table-striped.dataTable tbody tr {
     font-size: 16px !important;
+   
   }
   div.col-sm-12.col-md-6 div.dataTables_length.bs-select label {
     font-size: 1rem !important;
+
   }
   div.dataTables_wrapper.dt-bootstrap4.mx-2 > div.row > div.col-sm-12.col-md-5 div.dataTables_info {
     border-top: 0.5px solid rgba(0, 0, 0, 0.144);
@@ -62,6 +73,7 @@
   }
   div.dataTables_wrapper.dt-bootstrap4.mx-2 > div.row > div.col-sm-12.col-md-7 div.dataTables_paginate ul.pagination li {
     font-size: 1.5rem !important;
+    
    
   }
 }

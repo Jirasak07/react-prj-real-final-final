@@ -6,14 +6,11 @@ import axios from 'axios'
 
 
 function App() {
-  const URL = 'https://rest-api-jb.vercel.app/product'
-  const [p,setP]= useState([])
+  // const URL = 'https://rest-api-jb.vercel.app/product'
+  // const [p,setP]= useState([])
 
   useEffect(()=>{
-    document.body.style.backgroundColor = " #f0f2f5"
-    axios.get(URL).then((res)=>{
-      setP(res.data)
-    })
+    document.body.style.backgroundColor = " var(--sixty)"
   })
   return <>
 <Header/>

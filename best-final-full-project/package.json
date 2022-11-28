@@ -14,9 +14,10 @@
     "evergreen-ui": "^6.13.1",
     "mdb-react-ui-kit": "^5.0.0",
     "mdbreact": "^5.2.0",
-    "react": "^17.0.2",
+    "react": "^18.2.0",
     "react-bootstrap": "^2.6.0",
-    "react-dom": "^17.0.2",
+    "react-device-detect": "^2.2.2",
+    "react-dom": "^18.2.0",
     "react-icons": "^4.6.0",
     "react-qrcode-logo": "^2.8.0",
     "react-router-dom": "^6.4.3",
@@ -50,6 +51,6 @@
     ]
   },
   "devDependencies": {
-    "html5-qrcode": "^2.3.1"
+    "html5-qrcode": "^2.3.3"
   }
 }

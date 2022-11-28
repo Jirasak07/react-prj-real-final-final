@@ -43,45 +43,36 @@ function AddProductSingle(props) {
       });
   }, []);
   const onSubmit = () => {
-    // axios
-    //   .post("http://localhost:3333/product-added", {
-    //     pid: input.pid,
-    //     pname: input.pname,
-    //     pdetail: input.pdetail,
-    //     qty: num,
-    //     unit: input.unit,
-    //     price: input.price,
-    //     finance: input.finance,
-    //     acquirement: input.acquirement,
-    //     ptype_id: input.ptype_id,
-    //     seller: input.seller,
-    //     sub_aid: input.sub_aid,
-    //     pstatus_id: input.pstatus_id,
-    //     buydate: input.buydate,
-    //     pickdate: input.pickdate,
-    //     fisicalyear: input.fisicalyear,
-    //   })
-    //   .then((res) => {
+    console.log(input)
+    axios
+      .post("http://localhost:3333/product-added", {
+        pid: input.pid,
+        pname: input.pname,
+        pdetail: input.pdetail,
+        qty: 1,
+        unit:input.unit,
+        price: input.price,
+        finance: input.finance,
+        acquirement: input.acquirement,
+        ptype_id: input.ptype_id,
+        seller: input.seller,
+        sub_aid: input.sub_aid,
+        pstatus_id: input.pstatus_id,
+        buydate: input.buydate,
+        pickdate: input.pickdate,
+        fisicalyear: input.fisicalyear,
+      })
+      .then((res) => {
+        console.log(res);
+      });
+    // const url = "http://localhost:3333/upload";
+    // const formData = new FormData();
 
-    //   });
-      const url = "http://localhost:3333/upload";
-    const formData = new FormData();
-    
-    formData.append("photo", file,input.pid+typename);
-
-    // formData.append("fileName", );
-    console.log(file)
-    // const config = {
-    //   headers: {
-    //     "Content-Type": "multipart/form-data",
-    //   },
-    // };
-    // for (var pair of formData.entries()) {
-    //   console.log(pair[0] + " - " + pair[1]);
-    // }
-    axios.post(url, formData).then((response) => {
-      console.log(response);
-    });
+    // formData.append("photo", file,input.pid+typename);
+    // console.log(file)
+    // axios.post(url, formData).then((response) => {
+    //   console.log(response);
+    // });
   };
   const onHandleChange = (e) => {
     alert("1234");
@@ -89,33 +80,44 @@ function AddProductSingle(props) {
   const [images, setImages] = useState([]);
   const [imageURLs, setImageURLs] = useState([]);
   const [file, setFile] = useState();
-  const [typename, setTypeName] =useState("")
+  const [typename, setTypeName] = useState("");
   useEffect(() => {
     if (images.length < 1) return;
     const newImageUrls = [];
     images.forEach((image) => newImageUrls.push(URL.createObjectURL(image)));
     setImageURLs(newImageUrls);
   }, [images]);
-  const onImageChange=(e)=> {
+  const onImageChange = (e) => {
     setImages([...e.target.files]);
     setFile(e.target.files[0]);
-    console.log("."+e.target.files[0].type.split("image/")[1]);
-    setTypeName("."+e.target.files[0].type.split("image/")[1])
-
-  }
+    console.log("." + e.target.files[0].type.split("image/")[1]);
+    setTypeName("." + e.target.files[0].type.split("image/")[1]);
+  };
   return (
     <div>
       <MDBContainer>
         {/* แถว 1 */}
         <MDBRow>
           <MDBCol md="4">
-            <MDBInput name="pid" value={input.pid|| ""} onChange={onChange} label="หมายเลขครุภัณฑ์" outline />
+            <MDBInput
+              name="pid"
+              value={input.pid || ""}
+              onChange={onChange}
+              label="หมายเลขครุภัณฑ์"
+              outline
+            />
           </MDBCol>
           <MDBCol md="4">
-            <MDBInput name="name" value={input.name|| ""} onChange={onChange} label="ชื่อรายการ" outline />
+            <MDBInput
+              name="pname"
+              value={input.pname || ""}
+              onChange={onChange}
+              label="ชื่อรายการ"
+              outline
+            />
           </MDBCol>
           <MDBCol md="4">
-          <SelectField
+            <SelectField
               name="ptype_id"
               label="ประเภทครุภัณฑ์"
               value={input.ptype_id || ""}
@@ -132,7 +134,14 @@ function AddProductSingle(props) {
         {/* แถว 2 */}
         <MDBRow>
           <MDBCol md="6">
-            <MDBInput name="pdetail" value={input.pdetail|| ""} onChange={onChange} type="textarea" label="คุณลักษณะ" outline />
+            <MDBInput
+              name="pdetail"
+              value={input.pdetail || ""}
+              onChange={onChange}
+              type="textarea"
+              label="คุณลักษณะ"
+              outline
+            />
           </MDBCol>
 
           <MDBCol md="6" className="upload">
@@ -143,49 +152,115 @@ function AddProductSingle(props) {
                   <div className="nimg">อัพโหลดรูปภาพ</div>
                 </div>
                 <button>
-                  <input type="file" name="photo" label="รูปภาพ" onChange={onImageChange} />
+                  <input
+                    type="file"
+                    name="photo"
+                    label="รูปภาพ"
+                    onChange={onImageChange}
+                  />
                 </button>
               </div>
               {imageURLs.map((imageSrc, idx) => (
-        <img key={idx} className="imageShow"   src={imageSrc} />
-      ))}
+                <img key={idx} className="imageShow" src={imageSrc} />
+              ))}
             </div>
           </MDBCol>
         </MDBRow>
         {/* แถว 3 */}
         <MDBRow>
           <MDBCol md="4">
-            <MDBInput hint=" " name="buydate" value={input.buydate|| ""} onChange={onChange} type="date" label="วันที่ซื้อ" outline />
+            <MDBInput
+              hint=" "
+              name="buydate"
+              value={input.buydate || ""}
+              onChange={onChange}
+              type="date"
+              label="วันที่ซื้อ"
+              outline
+            />
           </MDBCol>
           <MDBCol md="4">
-            <MDBInput name="pickdate" value={input.pickdate|| ""} onChange={onChange} type="date" hint="  " label="วันที่รับ" outline />
+            <MDBInput
+              name="pickdate"
+              value={input.pickdate || ""}
+              onChange={onChange}
+              type="date"
+              hint="  "
+              label="วันที่รับ"
+              outline
+            />
           </MDBCol>
           <MDBCol md="4">
-            <MDBInput name="fisicalyear" value={input.fisicalyear|| ""} onChange={onChange} type="text" label="ปีงบประมาณ" outline />
+            <MDBInput
+              name="fisicalyear"
+              value={input.fisicalyear || ""}
+              onChange={onChange}
+              type="text"
+              label="ปีงบประมาณ"
+              outline
+            />
           </MDBCol>
         </MDBRow>
         {/* แถว 4 */}
         <MDBRow>
           <MDBCol md="4">
-            <MDBInput name="qty"  type="number" value={num} label="จำนวน" outline />
+            <MDBInput
+              name="qty"
+              type="number"
+              value={num}
+              label="จำนวน"
+              outline
+            />
           </MDBCol>
           <MDBCol md="4">
-            <MDBInput name="unit" value={input.unit|| ""} onChange={onChange} type="text" label="หน่วยนับ" outline />
+            <MDBInput
+              name="unit"
+              value={input.unit || ""}
+              onChange={onChange}
+              type="text"
+              label="หน่วยนับ"
+              outline
+            />
           </MDBCol>
           <MDBCol md="4">
-            <MDBInput name="price" value={input.price|| ""} onChange={onChange} type="number" label="ราคาต่อหน่วย" outline />
+            <MDBInput
+              name="price"
+              value={input.price || ""}
+              onChange={onChange}
+              type="number"
+              label="ราคาต่อหน่วย"
+              outline
+            />
           </MDBCol>
         </MDBRow>
         {/* แถว 5 */}
         <MDBRow>
           <MDBCol md="4">
-            <MDBInput name="finance" value={input.finance|| ""} onChange={onChange} label="ประเภทเงิน" outline />
+            <MDBInput
+              name="finance"
+              value={input.finance || ""}
+              onChange={onChange}
+              label="ประเภทเงิน"
+              outline
+            />
           </MDBCol>
           <MDBCol md="4">
-            <MDBInput name="get" value={input.get|| ""} onChange={onChange} label="ที่มาครุภัณฑ์" outline />
+            <MDBInput
+              name="acquirement"
+              value={input.acquirement || ""}
+              onChange={onChange}
+              label="ที่มาครุภัณฑ์"
+              outline
+            />
           </MDBCol>
           <MDBCol md="4">
-            <MDBInput name="seller" value={input.seller|| ""} onChange={onChange} label="รายละเอียดผู้ขาย" outline />
+            <MDBInput
+              name="seller"
+              value={input.seller || ""}
+              onChange={onChange}
+              label="รายละเอียดผู้ขาย"
+              outline
+            />
           </MDBCol>
         </MDBRow>
         {/* แถว 6 */}
@@ -225,12 +300,13 @@ function AddProductSingle(props) {
         </MDBRow>
       </MDBContainer>
       <MDBModalFooter>
-        <div className="btn btn-success btn-sm" onClick={onSubmit} >บันทึก</div>
+        <div className="btn btn-success btn-sm" onClick={onSubmit}>
+          บันทึก
+        </div>
         <div className="btn btn-danger btn-sm" onClick={props.close}>
           ยกเลิก
         </div>
       </MDBModalFooter>
-     
     </div>
   );
 }
