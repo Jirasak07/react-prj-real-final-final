@@ -1,0 +1,56 @@
+.Page-Login {
+  background-color: rgb(255, 255, 255);
+  position: fixed;
+  top: 0;
+  z-index: 1000;
+  width: 100vw;
+  height: 100%;
+  bottom: 0px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+.box1 {
+  height: 100%;
+  width: auto;
+  background-image: url("../Image/nathan-jennings-hus5fEdu8wA-unsplash.jpg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+.box2 {
+  background-color: var(--white-100);
+  box-shadow: -10px 3px 18px 13px rgba(0, 0, 0, 0.349);
+  height: 100%;
+  width: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.Form-login {
+  width: 90%;
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+}
+.form-group{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+}
+.nname{
+    display: flex;
+    justify-content: center;
+    word-wrap: break-word;
+
+}
+.image {
+  margin: 0 auto;
+}
+.form-input {
+  margin: 0 auto;
+  width: 70%;
+  height: fit-content;
+}

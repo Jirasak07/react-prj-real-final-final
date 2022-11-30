@@ -1,0 +1,13 @@
+.App{
+  position: relative;
+  display:flex ;
+  flex-direction: column;
+}
+.router{
+  position: fixed;
+  top: 50px;
+  width: 100vw;
+  height: 100%;
+  bottom: 0px;
+  overflow-y: auto;
+}

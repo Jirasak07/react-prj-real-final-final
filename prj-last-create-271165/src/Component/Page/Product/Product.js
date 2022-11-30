@@ -40,7 +40,7 @@ function Product() {
         ]
     })
   return (
-    <div className="product">
+    <div className="bg-red">
       <div className="container-sm">
         <MDBDataTable sortable={false} theadColor="dark" data={data}/></div>
     </div>
