@@ -1,20 +1,16 @@
-import logo from "./logo.svg";
 import "./App.css";
-import { useEffect, useState } from "react";
-import Header from "./Header/Header";
+import { useEffect } from "react";
 import Router from "./Router";
+import Header from "./Header/Header";
 
 function App() {
   useEffect(() => {
     document.body.style.backgroundColor = "var(--background)";
-    
+    console.log("app")
   });
 
   return (
     <>
-      <div className="App">
-        <Header />
-      </div>
       <div className="router">
         <Router />
       </div>

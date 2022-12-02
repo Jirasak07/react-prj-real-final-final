@@ -1,8 +1,8 @@
 .Page-Login {
   background-color: rgb(255, 255, 255);
   position: fixed;
-  top: 0;
-  z-index: 105;
+  top: 0 !important;
+
   width: 100vw;
   height: 100vh;
   bottom: 0px;

@@ -11,13 +11,19 @@
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.2.0",
     "bootstrap": "^5.2.3",
+    "downloadjs": "^1.4.7",
+    "html2canvas": "^1.4.1",
+    "mdb-react-ui-kit": "^5.0.0",
     "mdbreact": "^5.2.0",
     "react": "^18.2.0",
     "react-bootstrap": "^2.6.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.7.1",
+    "react-qrcode-logo": "^2.8.0",
     "react-router-dom": "^6.4.3",
     "react-scripts": "5.0.1",
+    "sweetalert2": "^11.6.15",
+    "sweetalert2-react-content": "^5.0.7",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
@@ -43,5 +49,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@types/downloadjs": "^1.4.3"
   }
 }
