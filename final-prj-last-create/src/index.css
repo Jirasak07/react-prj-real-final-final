@@ -16,3 +16,16 @@ body {
   --white-100:#FFFFFF;
   --background:#EDEDED;
 }
+/* ===== Scrollbar CSS ===== */
+  /* Firefox */
+  * {
+   
+    scrollbar-color: #8f54a0 #ffffff;
+  }
+
+  /* Chrome, Edge, and Safari */
+  *::-webkit-scrollbar {
+    /* display: none; */
+     scrollbar-width: thin;
+
+  }

@@ -1,17 +1,47 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { AiOutlineMenuUnfold, AiOutlineMenuFold } from "react-icons/ai";
-import { FiLogOut } from "react-icons/fi";
+import { useNavigate } from "react-router-dom";
 import * as BiIcon from "react-icons/bi";
+import {FaUserCircle} from 'react-icons/fa'
 import "./Header.css";
+import axios from "axios";
 
 function Header() {
+  const navi = useNavigate();
+  const [name ,setName] = useState("")
+  const user_id = localStorage.getItem('user_id')
   const [side, setSide] = useState(false);
   const Side = () => {
     setSide(!side);
   };
+  const Logout =()=>{
+    localStorage.removeItem('user_id');
+    localStorage.removeItem('main_aid');
+    localStorage.removeItem('token');
+    navi('/')
+  }
+  useEffect(()=>{
+    axios.post("http://localhost:3333/show-user-login",{
+      user_id: user_id
+    })
+    .then((res)=>{
+      setName(res.data[0].name)
+      console.log(res.data[0].name)
+    })
+  })
+  const [nav, setNav] = useState(false)
+  const changNav = () =>{
+    if(window.scrollY >= 40){
+      setNav(true)
+    }else{
+      setNav(false)
+    }
+  }
+  window.addEventListener('scroll', changNav)
   return (
     <>
-      <div className="head d-flex flex-row align-items-center justify-content-evenly gap-2">
+    <div onClick={Side} className={side? "bg-overlay":"bg-overlay bg-o"}></div>
+      <div className={nav? "head active d-flex flex-row align-items-center justify-content-evenly gap-2":"head d-flex flex-row align-items-center justify-content-evenly gap-2"}>
         <div
           className="col-1 fw-bolder fs-5 align-items-center justify-content-center d-flex ps-3"
           onClick={Side}
@@ -22,13 +52,14 @@ function Header() {
           ระบบตรวจสอบครุภัณฑ์ สำนักส่งเสริมวิชาการและงานทะเบียน
         </div>
         <div className="col-3 col-md-4 col-lg-3 col-xl-2 drop ">
-          <div className="d-flex align-items-center  ">
-            <div className="d-none d-md-flex username">
-              {" "}
-              username username &nbsp;{" "}
+          <div className="d-flex align-items-center ">
+            <div className="d-none d-md-flex username align-items-center profile">
+              {" "}<FaUserCircle className="ichover"/> &nbsp;
+              {name} &nbsp;{" "}
             </div>
-            <div className="log ms-3 me-2">
-              <BiIcon.BiPowerOff className="logicon" /> Logout
+            <div className="log ms-3 me-2 " onClick={Logout} >
+              <BiIcon.BiPowerOff className="logicon" /> 
+              {/* Logout */}
             </div>
           </div>
         </div>

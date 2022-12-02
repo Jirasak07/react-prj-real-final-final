@@ -1,0 +1,99 @@
+.page-product {
+  height: auto;
+  background-color: var(--white-100);
+  border-radius: 5px;
+  overflow: none;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+}
+.manage {
+  height: fit-content;
+  max-height: 50px;
+  align-self: end;
+  width: 40%;
+  border-radius: 3px;
+  /* background-color: #b8e1ff62 ;
+    border: 0.6px solid #B8E1FF;
+    color: #75c3fc; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 3%;
+  padding: 5px;
+  z-index: 1;
+}
+#group {
+  display: block;
+  word-wrap: break-word !important;
+}
+.btn-single {
+  width: fit-content;
+  max-height: 100%;
+  background-color: #75c3fc !important;
+  color: var(--white-100) !important;
+}
+.btn-group {
+  /* max-width: 100%; */
+  max-height: 100%;
+  background-color: var(--orange-25) !important;
+  color: var(--white-100) !important;
+}
+.edit {
+  background-color: #f7e25e;
+  width: 20px ;
+  height: 20px ;
+  padding: 2px;
+  border-radius: 5%;
+  box-shadow: 0px 1px 7px 5px rgba(0, 0, 0, 0.05);
+  cursor: pointer;
+}
+.edit:hover {
+  box-shadow: 0px 0px 20px 3px #f7e25e;
+}
+.qrcode{
+    background-color: #BDD358 ;
+    width: 20px ;
+    height: 20px ;
+    padding: 2px;
+    border-radius: 5%;
+    box-shadow: 0px 1px 7px 5px rgba(0, 0, 0, 0.05);
+    cursor: pointer;
+}
+.qrcode:hover{
+    box-shadow: 0px 0px 20px 3px #BDD358;
+}
+.check{
+    background-color: #C792DF;
+    width: 20px ;
+    height: 20px ;
+    padding: 2px;
+    border-radius: 5%;
+    box-shadow: 0px 1px 7px 5px rgba(0, 0, 0, 0.05);
+    cursor: pointer;
+}
+.check:hover{
+    box-shadow: 0px 0px 20px 3px #C792DF;
+}
+.update{
+    background-color: #ff9346;
+    width: 20px ;
+    height: 20px ;
+    padding: 2px;
+    border-radius: 5%;
+    box-shadow: 0px 1px 7px 5px rgba(0, 0, 0, 0.05);
+    cursor: pointer;
+}
+.update:hover{
+    box-shadow: 0px 0px 20px 3px #ff9346;
+}
+
+@media screen and (max-width: 376px) {
+  .page-product {
+    font-size: calc(0.8rem + 0.3px) !important;
+  }
+  .manage {
+    align-self: center;
+    width: 100%;
+  }
+}
