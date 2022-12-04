@@ -33,35 +33,66 @@ function ProductAdd(props) {
   }, []);
 
   const Submit = () => {
-    let timerInterval;
-    MySwal.fire({
-      title: "Auto close alert!",
-      html: "I will close in <b></b> milliseconds.",
-      timer: 900,
-      icon: "success",
-      timerProgressBar: true,
-      didOpen: () => {
-        MySwal.showLoading();
-        const b = MySwal.getHtmlContainer().querySelector("b");
-        timerInterval = setInterval(() => {
-          b.textContent = MySwal.getTimerLeft();
-        }, 1200);
-      },
-      willClose: () => {
-        clearInterval(timerInterval);
-      },
-    })
-      .then((result) => {
-        /* Read more about handling dismissals below */
-        if (result.dismiss === Swal.DismissReason.timer) {
-          console.log("I was closed by the timer");
-        }
+    axios
+      .post("http://localhost:3333/product-added", {
+        pid: input.pid,
+        pname: input.pname,
+        pdetail: input.pdetail,
+        qty: 1,
+        unit: input.unit,
+        price: input.price,
+        finance: input.finance,
+        acquirement: input.get,
+        ptype_id: input.ptype_id,
+        seller: input.seller,
+        sub_aid: input.sub_aid,
+        pstatus_id: input.pstatus_id,
+        buydate: input.buydate,
+        pickdate: input.pickdate,
+        fisicalyear: input.fisicalyear,
       })
-      .then((value) => {
-        setTimeout(() => {
-          props.toggleShow();
-        }, 100);
-      });
+      .then((res) => {
+        let timerInterval;
+        MySwal.fire({
+          title: "ปิดเมื่อบันทึกเสร็จสิ้น",
+          html: "I will close in <b></b> milliseconds.",
+          timer: 900,
+          icon: "success",
+          timerProgressBar: true,
+          didOpen: () => {
+            MySwal.showLoading();
+            const b = MySwal.getHtmlContainer().querySelector("b");
+            timerInterval = setInterval(() => {
+              b.textContent = MySwal.getTimerLeft();
+            }, 1200);
+          },
+          willClose: () => {
+            clearInterval(timerInterval);
+          },
+        })
+          .then((result) => {
+            /* Read more about handling dismissals below */
+            if (result.dismiss === Swal.DismissReason.timer) {
+              console.log("I was closed by the timer");
+            }
+          })
+          .then((value) => {
+            setTimeout(() => {
+              props.toggleShow();
+            }, 100);
+          });
+      })
+      .catch(error=>{
+        MySwal.fire({
+          title: "บันทึกไม่สำเร็จ",
+          html: "",
+          icon: "error",
+          showCancelButton:false
+        })
+        console.log(error)
+      })
+
+      
   };
   const [images, setImages] = useState([]);
   const [imageURLs, setImageURLs] = useState([]);
@@ -79,6 +110,18 @@ function ProductAdd(props) {
     console.log("." + e.target.files[0].type.split("image/")[1]);
     setTypeName("." + e.target.files[0].type.split("image/")[1]);
   };
+  const mid = localStorage.getItem("main_aid");
+  const [subagen, setSubAgen] = useState([]);
+  useEffect(() => {
+    axios
+      .post("http://localhost:3333/show-sub-agen-where-main", {
+        main_aid: mid,
+      })
+      .then((res) => {
+        setSubAgen(res.data);
+        console.log(res.data);
+      });
+  }, []);
   return (
     <div>
       <div className="container">
@@ -175,9 +218,10 @@ function ProductAdd(props) {
                 label="สถานะครุภัณฑ์"
                 // onChange={handleChange}
               >
-                <MenuItem value={10}>Ten</MenuItem>
-                <MenuItem value={20}>Twenty</MenuItem>
-                <MenuItem value={30}>Thirty</MenuItem>
+               {pstatus.map((status)=>(
+                           <MenuItem value={status.pstatus_id}>{status.pstatus_name}</MenuItem>
+               ))}
+     
               </Select>
             </FormControl>
           </div>
@@ -224,7 +268,7 @@ function ProductAdd(props) {
               label="จำนวน"
               variant="outlined"
               name="qty"
-              value={input.qty || ""}
+              value={1}
               onChange={onInputChange}
             />
           </div>
@@ -246,6 +290,7 @@ function ProductAdd(props) {
               label="ราคา/หน่วย"
               variant="outlined"
               name="price"
+              type="number"
               value={input.price || ""}
               onChange={onInputChange}
             />
@@ -298,9 +343,9 @@ function ProductAdd(props) {
                 label="หน่วยงานที่ติดตั้ง"
                 // onChange={handleChange}
               >
-                <MenuItem value={10}>Ten</MenuItem>
-                <MenuItem value={20}>Twenty</MenuItem>
-                <MenuItem value={30}>Thirty</MenuItem>
+                {subagen.map((s) => (
+                  <MenuItem value={s.sub_aid}>{s.sub_aname}</MenuItem>
+                ))}
               </Select>
             </FormControl>
           </div>
