@@ -25,7 +25,7 @@ body {
 
   /* Chrome, Edge, and Safari */
   *::-webkit-scrollbar {
-    /* display: none; */
-     scrollbar-width: thin;
+    display: none;
+     scrollbar-width: 10px;
 
   }

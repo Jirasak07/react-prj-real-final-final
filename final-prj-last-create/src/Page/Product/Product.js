@@ -18,7 +18,6 @@ import {
   MDBModalHeader,
   MDBModalTitle,
   MDBModalBody,
-  MDBModalFooter,
 } from "mdb-react-ui-kit";
 import ProductAdd from "./ProductAdd";
 import GenQRcode from "../../QRCode/GenQRcode";
@@ -27,8 +26,7 @@ function Product() {
   const toggleShow = () => setBasicModal(!basicModal);
   const [qrmodal, setQrmodal] = useState(false)
   const [idqr, setIdqr] = useState()
-  const toggleQr = (id) =>{
-    console.log(id)
+  const ToggleQRcode = (id) =>{
     setIdqr(id)
     setQrmodal(!qrmodal)
   } 
@@ -108,7 +106,7 @@ function Product() {
 
                   <Tooltip title="ดาวน์โหลด QR Code" arrow placement="top">
                     <div>
-                      <HiOutlineQrcode className="qrcode" onClick={(e)=>toggleQr(i.pid)} />
+                      <HiOutlineQrcode className="qrcode" onClick={(e)=>ToggleQRcode(i.pid)} />
                     </div>
                   </Tooltip>
                   <Tooltip arrow placement="top" title="อัพเดทข้อมูลครุภัณฑ์">
@@ -129,7 +127,7 @@ function Product() {
           ],
         });
       });
-  }, []);
+  },[]);
   return (
     <>
       <div className="container page-product">
@@ -148,7 +146,7 @@ function Product() {
             hover
             noBottomColumns
             // searching={false}
-            // sortable={false}
+            sortable={false}
             responsive
             data={table}
           />
@@ -177,7 +175,7 @@ function Product() {
          <MDBModal show={qrmodal} setShow={setQrmodal} tabIndex="-1">
         <MDBModalDialog size="sm" centered >
           <MDBModalContent>
-            <MDBModalBody> <GenQRcode toggleQr={toggleQr} id={idqr} /> </MDBModalBody>
+            <MDBModalBody> <GenQRcode toggleQr={ToggleQRcode} id={idqr} /> </MDBModalBody>
           </MDBModalContent>
         </MDBModalDialog>
       </MDBModal>

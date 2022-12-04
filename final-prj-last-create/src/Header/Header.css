@@ -5,7 +5,7 @@
   left: 0%;
   top: 0;
   background-color: #ffffff !important;
-  box-shadow: 2px 2px 8px 4px rgba(0, 0, 0, 0.158);
+  box-shadow: 2px 2px 8px 4px rgba(0, 0, 0, 0.075);
   max-height: fit-content;
   z-index: 1;
   transition: 0.5s;
