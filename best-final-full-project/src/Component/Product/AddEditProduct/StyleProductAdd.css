@@ -1,0 +1,91 @@
+/* input.imgUpload{
+    border: none;
+    background-color: blue !important;
+    font-size: 20px !important ;
+}
+.boxImage{
+    display: flex;
+    justify-content: center;
+    align-items: center !important;
+    background-color: bisque;
+    width: 100%;
+    height: 10vh;
+    border-radius: 10px;
+} */
+.upload{
+    display: flex;
+    justify-content: center;
+}
+.file-card {
+    margin: 0rem;
+  background-color: #edf2f7;
+  border: 3px dashed #cbd5e0;
+  padding: 1em;
+  width: 100%;
+  min-width: 150px;
+  max-width: 300px;
+  max-height: 100% !important;
+  height: max-content;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  border-radius: 10px;
+}
+.file-inputs {
+  position: relative;
+  margin-bottom: 1.5em;
+  cursor: pointer;
+  
+}
+button{
+    background-color: tomato;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px !important;
+}
+button:hover{
+    background-color: rgba(255, 99, 71, 0.733);
+    border: 2px solid tomato;
+    cursor: pointer;
+    border-radius: 5px !important;
+
+}
+.file-inputs input {
+    background-color: #cbd5e0;
+    opacity: 0;
+    width: 25vw;
+    max-width: 100px;
+    height: 40px;
+    max-height: 50px;
+    border-radius: 10px;
+  outline: none !important;
+  border: none !important;
+  cursor: pointer;
+}
+div.imge{
+    z-index: 0;  
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #ffffff;
+    width: 100%;
+    height: 100%;
+    font-size: 3rem !important;
+}
+div.nimg{
+    font-size: 0.8rem !important;
+    color: #ffffff;
+}
+img.imageShow{
+    display: block;
+    top: 0px;
+    bottom: 0px;
+    width: 100%;
+    max-width: 150px;
+    position: relative;
+    border: 1px dashed;
+}
+

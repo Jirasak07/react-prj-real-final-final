@@ -1,0 +1,88 @@
+.product-table {
+  background-color: var(--sixty-2);
+  border-radius: 5px;
+  box-shadow: 0px 5px 9px 2px rgba(0, 0, 0, 0.16);
+  margin-left: 5px;
+  margin-right: 5px;
+  overflow: auto;
+  max-height: 100%;
+  max-width: 95vw;
+}
+.adproduct {
+  margin-left: 10px;
+  display: flex;
+  justify-content: flex-end;
+}
+.contain {
+  font-size: 16px !important;
+  justify-content: center;
+  display: flex;
+}
+.modal {
+  z-index: 2560 !important;
+}
+.manage {
+  display: flex;
+  width: fit-content;
+  max-height: 40px;
+}
+.btn.btn-secondary.btn-sm.but {
+  width: max-content !important;
+}
+table.table.table-hover.table-striped.dataTable tbody tr{
+  color: var(--thirty);
+}
+div.col-sm-12.col-md-6 div.dataTables_length.bs-select label{
+  color: var(--thirty);
+}
+div.dataTables_wrapper.dt-bootstrap4.mx-2 > div.row > div.col-sm-12.col-md-5 div.dataTables_info{
+  color: var(--thirty);
+}
+@media screen and (max-width: 376px) {
+  .iccc{
+    font-size: 3rem !important;
+    
+  }
+  * {
+    font-size: 0.8em !important;
+  }
+  .btn.btn-sm.but {
+    font-size: 0.5rem !important;
+  }
+  .row {
+    font-size: 1rem !important;
+  }
+  select.custom-select.custom-select-sm.form-control.form-control-sm {
+    font-size: 0.8rem !important;
+  }
+  .adproduct {
+    display: flex;
+    justify-content: center;
+  }
+  table.table.table-hover.table-striped.dataTable tbody tr {
+    font-size: 16px !important;
+   
+  }
+  div.col-sm-12.col-md-6 div.dataTables_length.bs-select label {
+    font-size: 1rem !important;
+
+  }
+  div.dataTables_wrapper.dt-bootstrap4.mx-2 > div.row > div.col-sm-12.col-md-5 div.dataTables_info {
+    border-top: 0.5px solid rgba(0, 0, 0, 0.144);
+    font-size: 1rem !important;
+  }
+  div.dataTables_wrapper.dt-bootstrap4.mx-2 > div.row > div.col-sm-12.col-md-7 div.dataTables_paginate ul.pagination li {
+    font-size: 1.5rem !important;
+    
+   
+  }
+}
+table.table.table-hover.table-striped.dataTable > thead.thead-dark > tr > th {
+  width: 60vw;
+  border: none !important;
+  font-size: 1rem !important;
+}
+.iccc{
+  font-size: 2rem;
+
+}

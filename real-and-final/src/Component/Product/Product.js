@@ -11,6 +11,7 @@ import "./styleProduct.css";
 import Add_Product_Group from "./Add_Product_Group";
 import Add_Product_Single from "./Add_Product_Single copy";
 function Product() {
+
   const [modal, setModal] = useState(false);
   const toggle = () => {
     setModal(!modal);
@@ -480,9 +481,9 @@ function Product() {
   });
   return (
     <>
-      <MDBContainer fluid className="w-100 h-50 content  ">
-        <MDBRow className="my-3 mx-2 gap-2 justify-content-center">
-          <MDBCol size="12" md="2" className="manage ">
+      <MDBContainer fluid className="w-100 h-50 ">
+        <MDBRow className="my-3 mx-2 gap-2">
+          {/* <MDBCol size="12" md="2" className="manage ">
             <div className="">
               <div className="d-grid">
                 <div className="btn btn-secondary  " onClick={toggle}>
@@ -493,8 +494,16 @@ function Product() {
                 </div>
               </div>
             </div>
-          </MDBCol>
-          <MDBCol size="12" md="9" className="product">
+          </MDBCol> */}
+          <MDBCol size="12" className="product">
+          <div className="d-flex justify-content-end">
+                <div className="btn btn-success btn-sm " onClick={toggle}>
+                  เพิ่มครุภัณฑ์แบบเดี่ยว
+                </div>
+                <div className="btn btn-info btn-sm " onClick={toggleG}>
+                  เพิ่มครุภัณฑ์แบบชุด
+                </div>
+              </div>
             <MDBDataTableV5
             responsive
             data={product} />

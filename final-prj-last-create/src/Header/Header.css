@@ -1,0 +1,131 @@
+.head {
+  position: fixed;
+  height: 50px;
+  right: 0;
+  left: 0%;
+  top: 0;
+  background-color: #ffffff !important;
+  box-shadow: 2px 2px 8px 4px rgba(0, 0, 0, 0.075);
+  max-height: fit-content;
+  z-index: 1;
+  transition: 0.5s;
+}
+.head.active{
+  transition: 0.5s;
+}
+.profile:hover{
+  cursor: pointer;
+   filter: drop-shadow(1px 1px 3px rgba(0, 255, 0, 0.897));
+}
+.drop {
+  flex-wrap: wrap;
+  /* background: #000; */
+  height: 50px;
+  display: flex;
+  justify-content: center;
+
+  gap: 20px;
+}
+.username {
+  font-size: calc(0.8rem + 0.3px);
+  color: #4c6085;
+}
+.log{
+  font-size: 1rem;
+  color: #e44a4a;
+  cursor: pointer;
+}
+.logicon{
+  font-size: 1.5rem;
+}
+.log:hover{
+  filter: drop-shadow(2px 2px 2px rgba(245, 0, 0, 0.61));
+}
+.bg-overlay{
+  display: block;
+  transition: 1s;
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  background-color: #00000085;
+  z-index: 20001;
+  top: 0;
+}
+.bg-overlay.bg-o{
+  transition: 0.4s;
+  background-color: #ffffff00;
+  visibility: hidden;
+}
+
+/* .logout {
+  cursor: pointer;
+  font-size: calc(0.7rem + 0.256px);
+  height: 20px;
+  background-color: rgb(223, 79, 79);
+  color: rgb(255, 255, 255);
+  padding: 0px 5px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 3px;
+  font-weight: 800;
+  flex-wrap: wrap;
+}
+.logout:hover {
+  background-color: rgb(223, 39, 39);
+  box-shadow: 1px 2px 7px 0px rgba(255, 0, 0, 0.31);
+} */
+.bodynav {
+  z-index: 50000;
+  width: 250px;
+  height: 100%;
+  position: fixed;
+  background-color: var(--white-100);
+  /* box-shadow: 1px 2px 10px 2px rgba(0, 0, 0, 0.31); */
+  top: 0;
+  left: -250px;
+  bottom: 0;
+  transition: 0.4s;
+}
+.bodynav.active {
+  left: 0px;
+  /* box-shadow: 1px 2px 10px 2px rgba(0, 0, 0, 0.31); */
+}
+.iconnav {
+  height: 50px;
+  margin-top: 15px;
+}
+.sidemenu {
+  margin-top: 20%;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  align-items: center;
+}
+.link {
+  /* background: var(--white-100); */
+  height: 40px;
+  width: 80%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  cursor: pointer;
+}
+.link:hover {
+  border-radius: 5px;
+  background-color: #FFD2A5;
+  border: 1px solid #f59e6b ;
+  color: #F1935C;
+  font-weight: 900;
+
+}
+.link > div{
+  margin-left: 2rem;
+}
+@media screen and (max-width: 376px) {
+  .headname {
+    font-size: calc(0.7rem + 0.256px);
+  }
+  .logout {
+    font-size: calc(0.5rem + 0.256px);
+  }
+}
