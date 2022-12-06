@@ -1,31 +1,38 @@
-@import url('https://fonts.googleapis.com/css2?family=Sarabun:wght@100;200;300;400;500;600&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Sarabun:wght@100;200;300;400;500;600&display=swap");
 
 body {
   margin: 0;
-  font-family: 'Sarabun', sans-serif;
+  font-family: "Sarabun", sans-serif;
 }
-*{
-  font-family: 'Sarabun', sans-serif;
+* {
+  font-family: "Sarabun", sans-serif;
 }
-:root{
-  --orange-100:#F55E23;
-  --orange-50:#ff8a5b;
-  --orange-25:#F89169;
-  --black-100:#242424;
-  --black-50:#6d6d6d;
-  --white-100:#FFFFFF;
-  --background:#afafaf;
+:root {
+  --orange-100: #f55e23;
+  --orange-50: #ff8a5b;
+  --orange-25: #f89169;
+  --black-100: #242424;
+  --black-50: #222222;
+  --white-100: #ffffff;
+  --background: #032b43;
+  --background-2: #434242;
+  --backgroung-img: linear-gradient(
+    to left top,
+    #000000,
+    #441820,
+    #85262c,
+    #c63d29,
+    #ff6300
+  );
 }
 /* ===== Scrollbar CSS ===== */
-  /* Firefox */
-  * {
-   
-    scrollbar-color: #8f54a0 #ffffff;
-  }
+/* Firefox */
+* {
+  scrollbar-color: #8f54a0 #ffffff;
+}
 
-  /* Chrome, Edge, and Safari */
-  *::-webkit-scrollbar {
-    display: none;
-     scrollbar-width: 10px;
-
-  }
+/* Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+  display: none;
+  scrollbar-width: 10px;
+}

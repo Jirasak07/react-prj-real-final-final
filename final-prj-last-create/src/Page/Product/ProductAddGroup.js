@@ -12,7 +12,7 @@ import { FaCloudUploadAlt } from "react-icons/fa";
 import axios from "axios";
 
 const MySwal = withReactContent(Swal);
-function ProductAdd(props) {
+function ProductAddGroup(props) {
   const [input, setInput] = useState([]);
   const onInputChange = (e) => {
     const name = e.target.name;
@@ -33,9 +33,11 @@ function ProductAdd(props) {
   }, []);
   const Submit = () => {
     // e.preventDefault();
-    axios
+    const count = input.qty;
+    for(let i = 1 ; i <= count; i++){
+       axios
       .post("http://localhost:3333/product-added", {
-        pid: input.pid,
+        pid: input.pid + "/" + i,
         pname: input.pname,
         pdetail: input.pdetail,
         qty: 1,
@@ -50,56 +52,14 @@ function ProductAdd(props) {
         buydate: input.buydate,
         pickdate: input.pickdate,
         fisicalyear: input.fisicalyear,
+        image: input.pid + typename,
       })
       .then((res) => {
-        console.log(res.data.status);
-        if (res.data.status === "error") {
-          MySwal.fire({
-            title: <strong>ไม่สามารถบันทึกได้</strong>,
-            html: `${res.data.message.sqlMessage}`,
-            icon: "error",
-          });
-        } else if (res.data.status != "error") {
-          let timerInterval;
-          MySwal.fire({
-            title: "ปิดเมื่อบันทึกเสร็จสิ้น",
-            html: "I will close in <b></b> milliseconds.",
-            timer: 900,
-            icon: "success",
-            timerProgressBar: true,
-            didOpen: () => {
-              MySwal.showLoading();
-              const b = MySwal.getHtmlContainer().querySelector("b");
-              timerInterval = setInterval(() => {
-                b.textContent = MySwal.getTimerLeft();
-              }, 1200);
-            },
-            willClose: () => {
-              clearInterval(timerInterval);
-            },
-          })
-            .then((result) => {
-              /* Read more about handling dismissals below */
-             
-              if (result.dismiss === Swal.DismissReason.timer) {
-                const url = "http://localhost:3333/upload";
-                const formData = new FormData();
-  
-                formData.append("photo", file, input.pid + typename);
-                console.log(file);
-                axios.post(url, formData).then((response) => {});
-                console.log("I was closed by the timer");
-              }
-            })
-            .then((value) => {
-              setTimeout(() => {
-                props.toggleShow();
-                // window.location.reload();
-                setInput([])
-              }, 100);
-            });
-        }
+        console.log(res.data.status)
+        alert(res.data.status)
       });
+    }
+   
   };
   const [images, setImages] = useState([]);
   const [imageURLs, setImageURLs] = useState([]);
@@ -283,7 +243,7 @@ function ProductAdd(props) {
               label="จำนวน"
               variant="outlined"
               name="qty"
-              value={1}
+              value={input.qty || ""}
               onChange={onInputChange}
             />
           </div>
@@ -378,4 +338,4 @@ function ProductAdd(props) {
   );
 }
 
-export default ProductAdd;
+export default ProductAddGroup;

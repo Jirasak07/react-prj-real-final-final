@@ -45,8 +45,7 @@ function AddProductGroup(props) {
   }, []);
   const onSubmit = () => {
     const count = input.qty;
-   
-  
+
     console.log(count);
     // console.log(input);
     axios
@@ -58,7 +57,7 @@ function AddProductGroup(props) {
         unit: input.unit,
         price: input.price,
         finance: input.finance,
-        acquirement: input.acquirement,
+        acquirement: input.get,
         ptype_id: input.ptype_id,
         seller: input.seller,
         sub_aid: input.sub_aid,
@@ -66,20 +65,17 @@ function AddProductGroup(props) {
         buydate: input.buydate,
         pickdate: input.pickdate,
         fisicalyear: input.fisicalyear,
+        image: input.pid + typename,
       })
       .then((res) => {
         console.log(res);
+        const url = "http://localhost:3333/upload";
+        const formData = new FormData();
+        formData.append("photo", file, input.pid + typename);
+        axios.post(url, formData).then((response) => {
+          console.log(response);
+        });
       });
-    for (let i = 1; i <= count; ) {
-     let name = input.pid
-      const url = "http://localhost:3333/upload";
-      const formData = new FormData();
-      formData.append("photo", file,input.pid + typename);
-      axios.post(url, formData).then((response) => {
-        console.log(response);
-      });
-      i++;
-    }
   };
   const onHandleChange = (e) => {
     alert("1234");

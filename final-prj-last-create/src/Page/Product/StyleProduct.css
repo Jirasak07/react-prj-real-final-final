@@ -1,12 +1,13 @@
 .page-product {
   height: auto;
-  background-color: var(--white-100);
+  /* background-color: var(--white-100); */
+  background-color: rgb(255, 255, 255);
   border-radius: 5px;
   overflow: none;
   padding: 10px;
   display: flex;
   flex-direction: column;
-  margin-top: 60px;
+  /* margin-top: 70px; */
   margin-bottom: 60px;
 }
 .manage {
@@ -15,9 +16,6 @@
   align-self: end;
   width: 40%;
   border-radius: 3px;
-  /* background-color: #b8e1ff62 ;
-    border: 0.6px solid #B8E1FF;
-    color: #75c3fc; */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -148,7 +146,12 @@ button
   > div.MuiFormControl-root.MuiFormControl-fullWidth.MuiTextField-root.bg-danger.css-wb57ya-MuiFormControl-root-MuiTextField-root {
   opacity: 0;
 }
-
+/* div.dataTables_paginate > ul.pagination {
+  background-color: #ffffffb7;
+  color: white !important;
+  max-width: fit-content;
+  border-radius: 3px;
+} */
 @media screen and (max-width: 376px) {
   .page-product {
     font-size: calc(0.8rem + 0.3px) !important;

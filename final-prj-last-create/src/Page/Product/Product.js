@@ -21,15 +21,30 @@ import {
 } from "mdb-react-ui-kit";
 import ProductAdd from "./ProductAdd";
 import GenQRcode from "../../QRCode/GenQRcode";
-function Product() {
+import ProductAddGroup from "./ProductAddGroup";
+function Product(props) {
   const [basicModal, setBasicModal] = useState(false);
   const toggleShow = () => setBasicModal(!basicModal);
-  const [qrmodal, setQrmodal] = useState(false)
-  const [idqr, setIdqr] = useState()
-  const ToggleQRcode = (id) =>{
-    setIdqr(id)
-    setQrmodal(!qrmodal)
-  } 
+  const [basicGroup, setBasicGroup] = useState(false);
+  const toggleShowG = () => setBasicGroup(!basicGroup);
+  const [qrmodal, setQrmodal] = useState(false);
+  const [idqr, setIdqr] = useState();
+  const ToggleQRcode = (id) => {
+    setIdqr(id);
+    setQrmodal(!qrmodal);
+  };
+  const main = localStorage.getItem('main_aid')
+  const [re,setRe] = useState()
+  useEffect(() => {
+    axios
+    .post("http://localhost:3333/product", {
+      main_aid: main,
+    })
+    .then((res)=>{
+      console.log("lenght",res.data.length)
+      setRe(res.data.length)
+    })
+  })
   const [table, setTable] = useState([]);
   useEffect(() => {
     let mid = localStorage.getItem("main_aid");
@@ -38,6 +53,7 @@ function Product() {
         main_aid: mid,
       })
       .then((res) => {
+        console.log("table", res.data.lenght);
         const data = res.data;
         setTable({
           columns: [
@@ -106,7 +122,10 @@ function Product() {
 
                   <Tooltip title="ดาวน์โหลด QR Code" arrow placement="top">
                     <div>
-                      <HiOutlineQrcode className="qrcode" onClick={(e)=>ToggleQRcode(i.pid)} />
+                      <HiOutlineQrcode
+                        className="qrcode"
+                        onClick={(e) => ToggleQRcode(i.pid)}
+                      />
                     </div>
                   </Tooltip>
                   <Tooltip arrow placement="top" title="อัพเดทข้อมูลครุภัณฑ์">
@@ -127,7 +146,7 @@ function Product() {
           ],
         });
       });
-  },[]);
+  }, [re]);
   return (
     <>
       <div className="container page-product">
@@ -135,12 +154,14 @@ function Product() {
           <div className="btn btn-single btn-sm" onClick={toggleShow}>
             เพิ่มครุภัณฑ์เดี่ยว
           </div>
-          <div className="btn btn-group btn-sm " onClick={toggleShow}>
+          <div className="btn btn-group btn-sm " onClick={toggleShowG}>
             เพิ่มครุภัณฑ์กลุ่ม
           </div>
         </div>
         <div className="table p-2">
           <MDBDataTable
+            theadColor="white"
+            tbodyColor="white"
             entriesLabel="จำนวนที่แสดง"
             searchLabel="ค้นหาครุภัณฑ์"
             hover
@@ -149,37 +170,65 @@ function Product() {
             sortable={false}
             responsive
             data={table}
+            paginationLabel={["ก่อนหน้า", "ถัดไป"]}
+            infoLabel={["แสดง", "ถึง", "ของ", "ครุภัณฑ์"]}
           />
         </div>
       </div>
-      <div >
-      {/* MODAL ADD PRODUCT SINGLE */}
-      <MDBModal show={basicModal} setShow={setBasicModal} tabIndex="-1">
-        <MDBModalDialog size="lg" >
-          <MDBModalContent>
-            <MDBModalHeader>
-              <MDBModalTitle>เพิ่มครุภัณฑ์เดี่ยว</MDBModalTitle>
-              <MDBBtn
-                className="btn-close"
-                color="none"
-                onClick={toggleShow}
-              ></MDBBtn>
-            </MDBModalHeader>
-            <MDBModalBody> <ProductAdd toggleShow={toggleShow} /> </MDBModalBody>
-          </MDBModalContent>
-        </MDBModalDialog>
-      </MDBModal>
-      {/*  END  MODAL ADD PRODUCT SINGLE */}
+      <div>
+        {/* MODAL ADD PRODUCT SINGLE */}
+        <MDBModal show={basicModal} setShow={setBasicModal} tabIndex="-1">
+          <MDBModalDialog size="lg">
+            <MDBModalContent>
+              <MDBModalHeader>
+                <MDBModalTitle>เพิ่มครุภัณฑ์เดี่ยว</MDBModalTitle>
+                <MDBBtn
+                  className="btn-close"
+                  color="none"
+                  onClick={toggleShow}
+                ></MDBBtn>
+              </MDBModalHeader>
+              <MDBModalBody>
+                {" "}
+                <ProductAdd toggleShow={toggleShow} />{" "}
+              </MDBModalBody>
+            </MDBModalContent>
+          </MDBModalDialog>
+        </MDBModal>
+        {/*  END  MODAL ADD PRODUCT SINGLE */}
 
-         {/* MODAL QRCODE */}
-         <MDBModal show={qrmodal} setShow={setQrmodal} tabIndex="-1">
-        <MDBModalDialog size="sm" centered >
-          <MDBModalContent>
-            <MDBModalBody> <GenQRcode toggleQr={ToggleQRcode} id={idqr} /> </MDBModalBody>
-          </MDBModalContent>
-        </MDBModalDialog>
-      </MDBModal>
-      {/*  END  MODAL QRCODE */}
+        {/* MODAL QRCODE */}
+        <MDBModal show={qrmodal} setShow={setQrmodal} tabIndex="-1">
+          <MDBModalDialog size="sm" centered>
+            <MDBModalContent>
+              <MDBModalBody>
+                {" "}
+                <GenQRcode toggleQr={ToggleQRcode} id={idqr} />{" "}
+              </MDBModalBody>
+            </MDBModalContent>
+          </MDBModalDialog>
+        </MDBModal>
+        {/*  END  MODAL QRCODE */}
+        {/* MODAL ADD PRODUCT GROUP */}
+        <MDBModal show={basicGroup} setShow={setBasicGroup} tabIndex="-1">
+          <MDBModalDialog size="lg">
+            <MDBModalContent>
+              <MDBModalHeader>
+                <MDBModalTitle>เพิ่มครุภัณฑ์แบบกลุ่ม</MDBModalTitle>
+                <MDBBtn
+                  className="btn-close"
+                  color="none"
+                  onClick={toggleShowG}
+                ></MDBBtn>
+              </MDBModalHeader>
+              <MDBModalBody>
+                {" "}
+                <ProductAddGroup toggleShow={toggleShowG}  />{" "}
+              </MDBModalBody>
+            </MDBModalContent>
+          </MDBModalDialog>
+        </MDBModal>
+        {/*  END  MODAL ADD PRODUCT GROUP */}
       </div>
     </>
   );

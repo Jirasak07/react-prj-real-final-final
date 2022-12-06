@@ -5,7 +5,7 @@ import Header from "./Header/Header";
 
 function App() {
   useEffect(() => {
-    document.body.style.backgroundColor = "var(--background)";
+    document.body.style.backgroundImage = "var(--backgroung-img)";
     console.log("app")
   });
 
