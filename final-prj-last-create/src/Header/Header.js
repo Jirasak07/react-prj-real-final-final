@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { AiOutlineMenuUnfold, AiOutlineMenuFold } from "react-icons/ai";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import * as BiIcon from "react-icons/bi";
 import { FaUserCircle } from "react-icons/fa";
 import "./Header.css";
@@ -95,11 +95,11 @@ function Header() {
           <AiOutlineMenuFold />
         </div>
         <div className="sidemenu">
-          <div className="link">
+          <NavLink to="/home" className="link">
             <div>
               <BiIcon.BiTable /> &nbsp; ครุภัณฑ์
             </div>
-          </div>
+          </NavLink>
           <div className="link">
             <div>
               <BiIcon.BiQrScan /> &nbsp; สแกน QR code
@@ -121,6 +121,12 @@ function Header() {
               <BiIcon.BiFile /> &nbsp; ออกรายงาน
             </div>{" "}
           </div>
+          <NavLink to="/test" className="link">
+            <div className="text-link">
+              {" "}
+              <BiIcon.BiFile /> &nbsp; ทดสอบ Validate
+            </div>{" "}
+          </NavLink>
         </div>
       </div>
     </div>

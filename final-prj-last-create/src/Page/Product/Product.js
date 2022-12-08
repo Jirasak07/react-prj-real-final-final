@@ -33,18 +33,18 @@ function Product(props) {
     setIdqr(id);
     setQrmodal(!qrmodal);
   };
-  const main = localStorage.getItem('main_aid')
-  const [re,setRe] = useState()
+  const main = localStorage.getItem("main_aid");
+  const [re, setRe] = useState();
   useEffect(() => {
     axios
-    .post("http://localhost:3333/product", {
-      main_aid: main,
-    })
-    .then((res)=>{
-      console.log("lenght",res.data.length)
-      setRe(res.data.length)
-    })
-  })
+      .post("http://localhost:3333/product", {
+        main_aid: main,
+      })
+      .then((res) => {
+        // console.log("lenght",res.data.length)
+        setRe(res.data.length);
+      });
+  });
   const [table, setTable] = useState([]);
   useEffect(() => {
     let mid = localStorage.getItem("main_aid");
@@ -53,7 +53,7 @@ function Product(props) {
         main_aid: mid,
       })
       .then((res) => {
-        console.log("table", res.data.lenght);
+        // console.log("table", res.data.lenght);
         const data = res.data;
         setTable({
           columns: [
@@ -190,7 +190,7 @@ function Product(props) {
               </MDBModalHeader>
               <MDBModalBody>
                 {" "}
-                <ProductAdd toggleShow={toggleShow} />{" "}
+                <ProductAdd toggleShow={toggleShow} {...props} />{" "}
               </MDBModalBody>
             </MDBModalContent>
           </MDBModalDialog>
@@ -203,7 +203,7 @@ function Product(props) {
             <MDBModalContent>
               <MDBModalBody>
                 {" "}
-                <GenQRcode toggleQr={ToggleQRcode} id={idqr} />{" "}
+                <GenQRcode {...props} toggleQr={ToggleQRcode} id={idqr} />{" "}
               </MDBModalBody>
             </MDBModalContent>
           </MDBModalDialog>
@@ -223,7 +223,7 @@ function Product(props) {
               </MDBModalHeader>
               <MDBModalBody>
                 {" "}
-                <ProductAddGroup toggleShow={toggleShowG}  />{" "}
+                <ProductAddGroup {...props} toggleShow={toggleShowG} />{" "}
               </MDBModalBody>
             </MDBModalContent>
           </MDBModalDialog>

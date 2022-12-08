@@ -7,6 +7,9 @@ body {
 * {
   font-family: "Sarabun", sans-serif;
 }
+a{
+  color: #000000c0 !important;
+}
 :root {
   --orange-100: #f55e23;
   --orange-50: #ff8a5b;
@@ -35,4 +38,8 @@ body {
 *::-webkit-scrollbar {
   display: none;
   scrollbar-width: 10px;
+}
+.kill{
+  background-position: center;
+  background-repeat: no-repeat;
 }

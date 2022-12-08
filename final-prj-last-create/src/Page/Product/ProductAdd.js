@@ -24,7 +24,7 @@ function ProductAdd(props) {
   useEffect(() => {
     axios.get("http://localhost:3333/show-product-type").then((res) => {
       setPtype(res.data);
-      console.log(res.data);
+      // console.log(res.data);
     });
 
     axios.get("http://localhost:3333/show-pstatus").then((res) => {
@@ -52,7 +52,7 @@ function ProductAdd(props) {
         fisicalyear: input.fisicalyear,
       })
       .then((res) => {
-        console.log(res.data.status);
+        // console.log(res.data.status);
         if (res.data.status === "error") {
           MySwal.fire({
             title: <strong>ไม่สามารถบันทึกได้</strong>,
@@ -80,22 +80,22 @@ function ProductAdd(props) {
           })
             .then((result) => {
               /* Read more about handling dismissals below */
-             
+
               if (result.dismiss === Swal.DismissReason.timer) {
                 const url = "http://localhost:3333/upload";
                 const formData = new FormData();
-  
+
                 formData.append("photo", file, input.pid + typename);
-                console.log(file);
+                // console.log(file);
                 axios.post(url, formData).then((response) => {});
-                console.log("I was closed by the timer");
+                // console.log("I was closed by the timer");
               }
             })
             .then((value) => {
               setTimeout(() => {
                 props.toggleShow();
                 // window.location.reload();
-                setInput([])
+                setInput([]);
               }, 100);
             });
         }
@@ -114,7 +114,7 @@ function ProductAdd(props) {
   const onImageChange = (e) => {
     setImages([...e.target.files]);
     setFile(e.target.files[0]);
-    console.log("." + e.target.files[0].type.split("image/")[1]);
+    // console.log("." + e.target.files[0].type.split("image/")[1]);
     setTypeName("." + e.target.files[0].type.split("image/")[1]);
   };
   const mid = localStorage.getItem("main_aid");
@@ -126,7 +126,7 @@ function ProductAdd(props) {
       })
       .then((res) => {
         setSubAgen(res.data);
-        console.log(res.data);
+        // console.log(res.data);
       });
   }, []);
   return (
@@ -172,7 +172,9 @@ function ProductAdd(props) {
                 // onChange={handleChange}
               >
                 {ptype.map((d, i) => (
-                  <MenuItem value={d.ptype_id}>{d.ptype_name}</MenuItem>
+                  <MenuItem key={i} value={d.ptype_id}>
+                    {d.ptype_name}
+                  </MenuItem>
                 ))}
               </Select>
             </FormControl>
@@ -228,8 +230,8 @@ function ProductAdd(props) {
                 label="สถานะครุภัณฑ์"
                 // onChange={handleChange}
               >
-                {pstatus.map((status) => (
-                  <MenuItem value={status.pstatus_id}>
+                {pstatus.map((status, id) => (
+                  <MenuItem key={id} value={status.pstatus_id}>
                     {status.pstatus_name}
                   </MenuItem>
                 ))}
@@ -358,8 +360,10 @@ function ProductAdd(props) {
                 label="หน่วยงานที่ติดตั้ง"
                 // onChange={handleChange}
               >
-                {subagen.map((s) => (
-                  <MenuItem value={s.sub_aid}>{s.sub_aname}</MenuItem>
+                {subagen.map((s, id) => (
+                  <MenuItem key={id} value={s.sub_aid}>
+                    {s.sub_aname}
+                  </MenuItem>
                 ))}
               </Select>
             </FormControl>
