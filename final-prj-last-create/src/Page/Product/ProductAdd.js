@@ -10,15 +10,16 @@ import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import { FaCloudUploadAlt } from "react-icons/fa";
 import axios from "axios";
+import { useForm } from "react-hook-form";
 
 const MySwal = withReactContent(Swal);
 function ProductAdd(props) {
-  const [input, setInput] = useState([]);
-  const onInputChange = (e) => {
-    const name = e.target.name;
-    const value = e.target.value;
-    setInput((values) => ({ ...values, [name]: value }));
-  };
+  // const [input, setInput] = useState([]);
+  // const onInputChange = (e) => {
+  //   const name = e.target.name;
+  //   const value = e.target.value;
+  //   setInput((values) => ({ ...values, [name]: value }));
+  // };
   const [ptype, setPtype] = useState([]);
   const [pstatus, setPstatus] = useState([]);
   useEffect(() => {
@@ -35,21 +36,21 @@ function ProductAdd(props) {
     // e.preventDefault();
     axios
       .post("http://localhost:3333/product-added", {
-        pid: input.pid,
-        pname: input.pname,
-        pdetail: input.pdetail,
-        qty: 1,
-        unit: input.unit,
-        price: input.price,
-        finance: input.finance,
-        acquirement: input.get,
-        ptype_id: input.ptype_id,
-        seller: input.seller,
-        sub_aid: input.sub_aid,
-        pstatus_id: input.pstatus_id,
-        buydate: input.buydate,
-        pickdate: input.pickdate,
-        fisicalyear: input.fisicalyear,
+        // pid: input.pid,
+        // pname: input.pname,
+        // pdetail: input.pdetail,
+        // qty: 1,
+        // unit: input.unit,
+        // price: input.price,
+        // finance: input.finance,
+        // acquirement: input.get,
+        // ptype_id: input.ptype_id,
+        // seller: input.seller,
+        // sub_aid: input.sub_aid,
+        // pstatus_id: input.pstatus_id,
+        // buydate: input.buydate,
+        // pickdate: input.pickdate,
+        // fisicalyear: input.fisicalyear,
       })
       .then((res) => {
         // console.log(res.data.status);
@@ -95,7 +96,7 @@ function ProductAdd(props) {
               setTimeout(() => {
                 props.toggleShow();
                 // window.location.reload();
-                setInput([]);
+                // setInput([]);
               }, 100);
             });
         }
@@ -129,15 +130,29 @@ function ProductAdd(props) {
         // console.log(res.data);
       });
   }, []);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
   return (
     <div>
       <div className="container">
         <form className="row justify-content-center">
           <div className="col-12 col-sm-6 mt-3 ">
             <TextField
-              name="pid"
-              value={input.pid || ""}
-              onChange={onInputChange}
+              {...register("pid", {
+                required: "กรุณากรอกชื่อ",
+                pattern: {
+                  value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                  // value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                  message: "ไม่ถูกต้อง",
+                  maxLength: 17,
+                  minLength:1
+                },
+              })}
+              error={!!errors?.pid}
+              helperText={errors?.pid ? errors.pid.message : null}
               fullWidth
               id="outlined-basic"
               label="หมายเลขครุภัณฑ์"
@@ -147,9 +162,18 @@ function ProductAdd(props) {
           </div>
           <div className="col-12 col-sm-6 mt-3">
             <TextField
-              name="pname"
-              value={input.pname || ""}
-              onChange={onInputChange}
+               {...register("pname", {
+                required: "กรุณากรอกชื่อ",
+                pattern: {
+                  value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                  // value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                  message: "ไม่ถูกต้อง",
+                  maxLength: 17,
+                  minLength:1
+                },
+              })}
+              error={!!errors?.pname}
+              helperText={errors?.pname ? errors.pname.message : null}
               fullWidth
               id="outlined-basic"
               label="รายการ"
@@ -165,9 +189,21 @@ function ProductAdd(props) {
               <Select
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
-                name="ptype_id"
-                value={input.ptype_id || ""}
-                onChange={onInputChange}
+                // name="ptype_id"
+                // value={input.ptype_id || ""}
+                // onChange={onInputChange}
+                {...register("ptype_id", {
+                  required: "กรุณากรอกชื่อ",
+                  pattern: {
+                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                    // value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                    message: "ไม่ถูกต้อง",
+                    maxLength: 17,
+                    minLength:1
+                  },
+                })}
+                error={!!errors?.ptype_id}
+                helperText={errors?.ptype_id ? errors.ptype_id.message : null}
                 label="ประเภทครุภัณฑ์"
                 // onChange={handleChange}
               >
@@ -181,9 +217,18 @@ function ProductAdd(props) {
           </div>
           <div className="col-12 col-sm-6 mt-3">
             <TextField
-              name="pdetail"
-              value={input.pdetail || ""}
-              onChange={onInputChange}
+               {...register("pdetail", {
+                required: "กรุณากรอกชื่อ",
+                pattern: {
+                  value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                  // value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                  message: "ไม่ถูกต้อง",
+                  maxLength: 17,
+                  minLength:1
+                },
+              })}
+              error={!!errors?.pdetail}
+              helperText={errors?.pdetail ? errors.pdetail.message : null}
               fullWidth
               id="outlined-basic"
               label="คุณลักษณะ"
@@ -224,9 +269,21 @@ function ProductAdd(props) {
               <Select
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
-                name="pstatus_id"
-                value={input.pstatus_id || ""}
-                onChange={onInputChange}
+                // name="pstatus_id"
+                // value={input.pstatus_id || ""}
+                // onChange={onInputChange}
+                {...register("pstatus_id", {
+                  required: "กรุณากรอกชื่อ",
+                  pattern: {
+                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                    // value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                    message: "ไม่ถูกต้อง",
+                    maxLength: 17,
+                    minLength:1
+                  },
+                })}
+                error={!!errors?.pstatus_id}
+                helperText={errors?.pstatus_id ? errors.pstatus_id.message : null}
                 label="สถานะครุภัณฑ์"
                 // onChange={handleChange}
               >
@@ -240,9 +297,21 @@ function ProductAdd(props) {
           </div>
           <div className="col-12 col-sm-4 mt-3">
             <TextField
-              name="fisicalyear"
-              value={input.fisicalyear || ""}
-              onChange={onInputChange}
+              // name="fisicalyear"
+              // value={input.fisicalyear || ""}
+              // onChange={onInputChange}
+              {...register("fisicalyear", {
+                required: "กรุณากรอกชื่อ",
+                pattern: {
+                  value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                  // value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                  message: "ไม่ถูกต้อง",
+                  maxLength: 17,
+                  minLength:1
+                },
+              })}
+              error={!!errors?.fisicalyear}
+              helperText={errors?.fisicalyear ? errors.fisicalyear.message : null}
               fullWidth
               id="outlined-basic"
               label="ปีงบประมาณ"
@@ -257,10 +326,22 @@ function ProductAdd(props) {
               id="outlined-basic"
               label="วันที่ซื้อ"
               variant="outlined"
-              name="buydate"
-              defaultValue="Hello World"
-              value={input.buydate || ""}
-              onChange={onInputChange}
+              // name="buydate"
+              // defaultValue="Hello World"
+              // value={input.buydate || ""}
+              // onChange={onInputChange}
+              {...register("buydate", {
+                required: "กรุณากรอกชื่อ",
+                pattern: {
+                  value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                  // value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                  message: "ไม่ถูกต้อง",
+                  maxLength: 17,
+                  minLength:1
+                },
+              })}
+              error={!!errors?.buydate}
+              helperText={errors?.buydate ? errors.buydate.message : null}
               focused
             />
           </div>
@@ -272,9 +353,21 @@ function ProductAdd(props) {
               label="วันที่รับ"
               variant="outlined"
               type="date"
-              name="pickdate"
-              value={input.pickdate || ""}
-              onChange={onInputChange}
+              // name="pickdate"
+              // value={input.pickdate || ""}
+              // onChange={onInputChange}
+              {...register("pickdate", {
+                required: "กรุณากรอกชื่อ",
+                pattern: {
+                  value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                  // value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                  message: "ไม่ถูกต้อง",
+                  maxLength: 17,
+                  minLength:1
+                },
+              })}
+              error={!!errors?.pickdate}
+              helperText={errors?.pickdate ? errors.pickdate.message : null}
               focused
             />
           </div>
@@ -284,9 +377,21 @@ function ProductAdd(props) {
               id="outlined-basic"
               label="จำนวน"
               variant="outlined"
-              name="qty"
-              value={1}
-              onChange={onInputChange}
+              // name="qty"
+              // value={1}
+              // onChange={onInputChange}
+              {...register("qty", {
+                required: "กรุณากรอกชื่อ",
+                pattern: {
+                  value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                  // value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                  message: "ไม่ถูกต้อง",
+                  maxLength: 17,
+                  minLength:1
+                },
+              })}
+              error={!!errors?.qty}
+              helperText={errors?.qty ? errors.qty.message : null}
             />
           </div>
           <div className="col-12 col-sm-2 mt-3">
@@ -295,9 +400,21 @@ function ProductAdd(props) {
               id="outlined-basic"
               label="หน่วยนับ"
               variant="outlined"
-              name="unit"
-              value={input.unit || ""}
-              onChange={onInputChange}
+              // name="unit"
+              // value={input.unit || ""}
+              // onChange={onInputChange}
+              {...register("unit", {
+                required: "กรุณากรอกชื่อ",
+                pattern: {
+                  value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                  // value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                  message: "ไม่ถูกต้อง",
+                  maxLength: 17,
+                  minLength:1
+                },
+              })}
+              error={!!errors?.unit}
+              helperText={errors?.unit ? errors.unit.message : null}
             />
           </div>
           <div className="col-12 col-sm-4 mt-3">
@@ -306,10 +423,23 @@ function ProductAdd(props) {
               id="outlined-basic"
               label="ราคา/หน่วย"
               variant="outlined"
-              name="price"
+              // name="price"
+              // type="number"
+              // value={input.price || ""}
+              // onChange={onInputChange}
+              {...register("unit", {
+                required: "กรุณากรอกชื่อ",
+                pattern: {
+                  value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                  // value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                  message: "ไม่ถูกต้อง",
+                  maxLength: 17,
+                  minLength:1
+                },
+              })}
+              error={!!errors?.unit}
+              helperText={errors?.unit ? errors.unit.message : null}
               type="number"
-              value={input.price || ""}
-              onChange={onInputChange}
             />
           </div>
           <div className="col-12 col-sm-4 mt-3">
@@ -318,9 +448,21 @@ function ProductAdd(props) {
               id="outlined-basic"
               label="ที่มาครุภัณฑ์"
               variant="outlined"
-              name="get"
-              value={input.get || ""}
-              onChange={onInputChange}
+              // name="get"
+              // value={input.get || ""}
+              // onChange={onInputChange}
+              {...register("get", {
+                required: "กรุณากรอกชื่อ",
+                pattern: {
+                  value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                  // value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                  message: "ไม่ถูกต้อง",
+                  maxLength: 17,
+                  minLength:1
+                },
+              })}
+              error={!!errors?.get}
+              helperText={errors?.get ? errors.get.message : null}
             />
           </div>
           <div className="col-12 col-sm-4 mt-3">
@@ -329,9 +471,21 @@ function ProductAdd(props) {
               id="outlined-basic"
               label="ประเภทเงิน"
               variant="outlined"
-              name="finance"
-              value={input.finance || ""}
-              onChange={onInputChange}
+              // name="finance"
+              // value={input.finance || ""}
+              // onChange={onInputChange}
+              {...register("finance", {
+                required: "กรุณากรอกชื่อ",
+                pattern: {
+                  value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                  // value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                  message: "ไม่ถูกต้อง",
+                  maxLength: 17,
+                  minLength:1
+                },
+              })}
+              error={!!errors?.finance}
+              helperText={errors?.finance ? errors.finance.message : null}
             />
           </div>
           <div className="col-12 col-sm-6 mt-3">
@@ -341,9 +495,21 @@ function ProductAdd(props) {
               label="รายละเอียดผู้ขาย"
               multiline
               variant="outlined"
-              name="seller"
-              value={input.seller || ""}
-              onChange={onInputChange}
+              // name="seller"
+              // value={input.seller || ""}
+              // onChange={onInputChange}
+              {...register("seller", {
+                required: "กรุณากรอกชื่อ",
+                pattern: {
+                  value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                  // value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                  message: "ไม่ถูกต้อง",
+                  maxLength: 17,
+                  minLength:1
+                },
+              })}
+              error={!!errors?.seller}
+              helperText={errors?.seller ? errors.seller.message : null}
             />
           </div>
           <div className="col-12 col-sm-6 mt-3">
@@ -354,9 +520,21 @@ function ProductAdd(props) {
               <Select
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
-                name="sub_aid"
-                value={input.sub_aid || ""}
-                onChange={onInputChange}
+                // name="sub_aid"
+                // value={input.sub_aid || ""}
+                // onChange={onInputChange}
+                {...register("sub_aid", {
+                  required: "กรุณากรอกชื่อ",
+                  pattern: {
+                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                    // value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                    message: "ไม่ถูกต้อง",
+                    maxLength: 17,
+                    minLength:1
+                  },
+                })}
+                error={!!errors?.sub_aid}
+                helperText={errors?.sub_aid ? errors.sub_aid.message : null}
                 label="หน่วยงานที่ติดตั้ง"
                 // onChange={handleChange}
               >
