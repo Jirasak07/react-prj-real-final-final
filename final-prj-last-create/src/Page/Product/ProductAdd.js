@@ -14,12 +14,12 @@ import { useForm } from "react-hook-form";
 
 const MySwal = withReactContent(Swal);
 function ProductAdd(props) {
-  // const [input, setInput] = useState([]);
-  // const onInputChange = (e) => {
-  //   const name = e.target.name;
-  //   const value = e.target.value;
-  //   setInput((values) => ({ ...values, [name]: value }));
-  // };
+  const [input, setInput] = useState([]);
+  const onInputChange = (e) => {
+    const name = e.target.name;
+    const value = e.target.value;
+    setInput((values) => ({ ...values, [name]: value }));
+  };
   const [ptype, setPtype] = useState([]);
   const [pstatus, setPstatus] = useState([]);
   useEffect(() => {
@@ -86,7 +86,7 @@ function ProductAdd(props) {
                 const url = "http://localhost:3333/upload";
                 const formData = new FormData();
 
-                formData.append("photo", file, input.pid + typename);
+                formData.append("photo", file,  + typename);
                 // console.log(file);
                 axios.post(url, formData).then((response) => {});
                 // console.log("I was closed by the timer");

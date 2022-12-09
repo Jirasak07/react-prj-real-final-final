@@ -28,6 +28,10 @@ function TestValidate() {
   //   updateForm[name].value = value
   //   updateForm[name].touched = true
   // };
+  const [input,setInput] = useState([])
+  const onChange=(e)=>{
+alert(e.target.value)
+  }
 
   const {
     register,
@@ -35,7 +39,7 @@ function TestValidate() {
     formState: { errors },
   } = useForm();
   const Submit = (e) => {
-    alert(JSON.stringify(e));
+    alert(JSON.stringify(e)+input.pid);
   };
   return (
     <div>
@@ -48,15 +52,15 @@ function TestValidate() {
               label="name"
               fullWidth
               defaultValue="2"
-              // value={input.name || ""}
-
-              {...register("name", {
-                required: "กรุณากรอกชื่อ",
-                pattern: {
-                  value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                  message: "ไม่ถูกต้อง",
-                },
-              })}
+              name="name"
+              value={input.name || ""}
+              onChange={onChange}
+              // {...register("name", {
+              //   required: "กรุณากรอกชื่อ",
+              //   pattern: {
+              //     message: "ไม่ถูกต้อง",
+              //   },
+              // })}
               error={!!errors?.name}
               helperText={errors?.name ? errors.name.message : null}
             />
