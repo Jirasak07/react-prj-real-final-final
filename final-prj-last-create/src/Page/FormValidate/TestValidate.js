@@ -2,6 +2,7 @@ import { Button } from "@mui/material";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import TextField from "@mui/material/TextField";
+import MenuItem from "@mui/material/MenuItem";
 import React from "react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -28,18 +29,24 @@ function TestValidate() {
   //   updateForm[name].value = value
   //   updateForm[name].touched = true
   // };
-  const [input,setInput] = useState([])
-  const onChange=(e)=>{
-alert(e.target.value)
-  }
+  const [input, setInput] = useState([]);
+  const onChange = (e) => {
+    console.log(e.target.value);
+  };
 
   const {
+    setValue,
+    resetField,
+    reset,
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
   const Submit = (e) => {
-    alert(JSON.stringify(e)+input.pid);
+    alert(JSON.stringify(e));
+  };
+  const Cancel = () => {
+    resetField("pt_id");
   };
   return (
     <div>
@@ -51,16 +58,14 @@ alert(e.target.value)
               variant="outlined"
               label="name"
               fullWidth
-              defaultValue="2"
-              name="name"
-              value={input.name || ""}
-              onChange={onChange}
-              // {...register("name", {
-              //   required: "กรุณากรอกชื่อ",
-              //   pattern: {
-              //     message: "ไม่ถูกต้อง",
-              //   },
-              // })}
+              {...register("name", {
+                maxLength: {
+                  value: 2,
+                  message: "สูงสุด 2 ตัวอักษร", // JS only: <p>error message</p> TS only support string
+                },
+                minLength: 1,
+                required: true,
+              })}
               error={!!errors?.name}
               helperText={errors?.name ? errors.name.message : null}
             />
@@ -68,14 +73,23 @@ alert(e.target.value)
               variant="outlined"
               label="lname"
               fullWidth
-              defaultValue="2"
               // value={input.name || ""}
 
-              {...register("lname", { required: "กรุณากรอกนามสกุล" })}
+              {...register("lname", { required: true, maxLength: 5 })}
               error={!!errors?.lname}
               helperText={errors?.lname ? errors.lname.message : null}
             />
-
+            <TextField
+              select
+              fullWidth
+              label="Select"
+              {...register("pt_id")}
+              error={errors.pt_id}
+              helperText={errors.pt_id?.message}
+            >
+              <MenuItem value={1}>hhhhhhhh</MenuItem>
+              <MenuItem value={2}>GGGGGGG</MenuItem>
+            </TextField>
             <Button
               type="submit"
               variant="outlined"
@@ -85,6 +99,9 @@ alert(e.target.value)
             >
               {" "}
               Submit{" "}
+            </Button>
+            <Button fullWidth color="error" onClick={Cancel}>
+              Reset
             </Button>
           </Box>
         </form>

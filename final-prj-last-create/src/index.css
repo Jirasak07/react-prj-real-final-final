@@ -19,14 +19,7 @@ a{
   --white-100: #ffffff;
   --background: #032b43;
   --background-2: #434242;
-  --backgroung-img: linear-gradient(
-    to left top,
-    #000000,
-    #441820,
-    #85262c,
-    #c63d29,
-    #ff6300
-  );
+  --backgroung-img: #0b1c2e25 ;
 }
 /* ===== Scrollbar CSS ===== */
 /* Firefox */

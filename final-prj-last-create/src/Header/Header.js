@@ -65,12 +65,12 @@ function Header() {
         }
       >
         <div
-          className="text-light col-1 fw-bolder fs-5 align-items-center justify-content-center d-flex ps-3"
+          className=" col-1 fw-bolder fs-5 align-items-center justify-content-center d-flex ps-3"
           onClick={Side}
         >
           <AiOutlineMenuUnfold />
         </div>
-        <div className="text-light col d-flex text-center justify-content-center align-items-center flex-wrap fw-bolder headname">
+        <div className="col d-flex text-center justify-content-center align-items-center flex-wrap fw-bolder headname">
           ระบบตรวจสอบครุภัณฑ์ สำนักส่งเสริมวิชาการและงานทะเบียน
         </div>
         <div className="col-3 col-md-4 col-lg-3 col-xl-2 drop ">

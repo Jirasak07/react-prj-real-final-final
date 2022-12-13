@@ -1,5 +1,5 @@
 import { MDBDataTable } from "mdbreact";
-
+import { Pane, Dialog, Button as BtnEv } from "evergreen-ui";
 import React, { useEffect, useState } from "react";
 import "./StyleProduct.css";
 import {
@@ -10,18 +10,8 @@ import {
 } from "react-icons/hi";
 import Tooltip from "@mui/material/Tooltip";
 import axios from "axios";
-import {
-  MDBBtn,
-  MDBModal,
-  MDBModalDialog,
-  MDBModalContent,
-  MDBModalHeader,
-  MDBModalTitle,
-  MDBModalBody,
-} from "mdb-react-ui-kit";
-import ProductAdd from "./ProductAdd";
 import GenQRcode from "../../QRCode/GenQRcode";
-import ProductAddGroup from "./ProductAddGroup";
+import AddProductSingle from "./AddProductSingle";
 function Product(props) {
   const [basicModal, setBasicModal] = useState(false);
   const toggleShow = () => setBasicModal(!basicModal);
@@ -35,6 +25,10 @@ function Product(props) {
   };
   const main = localStorage.getItem("main_aid");
   const [re, setRe] = useState();
+  const [isShown, setIsShown] = useState(false);
+  const setEverGreenShow = () => {
+    setIsShown(false);
+  };
   useEffect(() => {
     axios
       .post("http://localhost:3333/product", {
@@ -149,12 +143,15 @@ function Product(props) {
   }, [re]);
   return (
     <>
-      <div className="container page-product">
+      <div className="container-fulid page-product">
         <div className="manage">
-          <div className="btn btn-single btn-sm" onClick={toggleShow}>
+          <div
+            className="btn-add btn-single btn-sm"
+            onClick={() => setIsShown(true)}
+          >
             เพิ่มครุภัณฑ์เดี่ยว
           </div>
-          <div className="btn btn-group btn-sm " onClick={toggleShowG}>
+          <div className="btn-add btn-group btn-sm " onClick={toggleShowG}>
             เพิ่มครุภัณฑ์กลุ่ม
           </div>
         </div>
@@ -176,59 +173,35 @@ function Product(props) {
         </div>
       </div>
       <div>
-        {/* MODAL ADD PRODUCT SINGLE */}
-        <MDBModal show={basicModal} setShow={setBasicModal} tabIndex="-1">
-          <MDBModalDialog size="lg">
-            <MDBModalContent>
-              <MDBModalHeader>
-                <MDBModalTitle>เพิ่มครุภัณฑ์เดี่ยว</MDBModalTitle>
-                <MDBBtn
-                  className="btn-close"
-                  color="none"
-                  onClick={toggleShow}
-                ></MDBBtn>
-              </MDBModalHeader>
-              <MDBModalBody>
-                {" "}
-                <ProductAdd toggleShow={toggleShow} {...props} />{" "}
-              </MDBModalBody>
-            </MDBModalContent>
-          </MDBModalDialog>
-        </MDBModal>
-        {/*  END  MODAL ADD PRODUCT SINGLE */}
-
-        {/* MODAL QRCODE */}
-        <MDBModal show={qrmodal} setShow={setQrmodal} tabIndex="-1">
-          <MDBModalDialog size="sm" centered>
-            <MDBModalContent>
-              <MDBModalBody>
-                {" "}
-                <GenQRcode {...props} toggleQr={ToggleQRcode} id={idqr} />{" "}
-              </MDBModalBody>
-            </MDBModalContent>
-          </MDBModalDialog>
-        </MDBModal>
-        {/*  END  MODAL QRCODE */}
-        {/* MODAL ADD PRODUCT GROUP */}
-        <MDBModal show={basicGroup} setShow={setBasicGroup} tabIndex="-1">
-          <MDBModalDialog size="lg">
-            <MDBModalContent>
-              <MDBModalHeader>
-                <MDBModalTitle>เพิ่มครุภัณฑ์แบบกลุ่ม</MDBModalTitle>
-                <MDBBtn
-                  className="btn-close"
-                  color="none"
-                  onClick={toggleShowG}
-                ></MDBBtn>
-              </MDBModalHeader>
-              <MDBModalBody>
-                {" "}
-                <ProductAddGroup {...props} toggleShow={toggleShowG} />{" "}
-              </MDBModalBody>
-            </MDBModalContent>
-          </MDBModalDialog>
-        </MDBModal>
-        {/*  END  MODAL ADD PRODUCT GROUP */}
+        <Pane>
+          <Dialog
+            width={300}
+            shouldCloseOnOverlayClick={false}
+            isShown={qrmodal}
+            title="QRCode ครุภัณฑ์"
+            onCloseComplete={ToggleQRcode}
+            hasFooter={false}
+          >
+            <GenQRcode {...props} toggleQr={ToggleQRcode} id={idqr} />{" "}
+          </Dialog>
+        </Pane>
+        {/* Modal EverGreenUI */}
+        <Pane>
+          <Dialog
+            // preventBodyScrolling
+            width={1000}
+            topOffset={20}
+            shouldCloseOnOverlayClick={false}
+            isShown={isShown}
+            title="เพิ่มครุภัณฑ์เดี่ยว"
+            onCloseComplete={() => setIsShown(false)}
+            hasFooter={false}
+            hasCancel={true}
+          >
+            <AddProductSingle show={() => setIsShown(false)} />
+          </Dialog>
+        </Pane>
+        {/* End EverGreenUI */}
       </div>
     </>
   );

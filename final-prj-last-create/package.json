@@ -12,6 +12,7 @@
     "axios": "^1.2.0",
     "bootstrap": "^5.2.3",
     "downloadjs": "^1.4.7",
+    "evergreen-ui": "^6.13.2",
     "html2canvas": "^1.4.1",
     "mdb-react-ui-kit": "^5.0.0",
     "mdbreact": "^5.2.0",

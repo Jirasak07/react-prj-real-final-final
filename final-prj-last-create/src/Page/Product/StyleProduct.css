@@ -9,38 +9,46 @@
   flex-direction: column;
   /* margin-top: 70px; */
   margin-bottom: 60px;
-  
+  margin-left: 10px;
+  margin-right: 10px;
 }
 .manage {
   height: fit-content;
   max-height: 50px;
-  align-self: end;
+  align-self: start;
   width: 40%;
   border-radius: 3px;
   display: flex;
-  justify-content: center;
+  justify-content: start;
   align-items: center;
   gap: 3%;
   padding: 5px;
 }
-#group {
-  display: block;
-  word-wrap: break-word !important;
+.btn-add {
+  padding: 4px;
+  border-radius: 5px !important;
+  cursor: pointer;
+  font-size: small;
+  font-weight: bolder;
+}
+.btn-add:hover{
+  box-shadow: 2px 2px 15px 3px rgba(0, 0, 0, 0.04);
 }
 .btn-single {
-  width: fit-content;
   max-height: 100%;
-  background-color: #75c3fc !important;
-  color: var(--white-100) !important;
+  background-color: #b8e1ff !important;
+  border-radius: 1px solid #4b89b6;
+  color: #4b89b6 !important;
 }
 .btn-group {
   /* max-width: 100%; */
   max-height: 100%;
-  background-color: var(--orange-25) !important;
-  color: var(--white-100) !important;
+  background-color: #f8926969 !important;
+  color: #e46c3d !important;
 }
 .edit {
-  background-color: #f7e25e;
+  background-color: #f7e35e91;
+  color: #998500;
   width: 20px;
   height: 20px;
   padding: 2px;
@@ -49,10 +57,13 @@
   cursor: pointer;
 }
 .edit:hover {
-  box-shadow: 0px 0px 20px 3px #f7e25e;
+  transition: 0.2s;
+  background-color: #f8d911;
+  color: #fdfdfd;
 }
 .qrcode {
-  background-color: #bdd358;
+  background-color: #a9c23b71;
+  color: #6b8300;
   width: 20px;
   height: 20px;
   padding: 2px;
@@ -61,22 +72,31 @@
   cursor: pointer;
 }
 .qrcode:hover {
-  box-shadow: 0px 0px 20px 3px #bdd358;
+  transition: 0.2s;
+  background-color: #a1bb2d;
+  color: #ffffff;
+  
+  
 }
 .check {
-  background-color: #c792df;
+  background-color: #c792df91;
+  color: #690099;
   width: 20px;
   height: 20px;
   padding: 2px;
   border-radius: 5%;
   box-shadow: 0px 1px 7px 5px rgba(0, 0, 0, 0.05);
+  transition: 0.2s;
   cursor: pointer;
 }
 .check:hover {
-  box-shadow: 0px 0px 20px 3px #c792df;
+  transition: 0.2s;
+  background-color: #ae00ff;
+  color: #ffffff;
 }
 .update {
-  background-color: #ff9346;
+  background-color: #ff934685;
+  color: #a14300;
   width: 20px;
   height: 20px;
   padding: 2px;
@@ -85,7 +105,9 @@
   cursor: pointer;
 }
 .update:hover {
-  box-shadow: 0px 0px 20px 3px #ff9346;
+  transition: 0.2s;
+  background-color: #f06909;
+  color: #ffffff;
 }
 .btn-cancel {
   background-color: #fd7979 !important;
@@ -111,38 +133,6 @@
   flex-direction: column;
   border-radius: 10px;
 }
-.file-inputs {
-  position: relative;
-  margin-bottom: 1.5em;
-  cursor: pointer;
-}
-
-div.imge {
-  z-index: 0;
-  position: absolute;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  color: #ffffff;
-  width: 100%;
-  height: 100%;
-  font-size: 3rem !important;
-  background-color: #fcdc759c;
-}
-div.nimg {
-  font-size: 0.8rem !important;
-  color: #1d1d1d;
-}
-img.imageShow {
-  display: block;
-  top: 0px;
-  bottom: 0px;
-  width: 100%;
-  max-width: 150px;
-  position: relative;
-  border: 1px dashed;
-}
 button
   > div.MuiFormControl-root.MuiFormControl-fullWidth.MuiTextField-root.bg-danger.css-wb57ya-MuiFormControl-root-MuiTextField-root {
   opacity: 0;
@@ -161,4 +151,45 @@ button
     align-self: center;
     width: 100%;
   }
+}
+.input-image{
+  background-color: #0095ff;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  opacity: 0;
+  height: 70px;
+  z-index: 2;
+}
+.image-input{
+position: relative;
+border-radius: 5px;
+display: flex;
+justify-content: center;
+background-color: #0095ff1a;
+height: 78px;
+}
+.logoimg-upload{
+  position: absolute;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  top: 20px;
+  bottom: 0;
+  color: #266da0;
+  font-weight: bold;
+  font-size: 2rem;
+}
+.imgShow{
+  /* display: flex;
+
+  background-color: #69009925;
+  z-index: 5;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center; */
+  display: contents;
+  border-radius: 10px;
 }
