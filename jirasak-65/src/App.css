@@ -1,38 +1,68 @@
-.App {
-  text-align: center;
+.content{
+    margin-top: 30px;
 }
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.conntent{
+    justify-content: center;
+    gap: 10px;
 }
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.all-product{
+    padding: 5px;
+    background-color: #ffffff;
+    height: 70px;
+    color: rgb(61, 148, 21);
+    font-weight: bold;
+    font-size: 80%;
+    border-left: 6px solid #54B435;
+    height: fit-content;
 }
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.total{
+    font-size: 3em;
+    margin-left: 10px;
 }
-
-.App-link {
-  color: #61dafb;
+.out{
+    padding: 5px;
+    background-color: #ffffff;
+    height: 70px;
+    color: rgb(185, 33, 33);
+    font-weight: bold;
+    font-size: 80%;
+    border-left: 6px solid #c91c1c;
+    height: fit-content;
 }
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.fix{
+    padding: 5px;
+    background-color: #ffffff;
+    height: 70px;
+    color: rgb(185, 158, 0);
+    font-weight: bold;
+    font-size: 80%;
+    border-left: 6px solid #ebe700;
+    height: fit-content;
+}
+.donate{
+    padding: 5px;
+    background-color: #ffffff;
+    height: 70px;
+    color: rgb(51, 75, 179);
+    font-weight: bold;
+    font-size: 80%;
+    border-left: 6px solid #408cffce;
+    height: fit-content;
+}
+.cam-check{
+    font-size: 5rem;
+}
+.check{
+    background-color: #b04fff86;
+    color: #ffffff;
+}
+.update{
+    background-color: #fff563;
+    color: #999999;
+}
+.bg-group{
+    background-color: #ff7322de !important;
+}
+.bg-group:hover{
+    background-color: #cc5f20 !important;
 }

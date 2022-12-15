@@ -1,23 +1,19 @@
-import logo from './logo.svg';
+import { useEffect } from 'react';
 import './App.css';
+import Header from './Component/Head/Header';
+import Dashboard from './Dashboard';
+import axios from 'axios';
 
 function App() {
+  useEffect(()=>{
+    document.body.style.backgroundColor= "#D2D7DF";
+  })
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="container-sm ">
+      <Header/>
+      <div className="content">
+        <Dashboard/>
+      </div>
     </div>
   );
 }
