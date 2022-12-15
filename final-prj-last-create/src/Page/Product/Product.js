@@ -1,34 +1,33 @@
 import { MDBDataTable } from "mdbreact";
-import { Pane, Dialog, Button as BtnEv } from "evergreen-ui";
+import { Pane, Dialog } from "evergreen-ui";
 import React, { useEffect, useState } from "react";
 import "./StyleProduct.css";
 import {
-  HiOutlinePencilAlt,
   HiOutlineQrcode,
   HiOutlineRefresh,
   HiOutlineBadgeCheck,
+  HiEye,
+  HiPencil
 } from "react-icons/hi";
 import Tooltip from "@mui/material/Tooltip";
 import axios from "axios";
 import GenQRcode from "../../QRCode/GenQRcode";
 import AddProductSingle from "./AddProductSingle";
+import ProductAddGroup from "./ProductAddGroup";
+import ProductDetail from "./ProductDetail";
 function Product(props) {
   const [basicModal, setBasicModal] = useState(false);
-  const toggleShow = () => setBasicModal(!basicModal);
-  const [basicGroup, setBasicGroup] = useState(false);
-  const toggleShowG = () => setBasicGroup(!basicGroup);
   const [qrmodal, setQrmodal] = useState(false);
+  const [detail, setDetail] =useState(false)
+  const [idDetail, setIdDetail] = useState()
   const [idqr, setIdqr] = useState();
-  const ToggleQRcode = (id) => {
+  const toggleQRcode = (id) => {
     setIdqr(id);
     setQrmodal(!qrmodal);
   };
   const main = localStorage.getItem("main_aid");
   const [re, setRe] = useState();
   const [isShown, setIsShown] = useState(false);
-  const setEverGreenShow = () => {
-    setIsShown(false);
-  };
   useEffect(() => {
     axios
       .post("http://localhost:3333/product", {
@@ -40,6 +39,10 @@ function Product(props) {
       });
   });
   const [table, setTable] = useState([]);
+  const ShowDetail = (id) => {
+    setDetail(true)
+    setIdDetail(id);
+  };
   useEffect(() => {
     let mid = localStorage.getItem("main_aid");
     axios
@@ -100,17 +103,22 @@ function Product(props) {
           rows: [
             ...data.map((i, index) => ({
               no: `${index + 1}`,
-              pid: ` ${i.pid}`,
+              pid: `${i.pid}`,
               pname: `${i.pname} `,
               lastyear: `kdckdjc`,
               status: `${i.pstatus_id}`,
               user: `dcdcdcdc`,
               sname: `${i.sub_aname}`,
-              manage: (
+              manage:(
                 <div className="d-flex gap-2 m-auto ">
+                  <Tooltip onClick={(e)=> ShowDetail(i.pid)} title="รายละเอียดครุภัณฑ์" arrow placement="top">
+                    <div>
+                      <HiEye className="detail" />
+                    </div>
+                  </Tooltip>
                   <Tooltip title="แก้ไขข้อมูลครุภัณฑ์" arrow placement="top">
                     <div>
-                      <HiOutlinePencilAlt className="edit" />
+                      <HiPencil className="edit" />
                     </div>
                   </Tooltip>
 
@@ -118,7 +126,7 @@ function Product(props) {
                     <div>
                       <HiOutlineQrcode
                         className="qrcode"
-                        onClick={(e) => ToggleQRcode(i.pid)}
+                        onClick={(e) => toggleQRcode(i.pid)}
                       />
                     </div>
                   </Tooltip>
@@ -151,7 +159,10 @@ function Product(props) {
           >
             เพิ่มครุภัณฑ์เดี่ยว
           </div>
-          <div className="btn-add btn-group btn-sm " onClick={toggleShowG}>
+          <div
+            className="btn-add btn-group btn-sm "
+            onClick={() => setBasicModal(true)}
+          >
             เพิ่มครุภัณฑ์กลุ่ม
           </div>
         </div>
@@ -176,13 +187,13 @@ function Product(props) {
         <Pane>
           <Dialog
             width={300}
-            shouldCloseOnOverlayClick={false}
+            shouldCloseOnOverlayClick={true}
             isShown={qrmodal}
             title="QRCode ครุภัณฑ์"
-            onCloseComplete={ToggleQRcode}
+            onCloseComplete={toggleQRcode}
             hasFooter={false}
           >
-            <GenQRcode {...props} toggleQr={ToggleQRcode} id={idqr} />{" "}
+            <GenQRcode {...props} toggleQr={toggleQRcode} id={idqr} />{" "}
           </Dialog>
         </Pane>
         {/* Modal EverGreenUI */}
@@ -199,6 +210,40 @@ function Product(props) {
             hasCancel={true}
           >
             <AddProductSingle show={() => setIsShown(false)} />
+          </Dialog>
+        </Pane>
+        {/* End EverGreenUI */}
+        {/* Modal EverGreenUI */}
+        <Pane>
+          <Dialog
+            // preventBodyScrolling
+            width={1000}
+            topOffset={20}
+            shouldCloseOnOverlayClick={false}
+            isShown={basicModal}
+            title="เพิ่มครุภัณฑ์แบบชุด"
+            onCloseComplete={() => setBasicModal(false)}
+            hasFooter={false}
+            hasCancel={true}
+          >
+            <ProductAddGroup show={() => setBasicModal(false)} />
+          </Dialog>
+        </Pane>
+        {/* End EverGreenUI */}
+        {/* Modal EverGreenUI */}
+        <Pane>
+          <Dialog
+            // preventBodyScrolling
+            width={1000}
+            topOffset={20}
+            shouldCloseOnOverlayClick={true}
+            isShown={detail}
+            title="รายละเอียดครุภัณฑ์"
+            onCloseComplete={() => setDetail(false)}
+            hasFooter={false}
+            hasCancel={true}
+          >
+            <ProductDetail id={idDetail} show={()=>setDetail(false)} />
           </Dialog>
         </Pane>
         {/* End EverGreenUI */}

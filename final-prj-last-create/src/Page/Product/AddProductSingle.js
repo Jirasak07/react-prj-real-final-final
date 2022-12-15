@@ -1,4 +1,6 @@
 import React, { useEffect } from "react";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
 import {
   Button,
   TextInputField,
@@ -10,16 +12,11 @@ import { useForm } from "react-hook-form";
 import { BiImages } from "react-icons/bi";
 import { useState } from "react";
 import axios from "axios";
+const MySwal = withReactContent(Swal);
+
+//////////////////////////////////////////
+const mid = localStorage.getItem("main_aid");
 function AddProductSingle(props) {
-  const [input, setInput] = useState([]);
-  const [err, setErr] = useState({
-    pid: true,
-  });
-  const handleChange = (e) => {
-    const name = e.target.name;
-    const value = e.target.value;
-    setInput((values) => ({ ...values, [name]: value }));
-  };
   /////////////////////////////////////
   const [ptype, setPtype] = useState([]);
   const [pstatus, setPstatus] = useState([]);
@@ -32,14 +29,9 @@ function AddProductSingle(props) {
       setPstatus(res.data);
     });
   }, []);
-  const mid = localStorage.getItem("main_aid");
+
   const [subagen, setSubAgen] = useState([]);
   useEffect(() => {
-    // setInput({
-    //   ptype_id: "1",
-    //   pstatus_id: "1",
-    //   sub_aid: "1",
-    // });
     axios
       .post("http://localhost:3333/show-sub-agen-where-main", {
         main_aid: mid,
@@ -51,7 +43,81 @@ function AddProductSingle(props) {
   }, []);
 
   const onSubmit = (e) => {
-    alert(JSON.stringify(e));
+    axios
+      .post("http://localhost:3333/product-added", {
+        pid: e.pid,
+        pname: e.pname,
+        pdetail: e.pdetail,
+        qty: 1,
+        unit: e.unit,
+        price: e.price,
+        finance: e.finance,
+        acquirement: e.get,
+        ptype_id: e.ptype_id,
+        seller: e.seller,
+        sub_aid: e.sub_aid,
+        pstatus_id: e.pstatus_id,
+        buydate: e.buydate,
+        pickdate: e.pickdate,
+        fisicalyear: e.fisicalyear,
+        imgname: e.pid + typename,
+      })
+      .then((res) => {
+        // console.log(res.data.status);
+        if (res.data.status === "error") {
+          MySwal.fire({
+            title: <strong>ไม่สามารถบันทึกได้</strong>,
+            html: `${res.data.message.sqlMessage}`,
+            icon: "error",
+          });
+        } else if (res.data.status !== "error") {
+          let timerInterval;
+          MySwal.fire({
+            title: "บันทึกเสร็จสิ้น",
+            html: "I will close in <b></b> milliseconds.",
+            timer: 900,
+            icon: "success",
+            timerProgressBar: true,
+            didOpen: () => {
+              MySwal.showLoading();
+              const b = MySwal.getHtmlContainer().querySelector("b");
+              timerInterval = setInterval(() => {
+                b.textContent = MySwal.getTimerLeft();
+              }, 1200);
+            },
+            willClose: () => {
+              clearInterval(timerInterval);
+            },
+          })
+            .then((result) => {
+              /* Read more about handling dismissals below */
+
+              if (result.dismiss === Swal.DismissReason.timer) {
+                const url = "http://localhost:3333/upload";
+                const formData = new FormData();
+
+                formData.append("photo", file, e.pid + typename);
+                // console.log(file);
+                axios.post(url, formData).then((response) => {});
+                // console.log("I was closed by the timer");
+              }
+            })
+            .then((value) => {
+              setTimeout(() => {
+                props.show();
+                // window.location.reload();
+                // setInput([]);
+              }, 100);
+            });
+        }
+      });
+    // Swal.fire({
+    //   position: "top",
+    //   icon: "success",
+    //   title: "บันทึกเสร็จสิ้น",
+    //   showConfirmButton: false,
+    //   timer: 1000,
+    // });
   };
   const [images, setImages] = useState([]);
   const [imageURLs, setImageURLs] = useState([]);
@@ -75,7 +141,6 @@ function AddProductSingle(props) {
     register,
     handleSubmit,
     formState: { errors },
-    reset,
   } = useForm();
   ///////////////////////////////////////
 
@@ -307,32 +372,34 @@ function AddProductSingle(props) {
           />
         </div>
         <div className="col-12 col-sm-3">
-          <TextInputField label="รายละเอียดผู้ขาย"
-          {...register("seller", {
-            required: {
-              value: true,
-              message: "กรุณากรอกข้อมูล หรือ -",
-            },
-          })}
-          isInvalid={!!errors.seller}
-          validationMessage={errors?.seller ? errors.seller.message : null} />
+          <TextInputField
+            label="รายละเอียดผู้ขาย"
+            {...register("seller", {
+              required: {
+                value: true,
+                message: "กรุณากรอกข้อมูล หรือ -",
+              },
+            })}
+            isInvalid={!!errors.seller}
+            validationMessage={errors?.seller ? errors.seller.message : null}
+          />
         </div>
         <div className="col-12 col-sm-3">
-          <TextInputField label="ที่มาครุภัณฑ์"
-           {...register("get", {
-            required: {
-              value: true,
-              message: "กรุณากรอกข้อมูล หรือ -",
-            },
-          })}
-          isInvalid={!!errors.get}
-          validationMessage={errors?.get ? errors.get.message : null}
+          <TextInputField
+            label="ที่มาครุภัณฑ์"
+            {...register("get", {
+              required: {
+                value: true,
+                message: "กรุณากรอกข้อมูล หรือ -",
+              },
+            })}
+            isInvalid={!!errors.get}
+            validationMessage={errors?.get ? errors.get.message : null}
           />
         </div>
         <div className="col-12 col-sm-4">
           <SelectField
             label="หน่วยงานที่ติดตั้ง"
-            required
             {...register("sub_aid", {
               required: {
                 value: true,

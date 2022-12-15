@@ -1,71 +1,75 @@
-import { MDBModalFooter } from "mdb-react-ui-kit";
 import React, { useState, useEffect } from "react";
+import { useForm } from "react-hook-form";
+import { BiImages } from "react-icons/bi";
+import axios from "axios";
 import "./StyleProduct.css";
-import TextField from "@mui/material/TextField";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
+import {
+  Button,
+  TextInputField,
+  SelectField,
+  TextareaField,
+  Label,
+} from "evergreen-ui";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
-import { FaCloudUploadAlt } from "react-icons/fa";
-import axios from "axios";
-
+const mid = localStorage.getItem("main_aid");
 const MySwal = withReactContent(Swal);
 function ProductAddGroup(props) {
-  const [input, setInput] = useState([]);
-  const onInputChange = (e) => {
-    const name = e.target.name;
-    const value = e.target.value;
-    setInput((values) => ({ ...values, [name]: value }));
-  };
+  /////////////////////////////
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+  ////////////////////////////
+  // const [input, setInput] = useState([]);
+  // const onInputChange = (e) => {
+  //   const name = e.target.name;
+  //   const value = e.target.value;
+  //   setInput((values) => ({ ...values, [name]: value }));
+  // };
   const [ptype, setPtype] = useState([]);
   const [pstatus, setPstatus] = useState([]);
   useEffect(() => {
     axios.get("http://localhost:3333/show-product-type").then((res) => {
       setPtype(res.data);
-      // console.log(res.data);
     });
 
     axios.get("http://localhost:3333/show-pstatus").then((res) => {
       setPstatus(res.data);
     });
   }, []);
-  const Submit = () => {
-    // e.preventDefault();
-    const count = input.qty;
-    // for (let i = 1; i <= count; i++) {
+  const onSubmit = (e) => {
     axios
       .post("http://localhost:3333/product-added-group", {
-        pid: input.pid,
-        pname: input.pname,
-        pdetail: input.pdetail,
-        qty: input.qty,
-        unit: input.unit,
-        price: input.price,
-        finance: input.finance,
-        acquirement: input.get,
-        ptype_id: input.ptype_id,
-        seller: input.seller,
-        sub_aid: input.sub_aid,
-        pstatus_id: input.pstatus_id,
-        buydate: input.buydate,
-        pickdate: input.pickdate,
-        fisicalyear: input.fisicalyear,
-        image: input.pid + typename,
+        pid: e.pid,
+        pname: e.pname,
+        pdetail: e.pdetail,
+        qty: e.qty,
+        unit: e.unit,
+        price: e.price,
+        finance: e.finance,
+        acquirement: e.get,
+        ptype_id: e.ptype_id,
+        seller: e.seller,
+        sub_aid: e.sub_aid,
+        pstatus_id: e.pstatus_id,
+        buydate: e.buydate,
+        pickdate: e.pickdate,
+        fisicalyear: e.fisicalyear,
+        image: e.pid + typename,
       })
       .then((res) => {
-        // console.log(res.data);
-        if (res.data == "error") {
+        if (res.data === "error") {
           MySwal.fire({
             title: <strong>ไม่สามารถบันทึกได้</strong>,
             html: `${res.data}`,
             icon: "error",
           });
-        } else if (res.data == "success") {
+        } else if (res.data === "success") {
           let timerInterval;
           MySwal.fire({
-            title: "ปิดเมื่อบันทึกเสร็จสิ้น",
+            title: "บันทึกเสร็จสิ้น",
             html: "I will close in <b></b> milliseconds.",
             timer: 900,
             icon: "success",
@@ -82,23 +86,16 @@ function ProductAddGroup(props) {
             },
           })
             .then((result) => {
-              /* Read more about handling dismissals below */
-
               if (result.dismiss === Swal.DismissReason.timer) {
                 const url = "http://localhost:3333/upload";
                 const formData = new FormData();
-
-                formData.append("photo", file, input.pid + typename);
-                // console.log(file);
+                formData.append("photo", file, e.pid + typename);
                 axios.post(url, formData).then((response) => {});
-                // console.log("I was closed by the timer");
               }
             })
             .then((value) => {
               setTimeout(() => {
-                props.toggleShow();
-                // window.location.reload();
-                setInput([]);
+                props.show();
               }, 100);
             });
         }
@@ -121,7 +118,6 @@ function ProductAddGroup(props) {
     // console.log("." + e.target.files[0].type.split("image/")[1]);
     setTypeName("." + e.target.files[0].type.split("image/")[1]);
   };
-  const mid = localStorage.getItem("main_aid");
   const [subagen, setSubAgen] = useState([]);
   useEffect(() => {
     axios
@@ -130,258 +126,301 @@ function ProductAddGroup(props) {
       })
       .then((res) => {
         setSubAgen(res.data);
-        // console.log(res.data);
       });
   }, []);
   return (
-    <div>
-      <div className="container">
-        <form className="row justify-content-center">
-          <div className="col-12 col-sm-6 mt-3 ">
-            <TextField
-              name="pid"
-              value={input.pid || ""}
-              onChange={onInputChange}
-              fullWidth
-              id="outlined-basic"
-              label="หมายเลขครุภัณฑ์"
-              variant="outlined"
-              type="text"
-            />
-          </div>
-          <div className="col-12 col-sm-6 mt-3">
-            <TextField
-              name="pname"
-              value={input.pname || ""}
-              onChange={onInputChange}
-              fullWidth
-              id="outlined-basic"
-              label="รายการ"
-              variant="outlined"
-              type="text"
-            />
-          </div>
-          <div className="col-12 col-sm-6 mt-3">
-            <FormControl fullWidth>
-              <InputLabel id="demo-simple-select-label">
-                ประเภทครุภัณฑ์
-              </InputLabel>
-              <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                name="ptype_id"
-                value={input.ptype_id || ""}
-                onChange={onInputChange}
-                label="ประเภทครุภัณฑ์"
-                // onChange={handleChange}
-              >
-                {ptype.map((d, i) => (
-                  <MenuItem key={i} value={d.ptype_id}>
-                    {d.ptype_name}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-          </div>
-          <div className="col-12 col-sm-6 mt-3">
-            <TextField
-              name="pdetail"
-              value={input.pdetail || ""}
-              onChange={onInputChange}
-              fullWidth
-              id="outlined-basic"
-              label="คุณลักษณะ"
-              multiline={true}
-              variant="outlined"
-              type="text"
-            />
-          </div>
-          <div className="col-12 col-sm-4 mt-3">
-            <div className="file-card">
-              <div className="file-inputs">
-                <div className="imge">
-                  <FaCloudUploadAlt />
-                  <div className="nimg">อัพโหลดรูปภาพ</div>
-                </div>
-                <button>
-                  <TextField
-                    fullWidth
-                    id="outlined-basic"
-                    type="file"
-                    name="photo"
-                    // label="รูปภาพ"
-                    onChange={onImageChange}
-                    className="bg-danger"
-                  />
-                </button>
-              </div>
+    <div className="container">
+      <form
+        action=""
+        onSubmit={handleSubmit(onSubmit)}
+        className=" row justify-content-center"
+      >
+        <div className="col-sm-5 col-12">
+          <TextInputField
+            id="ids-are-optional"
+            label="หมายเลขครุภัณฑ์"
+            {...register("pid", {
+              required: {
+                value: true,
+                message: "กรุณากรอกหมายเลขครุภัณฑ์",
+              },
+              pattern: {
+                value: /\w{6}-\d{2}\.\d{2}-\d{4}/,
+                message: "กรุณากรอกหมายเลขครุภัณฑ์ให้ถูกต้อง",
+              },
+              maxLength: {
+                value: 17,
+                message:
+                  "กรุณากรอกหมายเลขครุภัณฑ์ให้ถูกต้อง (ไม่เกิน 17 ตัวอักษร)",
+              },
+            })}
+            isInvalid={!!errors.pid}
+            validationMessage={errors?.pid ? errors.pid.message : null}
+          />
+        </div>
+
+        <div className="col-sm-5 col-12">
+          <TextInputField
+            id="ids-are-optional"
+            label="ชื่อครุภัณฑ์"
+            {...register("pname", {
+              required: {
+                value: true,
+                message: "กรุณากรอกชื่อครุภัณฑ์",
+              },
+            })}
+            isInvalid={!!errors.pname}
+            validationMessage={errors?.pname ? errors.pname.message : null}
+          />
+        </div>
+        <div className="col-12 col-sm-5">
+          <SelectField
+            label="ประเภทครุภัณฑ์"
+            {...register("ptype_id", {
+              required: {
+                value: true,
+                message: "จะใช้ประเภทแรกในการบันทึก",
+              },
+            })}
+            isInvalid={!!errors.ptype_id}
+            validationMessage={
+              errors?.ptype_id ? errors.ptype_id.message : null
+            }
+          >
+            {ptype.map((item, id) => (
+              <option value={item.ptype_id}>{item.ptype_name}</option>
+            ))}
+          </SelectField>
+        </div>
+        <div className="col-12 col-sm-5">
+          <SelectField
+            label="สถานะครุภัณฑ์"
+            {...register("pstatus_id", {
+              required: {
+                value: true,
+                message: "จะใช้สถานะแรกในการบันทึก",
+              },
+            })}
+            isInvalid={!!errors.pstatus_id}
+            validationMessage={
+              errors?.pstatus_id ? errors.pstatus_id.message : null
+            }
+          >
+            {pstatus.map((item, id) => (
+              <option value={item.pstatus_id}>{item.pstatus_name}</option>
+            ))}
+          </SelectField>
+        </div>
+        <div className="col-12 col-sm-5">
+          <TextareaField
+            label="คุณลักษณะครุภัณฑ์"
+            {...register("pdetail", {
+              required: {
+                value: true,
+                message: "กรุณากรอกข้อมูล หรือ -",
+              },
+            })}
+            isInvalid={!!errors.pdetail}
+            validationMessage={errors?.pdetail ? errors.pdetail.message : null}
+          />
+        </div>
+        <div className="col-12 col-sm-5">
+          <Label
+            className="mb-2"
+            htmlFor="textarea-2"
+            marginBottom={4}
+            display="block"
+          >
+            รูปภาพครุภัณฑ์
+          </Label>
+          <div className="image-input">
+            <div className="logoimg-upload">
+              <BiImages />
+            </div>
+            <div className="imgShow">
               {imageURLs.map((imageSrc, idx) => (
-                <img key={idx} className="imageShow" src={imageSrc} alt="" />
+                <img key={idx} src={imageSrc} alt="" width={110} />
               ))}
             </div>
-          </div>
-          <div className="col-12 col-sm-4 mt-3">
-            <FormControl fullWidth>
-              <InputLabel id="demo-simple-select-label">
-                สถานะครุภัณฑ์
-              </InputLabel>
-              <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                name="pstatus_id"
-                value={input.pstatus_id || ""}
-                onChange={onInputChange}
-                label="สถานะครุภัณฑ์"
-                // onChange={handleChange}
-              >
-                {pstatus.map((status, id) => (
-                  <MenuItem key={id} value={status.pstatus_id}>
-                    {status.pstatus_name}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-          </div>
-          <div className="col-12 col-sm-4 mt-3">
-            <TextField
-              name="fisicalyear"
-              value={input.fisicalyear || ""}
-              onChange={onInputChange}
-              fullWidth
-              id="outlined-basic"
-              label="ปีงบประมาณ"
-              variant="outlined"
-              type="number"
+            <TextInputField
+              type="file"
+              className="input-image"
+              onChange={onImageChange}
+              name="photo"
             />
           </div>
-          <div className="col-12 col-sm-4 mt-3">
-            <TextField
-              fullWidth
-              type="date"
-              id="outlined-basic"
-              label="วันที่ซื้อ"
-              variant="outlined"
-              name="buydate"
-              defaultValue="Hello World"
-              value={input.buydate || ""}
-              onChange={onInputChange}
-              focused
-            />
-          </div>
-          <div className="col-12 col-sm-4 mt-3">
-            <TextField
-              placeholder=" "
-              fullWidth
-              id="outlined-basic"
-              label="วันที่รับ"
-              variant="outlined"
-              type="date"
-              name="pickdate"
-              value={input.pickdate || ""}
-              onChange={onInputChange}
-              focused
-            />
-          </div>
-          <div className="col-12 col-sm-2 mt-3">
-            <TextField
-              fullWidth
-              id="outlined-basic"
-              label="จำนวน"
-              variant="outlined"
-              name="qty"
-              value={input.qty || ""}
-              onChange={onInputChange}
-            />
-          </div>
-          <div className="col-12 col-sm-2 mt-3">
-            <TextField
-              fullWidth
-              id="outlined-basic"
-              label="หน่วยนับ"
-              variant="outlined"
-              name="unit"
-              value={input.unit || ""}
-              onChange={onInputChange}
-            />
-          </div>
-          <div className="col-12 col-sm-4 mt-3">
-            <TextField
-              fullWidth
-              id="outlined-basic"
-              label="ราคา/หน่วย"
-              variant="outlined"
-              name="price"
-              type="number"
-              value={input.price || ""}
-              onChange={onInputChange}
-            />
-          </div>
-          <div className="col-12 col-sm-4 mt-3">
-            <TextField
-              fullWidth
-              id="outlined-basic"
-              label="ที่มาครุภัณฑ์"
-              variant="outlined"
-              name="get"
-              value={input.get || ""}
-              onChange={onInputChange}
-            />
-          </div>
-          <div className="col-12 col-sm-4 mt-3">
-            <TextField
-              fullWidth
-              id="outlined-basic"
-              label="ประเภทเงิน"
-              variant="outlined"
-              name="finance"
-              value={input.finance || ""}
-              onChange={onInputChange}
-            />
-          </div>
-          <div className="col-12 col-sm-6 mt-3">
-            <TextField
-              fullWidth
-              id="outlined-basic"
-              label="รายละเอียดผู้ขาย"
-              multiline
-              variant="outlined"
-              name="seller"
-              value={input.seller || ""}
-              onChange={onInputChange}
-            />
-          </div>
-          <div className="col-12 col-sm-6 mt-3">
-            <FormControl fullWidth>
-              <InputLabel id="demo-simple-select-label">
-                หน่วยงานที่ติดตั้ง
-              </InputLabel>
-              <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                name="sub_aid"
-                value={input.sub_aid || ""}
-                onChange={onInputChange}
-                label="หน่วยงานที่ติดตั้ง"
-                // onChange={handleChange}
-              >
-                {subagen.map((s, id) => (
-                  <MenuItem key={id} value={s.sub_aid}>
-                    {s.sub_aname}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-          </div>
-        </form>
-      </div>
-      <MDBModalFooter className="mt-3">
-        <div className="btn btn-info btn-sm" onClick={Submit}>
-          บันทึก
         </div>
-        <div className="btn btn-cancel btn-sm" onClick={props.toggleShow}>
-          ยกเลิก
+        <div className="col-12 col-sm-4">
+          <TextInputField
+            type="date"
+            label="วันเดือนปีที่ซื้อ"
+            {...register("buydate", {
+              required: {
+                value: true,
+                message: "กรุณากรอกข้อมูล",
+              },
+            })}
+            isInvalid={!!errors.buydate}
+            validationMessage={errors?.buydate ? errors.buydate.message : null}
+          />
         </div>
-      </MDBModalFooter>
+        <div className="col-12 col-sm-4">
+          <TextInputField
+            type="date"
+            label="วันเดือนปีที่รับ"
+            {...register("pickdate", {
+              required: {
+                value: true,
+                message: "กรุณากรอกข้อมูล",
+              },
+            })}
+            isInvalid={!!errors.pickdate}
+            validationMessage={
+              errors?.pickdate ? errors.pickdate.message : null
+            }
+          />
+        </div>
+        <div className="col-12 col-sm-2">
+          <TextInputField
+            type="number"
+            label="ปีงบประมาณ"
+            {...register("fisicalyear", {
+              required: {
+                value: true,
+                message: "กรุณากรอกข้อมูล",
+              },
+              minLength: {
+                value: 4,
+                message: "กรอกได้ 4 ตัวเลข",
+              },
+              maxLength: {
+                value: 4,
+                message: "กรอกได้ 4 ตัวเลข",
+              },
+            })}
+            isInvalid={!!errors.fisicalyear}
+            validationMessage={
+              errors?.fisicalyear ? errors.fisicalyear.message : null
+            }
+          />
+        </div>
+        <div className="col-6 col-sm-3">
+          <TextInputField
+            label="ราคา/หน่วย"
+            type="number"
+            {...register("price", {
+              required: {
+                value: true,
+                message: "กรุณากรอกข้อมูล",
+              },
+              pattern: {
+                value: /^[1-9][0-9]*$/,
+                message: "กรุณากรอกให้ถูกต้อง",
+              },
+            })}
+            isInvalid={!!errors.price}
+            validationMessage={errors?.price ? errors.price.message : null}
+          />
+        </div>
+        <div className="col-6 col-sm-3">
+          <TextInputField
+            label="ประเภทเงิน"
+            {...register("finance", {
+              required: {
+                value: true,
+                message: "กรุณากรอกข้อมูล หรือ -",
+              },
+            })}
+            isInvalid={!!errors.finance}
+            validationMessage={errors?.finance ? errors.finance.message : null}
+          />
+        </div>
+        <div className="col-6 col-sm-2">
+          <TextInputField
+            label="จำนวน"
+            type="number"
+            name="qty"
+            {...register("qty", {
+              required: {
+                value: true,
+                message: "กรุณากรอกข้อมูล",
+              },
+              pattern: {
+                value: /^[1-9][0-9]*$/,
+                message: "กรุณากรอกให้ถูกต้อง",
+              },
+            })}
+            isInvalid={!!errors.qty}
+            validationMessage={errors?.qty ? errors.qty.message : null}
+          />
+        </div>
+        <div className="col-6 col-sm-2">
+          <TextInputField
+            label="หน่วยนับ"
+            name="unit"
+            {...register("unit", {
+              required: {
+                value: true,
+                message: "กรุณากรอกข้อมูล",
+              },
+            })}
+            isInvalid={!!errors.unit}
+            validationMessage={errors?.unit ? errors.unit.message : null}
+          />
+        </div>
+        <div className="col-12 col-sm-3">
+          <TextInputField
+            label="รายละเอียดผู้ขาย"
+            {...register("seller", {
+              required: {
+                value: true,
+                message: "กรุณากรอกข้อมูล หรือ -",
+              },
+            })}
+            isInvalid={!!errors.seller}
+            validationMessage={errors?.seller ? errors.seller.message : null}
+          />
+        </div>
+        <div className="col-12 col-sm-3">
+          <TextInputField
+            label="ที่มาครุภัณฑ์"
+            {...register("get", {
+              required: {
+                value: true,
+                message: "กรุณากรอกข้อมูล หรือ -",
+              },
+            })}
+            isInvalid={!!errors.get}
+            validationMessage={errors?.get ? errors.get.message : null}
+          />
+        </div>
+        <div className="col-12 col-sm-4">
+          <SelectField
+            label="หน่วยงานที่ติดตั้ง"
+            {...register("sub_aid", {
+              required: {
+                value: true,
+                message: "จะใช้หน่วยงานแรกในการบันทึก",
+              },
+            })}
+            isInvalid={!!errors.sub_aid}
+            validationMessage={errors?.sub_aid ? errors.sub_aid.message : null}
+          >
+            {subagen.map((item, id) => (
+              <option value={item.sub_aid}>{item.sub_aname}</option>
+            ))}
+          </SelectField>
+        </div>
+
+        <footer className="d-flex justify-content-end gap-2 mb-3">
+          <Button appearance="primary" intent="success" type="submit">
+            บันทึก
+          </Button>
+          <Button onClick={props.show} intent="danger" type="button">
+            ยกเลิก
+          </Button>
+        </footer>
+      </form>
     </div>
   );
 }

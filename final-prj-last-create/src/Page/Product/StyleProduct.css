@@ -19,7 +19,7 @@
   width: 40%;
   border-radius: 3px;
   display: flex;
-  justify-content: start;
+  justify-content: flex-start;
   align-items: center;
   gap: 3%;
   padding: 5px;
@@ -31,7 +31,7 @@
   font-size: small;
   font-weight: bolder;
 }
-.btn-add:hover{
+.btn-add:hover {
   box-shadow: 2px 2px 15px 3px rgba(0, 0, 0, 0.04);
 }
 .btn-single {
@@ -61,6 +61,21 @@
   background-color: #f8d911;
   color: #fdfdfd;
 }
+.detail {
+  background-color: #eb455e7a;
+  color: #eb455f;
+  width: 20px;
+  height: 20px;
+  padding: 2px;
+  border-radius: 5%;
+  box-shadow: 0px 1px 7px 5px rgba(0, 0, 0, 0.05);
+  cursor: pointer;
+}
+.detail:hover {
+  transition: 0.2s;
+  background-color: #eb455f;
+  color: #fdfdfd;
+}
 .qrcode {
   background-color: #a9c23b71;
   color: #6b8300;
@@ -75,8 +90,6 @@
   transition: 0.2s;
   background-color: #a1bb2d;
   color: #ffffff;
-  
-  
 }
 .check {
   background-color: #c792df91;
@@ -152,7 +165,7 @@ button
     width: 100%;
   }
 }
-.input-image{
+.input-image {
   background-color: #0095ff;
   position: absolute;
   top: 0;
@@ -162,15 +175,15 @@ button
   height: 70px;
   z-index: 2;
 }
-.image-input{
-position: relative;
-border-radius: 5px;
-display: flex;
-justify-content: center;
-background-color: #0095ff1a;
-height: 78px;
+.image-input {
+  position: relative;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  background-color: #0095ff1a;
+  height: 78px;
 }
-.logoimg-upload{
+.logoimg-upload {
   position: absolute;
   width: 100%;
   display: flex;
@@ -181,7 +194,7 @@ height: 78px;
   font-weight: bold;
   font-size: 2rem;
 }
-.imgShow{
+.imgShow {
   /* display: flex;
 
   background-color: #69009925;
@@ -192,4 +205,20 @@ height: 78px;
   align-items: center; */
   display: contents;
   border-radius: 10px;
+}
+.showdetail {
+  background-color: #e45826;
+  display: flex;
+  flex-direction: row;
+}
+.detaill {
+  background-color: #ffffff3b;
+}
+.img-detail {
+  box-shadow: 2px 2px 8px 5px rgba(0, 0, 0, 0.1);
+  max-height: 250px;
+  min-width: 150px;
+}
+.showwdet{
+  font-size: 14px !important;
 }
