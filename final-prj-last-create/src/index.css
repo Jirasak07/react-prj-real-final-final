@@ -19,7 +19,7 @@ a{
   --white-100: #ffffff;
   --background: #032b43;
   --background-2: #434242;
-  --backgroung-img: #0b1c2e25 ;
+  --backgroung-img: #0b1c2e10 ;
 }
 /* ===== Scrollbar CSS ===== */
 /* Firefox */
@@ -28,11 +28,11 @@ a{
 }
 
 /* Chrome, Edge, and Safari */
-*::-webkit-scrollbar {
+/* *::-webkit-scrollbar {
   display: none;
   scrollbar-width: 10px;
 }
 .kill{
   background-position: center;
   background-repeat: no-repeat;
-}
+} */

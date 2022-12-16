@@ -5,6 +5,8 @@ import * as BiIcon from "react-icons/bi";
 import { FaUserCircle } from "react-icons/fa";
 import "./Header.css";
 import axios from "axios";
+import Logo from "../Image/LOGO RGB PNG-สำหรับงานนำเสนอแบบดิจิติล.png";
+import { Add } from 'evergreen-ui'
 
 function Header() {
   const [head, setHead] = useState(false);
@@ -65,13 +67,20 @@ function Header() {
         }
       >
         <div
-          className=" col-1 fw-bolder fs-5 align-items-center justify-content-center d-flex ps-3"
+          className=" col fw-bolder fs-5 align-items-center justify-content-center d-flex ps-3"
           onClick={Side}
         >
-          <AiOutlineMenuUnfold />
+          <AiOutlineMenuUnfold  />
         </div>
-        <div className="col d-flex text-center justify-content-center align-items-center flex-wrap fw-bolder headname">
-          ระบบตรวจสอบครุภัณฑ์ สำนักส่งเสริมวิชาการและงานทะเบียน
+        <div className="col-7 h-100 d-flex justify-content-start align-items-center flex-wrap fw-bolder headname">
+          <div className="d-flex w-100 flex-row gap-3 gap-sm-2 h-100">
+            <div className="col-1 d-flex justify-content-center align-items-center  ">
+              <img src={Logo} className="h-75" />
+            </div>{" "}
+            <div className="col-10  d-flex justify-content-start align-items-center ">
+              ระบบตรวจสอบครุภัณฑ์ สำนักส่งเสริมวิชาการและงานทะเบียน
+            </div>
+          </div>
         </div>
         <div className="col-3 col-md-4 col-lg-3 col-xl-2 drop ">
           <div className="d-flex align-items-center ">

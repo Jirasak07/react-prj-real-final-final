@@ -1,8 +1,6 @@
-import React, { useState, useEffect } from "react";
-import { useForm } from "react-hook-form";
-import { BiImages } from "react-icons/bi";
-import axios from "axios";
-import "./StyleProduct.css";
+import React, { useEffect } from "react";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
 import {
   Button,
   TextInputField,
@@ -10,42 +8,47 @@ import {
   TextareaField,
   Label,
 } from "evergreen-ui";
-import Swal from "sweetalert2";
-import withReactContent from "sweetalert2-react-content";
-const mid = localStorage.getItem("main_aid");
+import { useForm } from "react-hook-form";
+import { BiImages } from "react-icons/bi";
+import { useState } from "react";
+import axios from "axios";
 const MySwal = withReactContent(Swal);
-function ProductAddGroup(props) {
-  /////////////////////////////
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
-  ////////////////////////////
-  // const [input, setInput] = useState([]);
-  // const onInputChange = (e) => {
-  //   const name = e.target.name;
-  //   const value = e.target.value;
-  //   setInput((values) => ({ ...values, [name]: value }));
-  // };
+
+//////////////////////////////////////////
+const mid = localStorage.getItem("main_aid");
+function Edit_Product(props) {
+  /////////////////////////////////////
   const [ptype, setPtype] = useState([]);
   const [pstatus, setPstatus] = useState([]);
   useEffect(() => {
     axios.get("http://localhost:3333/show-product-type").then((res) => {
       setPtype(res.data);
+      // console.log(res.data);
     });
-
     axios.get("http://localhost:3333/show-pstatus").then((res) => {
       setPstatus(res.data);
     });
   }, []);
+
+  const [subagen, setSubAgen] = useState([]);
+  useEffect(() => {
+    axios
+      .post("http://localhost:3333/show-sub-agen-where-main", {
+        main_aid: mid,
+      })
+      .then((res) => {
+        setSubAgen(res.data);
+        // console.log(res.data);
+      });
+  }, []);
+
   const onSubmit = (e) => {
     axios
-      .post("http://localhost:3333/product-added-group", {
+      .post("http://localhost:3333/product-added", {
         pid: e.pid,
         pname: e.pname,
         pdetail: e.pdetail,
-        qty: e.qty,
+        qty: 1,
         unit: e.unit,
         price: e.price,
         finance: e.finance,
@@ -57,16 +60,17 @@ function ProductAddGroup(props) {
         buydate: e.buydate,
         pickdate: e.pickdate,
         fisicalyear: e.fisicalyear,
-        image: e.pid + typename,
+        imgname: e.pid + typename,
       })
       .then((res) => {
-        if (res.data === "error") {
+        // console.log(res.data.status);
+        if (res.data.status === "error") {
           MySwal.fire({
             title: <strong>ไม่สามารถบันทึกได้</strong>,
-            html: `${res.data}`,
+            html: `${res.data.message.sqlMessage}`,
             icon: "error",
           });
-        } else if (res.data === "success") {
+        } else if (res.data.status !== "error") {
           let timerInterval;
           MySwal.fire({
             title: "บันทึกเสร็จสิ้น",
@@ -86,21 +90,34 @@ function ProductAddGroup(props) {
             },
           })
             .then((result) => {
+              /* Read more about handling dismissals below */
+
               if (result.dismiss === Swal.DismissReason.timer) {
                 const url = "http://localhost:3333/upload";
                 const formData = new FormData();
+
                 formData.append("photo", file, e.pid + typename);
+                // console.log(file);
                 axios.post(url, formData).then((response) => {});
+                // console.log("I was closed by the timer");
               }
             })
             .then((value) => {
               setTimeout(() => {
                 props.show();
+                // window.location.reload();
+                // setInput([]);
               }, 100);
             });
         }
       });
-    // }
+    // Swal.fire({
+    //   position: "top",
+    //   icon: "success",
+    //   title: "บันทึกเสร็จสิ้น",
+    //   showConfirmButton: false,
+    //   timer: 1000,
+    // });
   };
   const [images, setImages] = useState([]);
   const [imageURLs, setImageURLs] = useState([]);
@@ -115,52 +132,40 @@ function ProductAddGroup(props) {
   const onImageChange = (e) => {
     setImages([...e.target.files]);
     setFile(e.target.files[0]);
+    console.log(e.target.files[0]);
     // console.log("." + e.target.files[0].type.split("image/")[1]);
     setTypeName("." + e.target.files[0].type.split("image/")[1]);
   };
-  const [subagen, setSubAgen] = useState([]);
+  const [image, setImage] = useState();
   useEffect(() => {
     axios
-      .post("http://localhost:3333/show-sub-agen-where-main", {
-        main_aid: mid,
+      .post("http://localhost:3333/find-img", {
+        pid: props.id,
       })
       .then((res) => {
-        setSubAgen(res.data);
+        setImage("http://localhost:3333/img/" + res.data[0].image);
       });
-  }, []);
+  }, [props.id]);
+  ///////////////////////////////////////
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+  ///////////////////////////////////////
+
   return (
     <div className="container">
+      {props.id}
       <form
         action=""
         onSubmit={handleSubmit(onSubmit)}
         className=" row justify-content-center"
       >
+        
         <div className="col-sm-5 col-12">
           <TextInputField
-            id="ids-are-optional"
-            label="หมายเลขครุภัณฑ์"
-            {...register("pid", {
-              required: {
-                value: true,
-                message: "กรุณากรอกหมายเลขครุภัณฑ์",
-              },
-              pattern: {
-                value: /\w{6}-\d{2}\.\d{2}-\d{4}/,
-                message: "กรุณากรอกหมายเลขครุภัณฑ์ให้ถูกต้อง",
-              },
-              maxLength: {
-                value: 17,
-                message:
-                  "กรุณากรอกหมายเลขครุภัณฑ์ให้ถูกต้อง (ไม่เกิน 17 ตัวอักษร)",
-              },
-            })}
-            isInvalid={!!errors.pid}
-            validationMessage={errors?.pid ? errors.pid.message : null}
-          />
-        </div>
-
-        <div className="col-sm-5 col-12">
-          <TextInputField
+            //   pattern="\w{6}-\d{2}\.\d{2}-\d{4}"
             id="ids-are-optional"
             label="ชื่อครุภัณฑ์"
             {...register("pname", {
@@ -238,9 +243,22 @@ function ProductAddGroup(props) {
               <BiImages />
             </div>
             <div className="imgShow">
-              {imageURLs.map((imageSrc, idx) => (
-                <img key={idx} src={imageSrc} alt="" width={110} />
-              ))}
+              {imageURLs.length ? (
+                <>
+                  {" "}
+                  {imageURLs.map((imageSrc, idx) => (
+                    <img key={idx} src={imageSrc} alt="" width={110} />
+                  ))}
+                </>
+              ) : (
+                <>
+                  <img
+                    src={image}
+                    //   className="w-100 h-100 rounded img-detail"
+                    width={110}
+                  />
+                </>
+              )}
             </div>
             <TextInputField
               type="file"
@@ -254,6 +272,7 @@ function ProductAddGroup(props) {
           <TextInputField
             type="date"
             label="วันเดือนปีที่ซื้อ"
+            // description="ตัวอย่าง 07/12/2565"
             {...register("buydate", {
               required: {
                 value: true,
@@ -268,6 +287,7 @@ function ProductAddGroup(props) {
           <TextInputField
             type="date"
             label="วันเดือนปีที่รับ"
+            // description="ตัวอย่าง 07/12/2565"
             {...register("pickdate", {
               required: {
                 value: true,
@@ -336,23 +356,7 @@ function ProductAddGroup(props) {
           />
         </div>
         <div className="col-6 col-sm-2">
-          <TextInputField
-            label="จำนวน"
-            type="number"
-            name="qty"
-            {...register("qty", {
-              required: {
-                value: true,
-                message: "กรุณากรอกข้อมูล",
-              },
-              pattern: {
-                value: /^[1-9][0-9]*$/,
-                message: "กรุณากรอกให้ถูกต้อง",
-              },
-            })}
-            isInvalid={!!errors.qty}
-            validationMessage={errors?.qty ? errors.qty.message : null}
-          />
+          <TextInputField label="จำนวน" value="1" type="number" name="qty" />
         </div>
         <div className="col-6 col-sm-2">
           <TextInputField
@@ -413,7 +417,12 @@ function ProductAddGroup(props) {
         </div>
 
         <footer className="d-flex justify-content-end gap-2 mb-3">
-          <Button appearance="minimal" className="bg-info-blue400 text-white" type="submit">
+          <Button
+            appearance="primary"
+            intent="success"
+            // onClick={onSubmit}
+            type="submit"
+          >
             บันทึก
           </Button>
           <Button onClick={props.show} intent="danger" type="button">
@@ -425,4 +434,4 @@ function ProductAddGroup(props) {
   );
 }
 
-export default ProductAddGroup;
+export default Edit_Product;
