@@ -287,7 +287,7 @@ function Product(props) {
         </div>
 
         {/* /////////////////////////////////////////////////////////////////////////// */}
-        <div className="page-product rounded p-1">
+        <div className="page-product rounded p-1 border-info border-2 border-top">
           <MDBDataTable
             theadTextWhite
             theadColor="blue-grey darken-4"

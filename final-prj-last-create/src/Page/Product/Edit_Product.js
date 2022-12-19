@@ -1,6 +1,10 @@
 import React, { useEffect } from "react";
+import { format as formatDate } from "date-fns";
+
+import { th } from "date-fns/locale";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
+
 import {
   Button,
   TextInputField,
@@ -17,6 +21,9 @@ const MySwal = withReactContent(Swal);
 //////////////////////////////////////////
 const mid = localStorage.getItem("main_aid");
 function Edit_Product(props) {
+  const thisDay = new Date();
+  const day = formatDate(thisDay, "dd/MM/yyyy", { locale: th });
+
   /////////////////////////////////////
   const [ptype, setPtype] = useState([]);
   const [pstatus, setPstatus] = useState([]);
@@ -162,7 +169,6 @@ function Edit_Product(props) {
         onSubmit={handleSubmit(onSubmit)}
         className=" row justify-content-center"
       >
-        
         <div className="col-sm-5 col-12">
           <TextInputField
             //   pattern="\w{6}-\d{2}\.\d{2}-\d{4}"
@@ -194,25 +200,6 @@ function Edit_Product(props) {
           >
             {ptype.map((item, id) => (
               <option value={item.ptype_id}>{item.ptype_name}</option>
-            ))}
-          </SelectField>
-        </div>
-        <div className="col-12 col-sm-5">
-          <SelectField
-            label="สถานะครุภัณฑ์"
-            {...register("pstatus_id", {
-              required: {
-                value: true,
-                message: "จะใช้สถานะแรกในการบันทึก",
-              },
-            })}
-            isInvalid={!!errors.pstatus_id}
-            validationMessage={
-              errors?.pstatus_id ? errors.pstatus_id.message : null
-            }
-          >
-            {pstatus.map((item, id) => (
-              <option value={item.pstatus_id}>{item.pstatus_name}</option>
             ))}
           </SelectField>
         </div>
@@ -270,28 +257,38 @@ function Edit_Product(props) {
         </div>
         <div className="col-12 col-sm-4">
           <TextInputField
-            type="date"
             label="วันเดือนปีที่ซื้อ"
+            placeholder={day}
             // description="ตัวอย่าง 07/12/2565"
             {...register("buydate", {
               required: {
                 value: true,
                 message: "กรุณากรอกข้อมูล",
               },
+              pattern: {
+                value:
+                  /^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$/,
+                message: "กรุณาป้อนข้อมูลให้ถูกต้อง",
+              },
             })}
             isInvalid={!!errors.buydate}
             validationMessage={errors?.buydate ? errors.buydate.message : null}
           />
         </div>
-        <div className="col-12 col-sm-4">
+        <div className="col-12 col-sm-3">
           <TextInputField
-            type="date"
             label="วันเดือนปีที่รับ"
+            placeholder="01/01/2565"
             // description="ตัวอย่าง 07/12/2565"
             {...register("pickdate", {
               required: {
                 value: true,
                 message: "กรุณากรอกข้อมูล",
+              },
+              pattern: {
+                value:
+                  /^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$/,
+                message: "กรุณาป้อนข้อมูลให้ถูกต้อง",
               },
             })}
             isInvalid={!!errors.pickdate}
@@ -300,7 +297,7 @@ function Edit_Product(props) {
             }
           />
         </div>
-        <div className="col-12 col-sm-2">
+        <div className="col-12 col-sm-3">
           <TextInputField
             type="number"
             label="ปีงบประมาณ"
@@ -372,7 +369,7 @@ function Edit_Product(props) {
             validationMessage={errors?.unit ? errors.unit.message : null}
           />
         </div>
-        <div className="col-12 col-sm-3">
+        <div className="col-12 col-sm-5">
           <TextInputField
             label="รายละเอียดผู้ขาย"
             {...register("seller", {
@@ -385,7 +382,7 @@ function Edit_Product(props) {
             validationMessage={errors?.seller ? errors.seller.message : null}
           />
         </div>
-        <div className="col-12 col-sm-3">
+        <div className="col-12 col-sm-5">
           <TextInputField
             label="ที่มาครุภัณฑ์"
             {...register("get", {
@@ -398,7 +395,7 @@ function Edit_Product(props) {
             validationMessage={errors?.get ? errors.get.message : null}
           />
         </div>
-        <div className="col-12 col-sm-4">
+        <div className="col-12 col-sm-5">
           <SelectField
             label="หน่วยงานที่ติดตั้ง"
             {...register("sub_aid", {
@@ -415,7 +412,25 @@ function Edit_Product(props) {
             ))}
           </SelectField>
         </div>
-
+        <div className="col-12 col-sm-5">
+          <SelectField
+            label="สถานะครุภัณฑ์"
+            {...register("pstatus_id", {
+              required: {
+                value: true,
+                message: "จะใช้สถานะแรกในการบันทึก",
+              },
+            })}
+            isInvalid={!!errors.pstatus_id}
+            validationMessage={
+              errors?.pstatus_id ? errors.pstatus_id.message : null
+            }
+          >
+            {pstatus.map((item, id) => (
+              <option value={item.pstatus_id}>{item.pstatus_name}</option>
+            ))}
+          </SelectField>
+        </div>
         <footer className="d-flex justify-content-end gap-2 mb-3">
           <Button
             appearance="primary"
