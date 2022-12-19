@@ -1,4 +1,6 @@
 import { MDBDataTable } from "mdbreact";
+import { format } from "date-fns";
+import { de, th, be } from "date-fns/locale";
 import { Pane, Dialog, Button } from "evergreen-ui";
 import React, { useEffect, useState } from "react";
 import "./StyleProduct.css";
@@ -53,7 +55,7 @@ function Product(props) {
     setDetail(true);
     setIdDetail(id);
   };
-  const [editId, setEditId] = useState()
+  const [editId, setEditId] = useState();
   const ShowEdit = (id) => {
     setEdit(true);
     setEditId(id);
@@ -147,7 +149,12 @@ function Product(props) {
                   <HiEye className="detail" />
                 </div>
               </Tooltip>
-              <Tooltip  onClick={(e) => ShowEdit(i.pid)} title="แก้ไขข้อมูลครุภัณฑ์" arrow placement="top">
+              <Tooltip
+                onClick={(e) => ShowEdit(i.pid)}
+                title="แก้ไขข้อมูลครุภัณฑ์"
+                arrow
+                placement="top"
+              >
                 <div>
                   <HiPencil className="edit" />
                 </div>
@@ -203,6 +210,14 @@ function Product(props) {
         setCountProductAll(res.data.length);
       });
   }, [re]);
+  var today = new Date();
+  // const date = format(new Date(),'yyyy/MMM/dd',{locale:be});
+  const date = new Date();
+  const dd = date.toLocaleDateString("th-TH", {
+    day: "numeric",
+    month: "numeric",
+    year: "numeric",
+  });
   return (
     <>
       <div className=" contentner  gap-3 d-flex flex-column align-items-center">
@@ -287,7 +302,7 @@ function Product(props) {
         </div>
 
         {/* /////////////////////////////////////////////////////////////////////////// */}
-        <div className="page-product rounded p-1 border-info border-2 border-top">
+        <div className="page-product rounded p-1 ">
           <MDBDataTable
             theadTextWhite
             theadColor="blue-grey darken-4"
@@ -355,7 +370,6 @@ function Product(props) {
         {/* Modal EverGreenUI */}
         <Pane>
           <Dialog
-       
             width={1000}
             topOffset={20}
             shouldCloseOnOverlayClick={true}
@@ -373,15 +387,13 @@ function Product(props) {
         {/* Modal EverGreenUI */}
         <Pane>
           <Dialog
-       
             width={1000}
             topOffset={20}
-            shouldCloseOnOverlayClick={true}
+            shouldCloseOnOverlayClick={false}
             isShown={edit}
             title="แก้ไขข้อมูลครุภัณฑ์"
             onCloseComplete={() => setEdit(false)}
             hasFooter={false}
-           
           >
             <Edit_Product id={editId} show={() => setEdit(false)} />
           </Dialog>

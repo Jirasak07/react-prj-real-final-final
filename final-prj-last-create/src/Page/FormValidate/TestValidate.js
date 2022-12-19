@@ -1,4 +1,5 @@
 import { Button } from "@mui/material";
+import format from "date-fns/format";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import TextField from "@mui/material/TextField";
@@ -6,6 +7,8 @@ import MenuItem from "@mui/material/MenuItem";
 import React from "react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { ConsoleIcon } from "evergreen-ui";
+import axios from "axios";
 
 function TestValidate() {
   // const [formElementd, setFormElement] = useState({
@@ -43,7 +46,17 @@ function TestValidate() {
     formState: { errors },
   } = useForm();
   const Submit = (e) => {
-    alert(JSON.stringify(e));
+    console.log(String(e.name))
+    var ds =String(e.name).split('/')
+    console.log(ds)
+    var day = ds[1]+"/"+ds[0]+"/"+ds[2]
+    console.log("Dayyyyyyy",day)
+    console.log(format(new Date(day),'yyyy-MM-dd'))
+    var day23 = format(new Date(day),'yyyy-MM-dd')
+    axios.post('http://localhost:3333/date',{
+      idid:5,
+      day: day23
+    })
   };
   const Cancel = () => {
     resetField("pt_id");
@@ -59,37 +72,12 @@ function TestValidate() {
               label="name"
               fullWidth
               {...register("name", {
-                maxLength: {
-                  value: 2,
-                  message: "สูงสุด 2 ตัวอักษร", // JS only: <p>error message</p> TS only support string
-                },
-                minLength: 1,
                 required: true,
               })}
               error={!!errors?.name}
               helperText={errors?.name ? errors.name.message : null}
             />
-            <TextField
-              variant="outlined"
-              label="lname"
-              fullWidth
-              // value={input.name || ""}
-
-              {...register("lname", { required: true, maxLength: 5 })}
-              error={!!errors?.lname}
-              helperText={errors?.lname ? errors.lname.message : null}
-            />
-            <TextField
-              select
-              fullWidth
-              label="Select"
-              {...register("pt_id")}
-              error={errors.pt_id}
-              helperText={errors.pt_id?.message}
-            >
-              <MenuItem value={1}>hhhhhhhh</MenuItem>
-              <MenuItem value={2}>GGGGGGG</MenuItem>
-            </TextField>
+          
             <Button
               type="submit"
               variant="outlined"

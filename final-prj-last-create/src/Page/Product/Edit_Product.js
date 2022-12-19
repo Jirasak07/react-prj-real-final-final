@@ -1,10 +1,9 @@
 import React, { useEffect } from "react";
-import { format as formatDate } from "date-fns";
-
-import { th } from "date-fns/locale";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
-
+import "react-datepicker/dist/react-datepicker.css";
+import DatePicker, { registerLocale } from "react-datepicker";
+import th from "date-fns/locale/th"; // the locale you want
 import {
   Button,
   TextInputField,
@@ -16,18 +15,60 @@ import { useForm } from "react-hook-form";
 import { BiImages } from "react-icons/bi";
 import { useState } from "react";
 import axios from "axios";
+import { format } from "date-fns";
 const MySwal = withReactContent(Swal);
 
 //////////////////////////////////////////
 const mid = localStorage.getItem("main_aid");
 function Edit_Product(props) {
-  const thisDay = new Date();
-  const day = formatDate(thisDay, "dd/MM/yyyy", { locale: th });
-
-  /////////////////////////////////////
   const [ptype, setPtype] = useState([]);
   const [pstatus, setPstatus] = useState([]);
+  const [exday, setExDay] = useState();
+  const [status, setStatus] = useState();
+  const [type, setType] = useState();
+  const [agen, setAgen] = useState();
+  const [dataShowEdit, setDataShowEdit] = useState({});
+
   useEffect(() => {
+    axios
+      .post("http://localhost:3333/product-showedit", {
+        pid: props.id,
+      })
+      .then((res) => {
+        const day1 = new Date(res.data[0].buydate);
+        const buydate = format(day1, "dd/MM/yyyy");
+        const day2 = new Date(res.data[0].pickdate);
+        const pickdate = format(day2, "dd/MM/yyyy");
+        console.log(format(day1, "dd-MMM-yyyy"));
+        setValue("pname", res.data[0].pname);
+        setValue("pdetail", res.data[0].pdetail);
+        setValue("buydate", buydate);
+        setValue("pickdate", pickdate);
+        setValue("fisicalyear", res.data[0].fisicalyear);
+        setValue("price", res.data[0].price);
+        setValue("finance", res.data[0].finance);
+        setValue("unit", res.data[0].unit);
+        setValue("seller", res.data[0].seller);
+        setValue("get", res.data[0].acquirement);
+        setValue("ptype_id", res.data[0].ptype_id);
+        setImgName(res.data[0].image);
+        console.log("ptype_id", res.data[0].ptype_id);
+        setStatus(res.data[0].ptype_id);
+        console.log(
+          new Intl.NumberFormat("th-TH", {
+            maximumSignificantDigits: 3,
+          }).format(res.data[0].price)
+        );
+      });
+  }, []);
+  useEffect(() => {
+    const date = new Date();
+    const dd = date.toLocaleDateString("th-TH", {
+      day: "numeric",
+      month: "numeric",
+      year: "numeric",
+    });
+    setExDay(dd);
     axios.get("http://localhost:3333/show-product-type").then((res) => {
       setPtype(res.data);
       // console.log(res.data);
@@ -50,86 +91,105 @@ function Edit_Product(props) {
   }, []);
 
   const onSubmit = (e) => {
+    var day1 = String(e.buydate).split("/");
+    var buy1 = day1[1] + "/" + day1[0] + "/" + day1[2];
+    const buydatee = format(new Date(buy1), "yyyy-MM-dd");
+    /////////////////////////////
+    var day2 = String(e.pickdate).split("/");
+    var pick = day2[1] + "/" + day2[0] + "/" + day2[2];
+    const pickk = format(new Date(pick), "yyyy-MM-dd");
+
     axios
-      .post("http://localhost:3333/product-added", {
-        pid: e.pid,
+      .put("http://localhost:3333/update-product", {
+        pid: props.id,
         pname: e.pname,
         pdetail: e.pdetail,
-        qty: 1,
         unit: e.unit,
         price: e.price,
         finance: e.finance,
         acquirement: e.get,
         ptype_id: e.ptype_id,
-        seller: e.seller,
-        sub_aid: e.sub_aid,
-        pstatus_id: e.pstatus_id,
-        buydate: e.buydate,
-        pickdate: e.pickdate,
+        buydate: buydatee,
+        pickdate: pickk,
         fisicalyear: e.fisicalyear,
-        imgname: e.pid + typename,
+        seller: e.seller,
+        image: imgname,
       })
       .then((res) => {
-        // console.log(res.data.status);
-        if (res.data.status === "error") {
-          MySwal.fire({
-            title: <strong>ไม่สามารถบันทึกได้</strong>,
-            html: `${res.data.message.sqlMessage}`,
-            icon: "error",
-          });
-        } else if (res.data.status !== "error") {
-          let timerInterval;
-          MySwal.fire({
-            title: "บันทึกเสร็จสิ้น",
-            html: "I will close in <b></b> milliseconds.",
-            timer: 900,
-            icon: "success",
-            timerProgressBar: true,
-            didOpen: () => {
-              MySwal.showLoading();
-              const b = MySwal.getHtmlContainer().querySelector("b");
-              timerInterval = setInterval(() => {
-                b.textContent = MySwal.getTimerLeft();
-              }, 1200);
-            },
-            willClose: () => {
-              clearInterval(timerInterval);
-            },
-          })
-            .then((result) => {
-              /* Read more about handling dismissals below */
+        // if (res.data.status === "error") {
+        //   MySwal.fire({
+        //     title: <strong>ไม่สามารถบันทึกได้</strong>,
+        //     html: `${res.data.message.sqlMessage}`,
+        //     icon: "error",
+        //   });
+        // } else if (res.data.status !== "error") {
+        //   let timerInterval;
+        //   MySwal.fire({
+        //     title: "บันทึกเสร็จสิ้น",
+        //     html: "I will close in <b></b> milliseconds.",
+        //     timer: 900,
+        //     icon: "success",
+        //     timerProgressBar: true,
+        //     didOpen: () => {
+        //       MySwal.showLoading();
+        //       const b = MySwal.getHtmlContainer().querySelector("b");
+        //       timerInterval = setInterval(() => {
+        //         b.textContent = MySwal.getTimerLeft();
+        //       }, 1200);
+        //     },
+        //     willClose: () => {
+        //       clearInterval(timerInterval);
+        //     },
+        //   })
+        //     .then((result) => {
+        //       /* Read more about handling dismissals below */
 
-              if (result.dismiss === Swal.DismissReason.timer) {
-                const url = "http://localhost:3333/upload";
-                const formData = new FormData();
-
-                formData.append("photo", file, e.pid + typename);
-                // console.log(file);
-                axios.post(url, formData).then((response) => {});
-                // console.log("I was closed by the timer");
-              }
-            })
-            .then((value) => {
-              setTimeout(() => {
-                props.show();
-                // window.location.reload();
-                // setInput([]);
-              }, 100);
-            });
-        }
-      });
-    // Swal.fire({
-    //   position: "top",
-    //   icon: "success",
-    //   title: "บันทึกเสร็จสิ้น",
-    //   showConfirmButton: false,
-    //   timer: 1000,
-    // });
+        //       if (result.dismiss === Swal.DismissReason.timer) {
+        //         if (file) {
+        //           const url = "http://localhost:3333/upload";
+        //           const formData = new FormData();
+        //           formData.append("photo", file, imgname);
+        //           // console.log(file);
+        //           axios.post(url, formData).then((response) => {});
+        //           // console.log("I was closed by the timer");
+        //         }
+        //       }
+        //     })
+        //     .then((value) => {
+        //       setTimeout(() => {
+        //         props.show();
+        //         window.location.reload(false);
+        //         // window.location.reload();
+        //         // setInput([]);
+        //       }, 100);
+        //     });
+        // }
+        const Toast = Swal.mixin({
+          toast: true,
+          position: "top-end",
+          showConfirmButton: false,
+          timer: 1500,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.addEventListener("mouseenter", Swal.stopTimer);
+            toast.addEventListener("mouseleave", Swal.resumeTimer);
+          },
+        });
+        Toast.fire({
+          icon: "success",
+          title: "Signed in successfully",
+        }).then((val)=>{
+   
+                 props.show();
+                window.location.reload(false);
+      })
+      })
   };
   const [images, setImages] = useState([]);
   const [imageURLs, setImageURLs] = useState([]);
   const [file, setFile] = useState();
   const [typename, setTypeName] = useState("");
+  const [imgname, setImgName] = useState();
   useEffect(() => {
     if (images.length < 1) return;
     const newImageUrls = [];
@@ -137,11 +197,15 @@ function Edit_Product(props) {
     setImageURLs(newImageUrls);
   }, [images]);
   const onImageChange = (e) => {
+    const nameImg = String(props.id).split("/");
+    const pidd = nameImg[0];
     setImages([...e.target.files]);
     setFile(e.target.files[0]);
     console.log(e.target.files[0]);
     // console.log("." + e.target.files[0].type.split("image/")[1]);
     setTypeName("." + e.target.files[0].type.split("image/")[1]);
+
+    setImgName(pidd + "." + e.target.files[0].type.split("image/")[1]);
   };
   const [image, setImage] = useState();
   useEffect(() => {
@@ -157,13 +221,13 @@ function Edit_Product(props) {
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
-  } = useForm();
+  } = useForm({ mode: "onBlur" });
   ///////////////////////////////////////
-
   return (
     <div className="container">
-      {props.id}
+      <div className="text-center mb-2"> ครุภัณฑ์หมายเลข : {props.id}</div>
       <form
         action=""
         onSubmit={handleSubmit(onSubmit)}
@@ -172,7 +236,7 @@ function Edit_Product(props) {
         <div className="col-sm-5 col-12">
           <TextInputField
             //   pattern="\w{6}-\d{2}\.\d{2}-\d{4}"
-            id="ids-are-optional"
+
             label="ชื่อครุภัณฑ์"
             {...register("pname", {
               required: {
@@ -187,7 +251,9 @@ function Edit_Product(props) {
         <div className="col-12 col-sm-5">
           <SelectField
             label="ประเภทครุภัณฑ์"
+            value={status}
             {...register("ptype_id", {
+              onChange: (e) => setStatus(e.target.value),
               required: {
                 value: true,
                 message: "จะใช้ประเภทแรกในการบันทึก",
@@ -199,7 +265,9 @@ function Edit_Product(props) {
             }
           >
             {ptype.map((item, id) => (
-              <option value={item.ptype_id}>{item.ptype_name}</option>
+              <option key={item.ptype_id} value={item.ptype_id}>
+                {item.ptype_name}
+              </option>
             ))}
           </SelectField>
         </div>
@@ -258,7 +326,7 @@ function Edit_Product(props) {
         <div className="col-12 col-sm-4">
           <TextInputField
             label="วันเดือนปีที่ซื้อ"
-            placeholder={day}
+            placeholder={exday + "..."}
             // description="ตัวอย่าง 07/12/2565"
             {...register("buydate", {
               required: {
@@ -278,7 +346,7 @@ function Edit_Product(props) {
         <div className="col-12 col-sm-3">
           <TextInputField
             label="วันเดือนปีที่รับ"
-            placeholder="01/01/2565"
+            placeholder={exday + "..."}
             // description="ตัวอย่าง 07/12/2565"
             {...register("pickdate", {
               required: {
@@ -395,42 +463,7 @@ function Edit_Product(props) {
             validationMessage={errors?.get ? errors.get.message : null}
           />
         </div>
-        <div className="col-12 col-sm-5">
-          <SelectField
-            label="หน่วยงานที่ติดตั้ง"
-            {...register("sub_aid", {
-              required: {
-                value: true,
-                message: "จะใช้หน่วยงานแรกในการบันทึก",
-              },
-            })}
-            isInvalid={!!errors.sub_aid}
-            validationMessage={errors?.sub_aid ? errors.sub_aid.message : null}
-          >
-            {subagen.map((item, id) => (
-              <option value={item.sub_aid}>{item.sub_aname}</option>
-            ))}
-          </SelectField>
-        </div>
-        <div className="col-12 col-sm-5">
-          <SelectField
-            label="สถานะครุภัณฑ์"
-            {...register("pstatus_id", {
-              required: {
-                value: true,
-                message: "จะใช้สถานะแรกในการบันทึก",
-              },
-            })}
-            isInvalid={!!errors.pstatus_id}
-            validationMessage={
-              errors?.pstatus_id ? errors.pstatus_id.message : null
-            }
-          >
-            {pstatus.map((item, id) => (
-              <option value={item.pstatus_id}>{item.pstatus_name}</option>
-            ))}
-          </SelectField>
-        </div>
+
         <footer className="d-flex justify-content-end gap-2 mb-3">
           <Button
             appearance="primary"
