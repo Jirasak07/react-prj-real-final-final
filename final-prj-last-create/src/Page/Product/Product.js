@@ -287,10 +287,10 @@ function Product(props) {
             </Button>
             <Button
               onClick={() => setBasicModal(true)}
-              
-              className="w-100 text-white"
-              backgroundColor="#474d66"
+              className="bg-b w-100 text-white"
+              backgroundColor="#5C85FF"
               iconBefore={AddIcon}
+              appearance="minimal"
             >
               เพิ่มครุภัณฑ์แบบกลุ่ม
             </Button>
