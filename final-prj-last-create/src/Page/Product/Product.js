@@ -1,10 +1,7 @@
 import { MDBDataTable } from "mdbreact";
-import { format } from "date-fns";
-import { de, th, be } from "date-fns/locale";
 import { Pane, Dialog, Button } from "evergreen-ui";
 import React, { useEffect, useState } from "react";
 import "./StyleProduct.css";
-import { BsPlusSquareFill } from "react-icons/bs";
 import { AddIcon } from "evergreen-ui";
 import {
   HiOutlineQrcode,
@@ -19,7 +16,6 @@ import GenQRcode from "../../QRCode/GenQRcode";
 import AddProductSingle from "./AddProductSingle";
 import ProductAddGroup from "./ProductAddGroup";
 import ProductDetail from "./ProductDetail";
-import { NavLink } from "react-router-dom";
 import Edit_Product from "./Edit_Product";
 function Product(props) {
   const [basicModal, setBasicModal] = useState(false);
@@ -32,7 +28,6 @@ function Product(props) {
   const [edit, setEdit] = useState(false);
   const [idDetail, setIdDetail] = useState();
   const [idqr, setIdqr] = useState();
-  const [statusId, setStatusId] = useState();
   const toggleQRcode = (id) => {
     setIdqr(id);
     setQrmodal(!qrmodal);
@@ -210,18 +205,18 @@ function Product(props) {
         setCountProductAll(res.data.length);
       });
   }, [re]);
-  var today = new Date();
+  // var today = new Date();
   // const date = format(new Date(),'yyyy/MMM/dd',{locale:be});
-  const date = new Date();
-  const dd = date.toLocaleDateString("th-TH", {
-    day: "numeric",
-    month: "numeric",
-    year: "numeric",
-  });
+  // const date = new Date();
+  // const dd = date.toLocaleDateString("th-TH", {
+  //   day: "numeric",
+  //   month: "numeric",
+  //   year: "numeric",
+  // });
   return (
     <>
       <div className=" contentner  gap-3 d-flex flex-column align-items-center">
-        <div className="rounded row gap-3 col-12 justify-content-center ">
+        <div className="rounded row gap-3 col-12 justify-content-center mt-3 ">
           <div className="col-10 col-md-3 col-sm-3 bg-white rounded border-5 border-primary border-start b-box">
             <div className="p-1 text-primary d-flex flex-column text-center  h-100 ">
               <div className="col-12 fw-bolder  ">ครุภัณฑ์ทั้งหมด</div>

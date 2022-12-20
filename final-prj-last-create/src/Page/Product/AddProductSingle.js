@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import Swal from "sweetalert2";
+import { format } from "date-fns";
 import withReactContent from "sweetalert2-react-content";
 import {
   Button,
@@ -20,7 +21,15 @@ function AddProductSingle(props) {
   /////////////////////////////////////
   const [ptype, setPtype] = useState([]);
   const [pstatus, setPstatus] = useState([]);
+  const [exday, setExDay] = useState();
   useEffect(() => {
+    const date = new Date();
+    const dd = date.toLocaleDateString("th-TH", {
+      day: "numeric",
+      month: "numeric",
+      year: "numeric",
+    });
+    setExDay(dd);
     axios.get("http://localhost:3333/show-product-type").then((res) => {
       setPtype(res.data);
       // console.log(res.data);
@@ -43,6 +52,13 @@ function AddProductSingle(props) {
   }, []);
 
   const onSubmit = (e) => {
+    var day1 = String(e.buydate).split("/");
+    var buy1 = day1[1] + "/" + day1[0] + "/" + day1[2];
+    const buydatee = format(new Date(buy1), "yyyy-MM-dd");
+    /////////////////////////////
+    var day2 = String(e.pickdate).split("/");
+    var pick = day2[1] + "/" + day2[0] + "/" + day2[2];
+    const pickk = format(new Date(pick), "yyyy-MM-dd");
     axios
       .post("http://localhost:3333/product-added", {
         pid: e.pid,
@@ -57,8 +73,8 @@ function AddProductSingle(props) {
         seller: e.seller,
         sub_aid: e.sub_aid,
         pstatus_id: e.pstatus_id,
-        buydate: e.buydate,
-        pickdate: e.pickdate,
+        buydate: buydatee,
+        pickdate: pickk,
         fisicalyear: e.fisicalyear,
         imgname: e.pid + typename,
       })
@@ -141,7 +157,7 @@ function AddProductSingle(props) {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm({ mode: "onBlur" });
   ///////////////////////////////////////
 
   return (
@@ -269,13 +285,18 @@ function AddProductSingle(props) {
         </div>
         <div className="col-12 col-sm-4">
           <TextInputField
-            type="date"
             label="วันเดือนปีที่ซื้อ"
+            placeholder={exday + "..."}
             // description="ตัวอย่าง 07/12/2565"
             {...register("buydate", {
               required: {
                 value: true,
                 message: "กรุณากรอกข้อมูล",
+              },
+              pattern: {
+                value:
+                  /^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$/,
+                message: "กรุณาป้อนข้อมูลให้ถูกต้อง",
               },
             })}
             isInvalid={!!errors.buydate}
@@ -284,13 +305,18 @@ function AddProductSingle(props) {
         </div>
         <div className="col-12 col-sm-4">
           <TextInputField
-            type="date"
             label="วันเดือนปีที่รับ"
+            placeholder={exday + "..."}
             // description="ตัวอย่าง 07/12/2565"
             {...register("pickdate", {
               required: {
                 value: true,
                 message: "กรุณากรอกข้อมูล",
+              },
+              pattern: {
+                value:
+                  /^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$/,
+                message: "กรุณาป้อนข้อมูลให้ถูกต้อง",
               },
             })}
             isInvalid={!!errors.pickdate}

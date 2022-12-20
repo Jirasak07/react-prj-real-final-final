@@ -1,0 +1,80 @@
+.Menu {
+  background-color: #ffffff;
+  width: 70%;
+  min-width: 100px;
+  max-width: 250px;
+  height: 150px;
+  border-radius: 5px;
+  box-shadow:  1px 3px 12px rgba(126, 126, 126, 0.3),
+     10px 10px 20px rgb(255, 255, 255);
+}
+.Menu.update-scan:active{
+  box-shadow: 0 0px 10px #ff7b008f;
+}
+.Menu.check-scan:active{
+  box-shadow: 0 0px 10px #a812ff8f;
+}
+
+/* .background-button {
+  background-image: linear-gradient(-45deg, #f9f4eb, #e5e0d7, #d1ccc3);
+  width: 178px;
+  height: 178px;
+  border-radius: 8%;
+  box-shadow: 0px 0px 0px rgba(0, 0, 0, 0.3),
+    -0px -0px 0px rgba(255, 255, 255, 0.3);
+} */
+.scan{
+  height: 90vh;
+}
+.scan-icon{
+  font-size: 5rem;
+ 
+}
+.scan-icon.updatei{
+  color: #e46e007a;
+}
+.scan-icon.checki{
+  color: #af00e459;
+}
+.text-scan{
+  color: #4747477a;
+}
+.Scanner {
+  height: 60vh;
+  max-height: 450px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  grid-row: 2/3;
+  position: relative;
+  z-index: 2;
+}
+.Scanner > #reader {
+  min-width: 500px;
+  height: 500px;
+}
+.bg {
+  flex-direction: column;
+  gap: 20px;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+}
+.btext {
+  color: var(--thirty);
+  font-size: 2rem !important;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+
+.image2 {
+  opacity: 0.5;
+  position: absolute;
+  z-index: 50;
+  width: 250px;
+}

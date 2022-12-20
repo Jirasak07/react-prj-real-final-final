@@ -6,7 +6,7 @@ import { FaUserCircle } from "react-icons/fa";
 import "./Header.css";
 import axios from "axios";
 import Logo from "../Image/LOGO RGB PNG-สำหรับงานนำเสนอแบบดิจิติล.png";
-import { Add } from 'evergreen-ui'
+import { Add } from "evergreen-ui";
 
 function Header() {
   const [head, setHead] = useState(false);
@@ -70,7 +70,7 @@ function Header() {
           className=" col fw-bolder fs-5 align-items-center justify-content-center d-flex ps-3"
           onClick={Side}
         >
-          <AiOutlineMenuUnfold  />
+          <AiOutlineMenuUnfold />
         </div>
         <div className="col-7 h-100 d-flex justify-content-start align-items-center flex-wrap fw-bolder headname">
           <div className="d-flex w-100 flex-row gap-3 gap-sm-2 h-100">
@@ -109,11 +109,12 @@ function Header() {
               <BiIcon.BiTable /> &nbsp; ครุภัณฑ์
             </div>
           </NavLink>
-          <div className="link">
+          <NavLink to="/scanpage" className="link">
             <div>
               <BiIcon.BiQrScan /> &nbsp; สแกน QR code
             </div>
-          </div>
+          </NavLink>
+
           <div className="link">
             <div>
               <BiIcon.BiSitemap /> &nbsp; หน่วยงาน
