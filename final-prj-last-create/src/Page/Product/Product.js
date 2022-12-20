@@ -1,5 +1,5 @@
 import { MDBDataTable } from "mdbreact";
-import { Pane, Dialog, Button } from "evergreen-ui";
+import { Pane, Dialog, Button,Avatar } from "evergreen-ui";
 import React, { useEffect, useState } from "react";
 import "./StyleProduct.css";
 import { AddIcon } from "evergreen-ui";
@@ -289,6 +289,7 @@ function Product(props) {
               onClick={() => setBasicModal(true)}
               appearance="minimal"
               className="w-100"
+              backgroundColor="#474d66"
               iconBefore={AddIcon}
             >
               เพิ่มครุภัณฑ์แบบกลุ่ม
@@ -298,6 +299,7 @@ function Product(props) {
 
         {/* /////////////////////////////////////////////////////////////////////////// */}
         <div className="page-product rounded p-1 ">
+       
           <MDBDataTable
             theadTextWhite
             theadColor="blue-grey darken-4"
