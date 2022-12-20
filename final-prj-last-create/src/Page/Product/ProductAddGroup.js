@@ -442,9 +442,9 @@ function ProductAddGroup(props) {
 
         <footer className="d-flex justify-content-end gap-2 mb-3">
           <Button
-            appearance="primary"
-            className="w-100"
-            intent="primary"
+            appearance="minimal"
+            className="w-100 bg-b"
+            backgroundColor="#5C85FF"
             type="submit"
           >
             บันทึก
