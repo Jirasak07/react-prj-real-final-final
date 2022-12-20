@@ -287,9 +287,8 @@ function Product(props) {
             </Button>
             <Button
               onClick={() => setBasicModal(true)}
-              appearance="primary"
+              appearance="minimal"
               className="w-100"
-              intent="warning"
               iconBefore={AddIcon}
             >
               เพิ่มครุภัณฑ์แบบกลุ่ม
