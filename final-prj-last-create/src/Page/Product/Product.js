@@ -287,7 +287,7 @@ function Product(props) {
             </Button>
             <Button
               onClick={() => setBasicModal(true)}
-              appearance="primary"
+              
               className="w-100 text-white"
               backgroundColor="#474d66"
               iconBefore={AddIcon}
