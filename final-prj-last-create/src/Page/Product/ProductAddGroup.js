@@ -444,7 +444,7 @@ function ProductAddGroup(props) {
           <Button
             appearance="minimal"
             className="bg-b text-white"
-            backgroundColor="#5C85FF"
+            backgroundColor="#85A3FF"
             type="submit"
           >
             บันทึก
