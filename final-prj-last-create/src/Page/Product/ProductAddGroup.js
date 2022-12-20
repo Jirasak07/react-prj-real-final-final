@@ -440,10 +440,10 @@ function ProductAddGroup(props) {
           </SelectField>
         </div>
 
-        <footer className="d-flex justify-content-end gap-2 mb-3">
+        <footer className="d-flex justify-content-end gap-2 mb-3 ">
           <Button
             appearance="minimal"
-            className="w-100 bg-b"
+            className="bg-b text-white"
             backgroundColor="#5C85FF"
             type="submit"
           >
