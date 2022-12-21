@@ -69,6 +69,7 @@ function ScanCheck(props) {
               </Button>
             </div>
           </div>
+       
         </>
       ) : (
         <>For Mobile</>

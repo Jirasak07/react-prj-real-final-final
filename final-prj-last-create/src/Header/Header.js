@@ -96,14 +96,14 @@ function Header() {
           </div>
         </div>
       </div>
-      <div className={side ? "bodynav active" : "bodynav "}>
+      <div className={side ? "bodynav  rounded-end active" : "bodynav "}>
         <div
           className="fw-bolder fs-5 justify-content-end d-flex me-2 iconnav "
           onClick={Side}
         >
           <AiOutlineMenuFold />
         </div>
-        <div className="sidemenu">
+        <div className="sidemenu ">
           <NavLink to="/home" className="link">
             <div>
               <BiIcon.BiTable /> &nbsp; ครุภัณฑ์

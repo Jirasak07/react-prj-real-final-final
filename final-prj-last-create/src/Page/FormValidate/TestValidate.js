@@ -1,124 +1,197 @@
-import { Button } from "@mui/material";
-import format from "date-fns/format";
-import Box from "@mui/material/Box";
-import Container from "@mui/material/Container";
-import TextField from "@mui/material/TextField";
-import MenuItem from "@mui/material/MenuItem";
-import React from "react";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { ConsoleIcon } from "evergreen-ui";
-import axios from "axios";
+import React, { useState, useEffect, useRef, useCallback } from "react";
+import { Html5Qrcode } from "html5-qrcode";
+import { useLocation, useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
+import { Badge, Button, Pane } from "evergreen-ui";
+import "./test.css";
+import logo from "../../Image/QR_Code01.png";
+const config = {
+  fps: 10,
+  qrbox: {
+    width: 250,
+    height: 250,
+  },
+  aspectRatio: 1.0,
+};
+const MySwal = withReactContent(Swal);
+function TestValidate(props) {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const data = location.state?.id;
+  const nameEvent = location.state.data;
+  const [event, setEvent] = useState(null);
+  console.log("This is Props", props);
+  console.log("This is Location", location);
 
-function TestValidate() {
-  // const [formElementd, setFormElement] = useState({
-  //   username: {
-  //     type: "text",
-  //     value: "",
-  //     validator: {
-  //       required: true,
-  //       minLength: 5,
-  //       maxLength: 5,
-  //     },
-  //     touched: false,
-  //     error: { status: true, message: "" },
-  //   },
-  //   formValidate: false,
-  // });
-  // const onFormChange = (e) => {
-  //   const name = e.target.name;
-  //   const value = e.target.value;
-  //   let updateForm = {...formElementd}
-  //   updateForm[name].value = value
-  //   updateForm[name].touched = true
-  // };
-  const [input, setInput] = useState([]);
-  const onChange = (e) => {
-    console.log(e.target.value);
-  };
+  console.warn();
+  const [scannedCodes, setScannedCodes] = useState([]);
+  const [cameraId, setCameraId] = useState(null);
+  const [zoom, setZoom] = useState(1);
+  const [isCameraOn, setCameraOnFlag] = useState(false);
+  const htmlQrCodeRef = useRef(null);
+  ///////////////////////////
+  const initCammera = () => {
+    Html5Qrcode.getCameras()
+      .then((devices) => {
+        // console.log("Inside getCameras", devices);
+        if (devices && devices.length) {
+          // console.log("### getCameras", devices);
+          const backCamera =
+            devices.find((device) => device?.label.includes("Back")) ||
+            devices[1];
+          const camera = backCamera || devices[1] || devices[0];
+          console.log("##", camera);
+          const cameraId = backCamera ? backCamera.id : devices[0].id;
 
-  const {
-    setValue,
-    resetField,
-    reset,
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
-  const Submit = (e) => {
-    console.log(String(e.name))
-    var ds =String(e.name).split('/')
-    console.log(ds)
-    var day = ds[1]+"/"+ds[0]+"/"+ds[2]
-    console.log("Dayyyyyyy",day)
-    console.log(format(new Date(day),'yyyy-MM-dd'))
-    var day23 = format(new Date(day),'yyyy-MM-dd')
-    axios.post('http://localhost:3333/date',{
-      idid:5,
-      day: day23
-    })
+          // console.log("Inside getCameras if", htmlQrCodeRef.current);
+          htmlQrCodeRef.current = new Html5Qrcode("reader", {
+            verbose: true,
+          });
+          setCameraId(camera.id);
+          setCameraOnFlag(true);
+        }
+      })
+      .catch((err) => {
+        // console.log("getCammera", err);
+      });
   };
-  const Cancel = () => {
-    resetField("pt_id");
+  //////////////////////////
+  const onScanSuccess = async (decodedText, decodedResult, existingCodes) => {
+    if (decodedText.length) {
+      const urll = window.location.origin;
+      // alert(urll+"/product")
+      const promise = decodedText.slice(0, 4);
+        if (promise === "KPRU") {
+        const Toast = Swal.mixin({
+          toast: true,
+          position: "top-end",
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.addEventListener("mouseenter", Swal.stopTimer);
+            toast.addEventListener("mouseleave", Swal.resumeTimer);
+          },
+        });
+        Toast.fire({
+          icon: "success",
+          title: "Signed in successfully",
+        }).then((val) => {
+          stopCammera();
+          navigate(event, { state: { id: decodedText } });
+        });
+      } else {
+        alert("Can't Read QRCode");
+      }
+
+      // (window.location.href = urll + event);
+    } else {
+      alert("1234");
+    }
+    console.warn(existingCodes);
+    // handle the scanned code as you like, for example:
+    // console.log(`Code matched = ${decodedText}`, decodedResult);
+    // setScannedCodes(existingCodes.concat([{ decodedText, decodedResult }]));
   };
+  const onScanFailure = (error) => {
+    // handle scan failure, usually better to ignore and keep scanning.
+    // for example:
+    const path = window.location.pathname;
+    console.log(path);
+    if (path != "/test") {
+      stopCammera();
+    }
+
+    setTimeout(() => {
+      console.warn(`Code scan error = ${error}`);
+    }, 2000);
+  };
+  const startCamera = () => {
+    htmlQrCodeRef.current
+      .start(
+        //  { facingMode: { exact: "user" } },
+        { deviceId: { exact: cameraId } },
+        config,
+        (decodedText, decodedResult) =>
+          onScanSuccess(decodedText, decodedResult, scannedCodes),
+        onScanFailure
+      )
+      .then(() => {
+        // console.log("instance###", htmlQrCodeRef?.current);
+        // htmlQrCodeRef?.current?.context?.scale(1.5, 1.5);
+        // htmlQrCodeRef?.current?.context?.translate(-64, -36);
+        // console.log(htmlQrCodeRef.current.getRunningTrackCapabilities());
+      })
+      .catch((err) => {
+        // Start failed, handle it.
+        // console.log("err", err);
+      });
+  };
+  const stopCammera = () => {
+    console.log("stopCammera");
+    return htmlQrCodeRef.current
+      ?.stop()
+      .then(() => {
+        // console.log("$$$", htmlQrCodeRef.current);
+        htmlQrCodeRef.current = null;
+        setCameraOnFlag(false);
+      })
+      .then((v) => {
+        navigate("/scanpage");
+      });
+  };
+  useEffect(() => {
+    // console.log("useEffect", cameraId, htmlQrCodeRef.current);
+
+    if (htmlQrCodeRef.current && isCameraOn) {
+      // console.log("Calling start");
+
+      startCamera();
+    }
+  }, [isCameraOn]);
+  useEffect(() => {
+    const idScan = data;
+    if (idScan === "1") {
+      setEvent("/check");
+    } else if (idScan === "2") {
+      setEvent("/update");
+    }
+    initCammera();
+  }, []);
+
   return (
-    <div>
-      <Container maxWidth="xs">
-        <h1>Hello</h1>
-        <form action="" onSubmit={handleSubmit(Submit)}>
-          <Box p={5} bgcolor="white">
-            <TextField
-              variant="outlined"
-              label="name"
-              fullWidth
-              {...register("name", {
-                required: true,
-              })}
-              error={!!errors?.name}
-              helperText={errors?.name ? errors.name.message : null}
-            />
-          
-            <Button
-              type="submit"
-              variant="outlined"
-              fullWidth
-              color="primary"
-              className="mt-2"
-            >
-              {" "}
-              Submit{" "}
-            </Button>
-            <Button fullWidth color="error" onClick={Cancel}>
-              Reset
-            </Button>
-          </Box>
-        </form>
-      </Container>
-      {/* <div className="row">
-        <div className="col-sm-3 mt-5"></div>
-        <div className="card col-sm-6 mt-5">
-          <div className="card-body ml-3 mr-3 mt-5 mb-1">
-            <form action="">
-              <div className="form-group">
-                <label htmlFor="username">User Name</label>
-                <input
-                  type="text"
-                  id="username"
-                  name="username"
-                  className="form-control"
-                />
-                <div className="invalid-feedback">กรอกให้ครบ</div>
-                <div className="text-center">
-                  <button className="btn btn-primary" type="submit">
-                    Submit
-                  </button>
-                </div>
-              </div>
-            </form>
-          </div>
+    <div className="pt-3">
+      <Pane className="d-flex flex-column align-items-center top-scan  ">
+        <Pane
+          minHeight={320}
+          width="320px"
+          padding="10px"
+          backgroundColor="white"
+          className=" rounded"
+          elevation={2}
+        >
+          <img src={logo} className="img-scan" />
+          <div id="reader"></div>
+        </Pane>
+
+        {/* <button onClick={initCammera}>Start</button> */}
+        <div className="d-flex flex-column align-items-center gap-3 mt-3 ">
+          <Badge
+            className="fs-5 d-flex justify-content-center align-items-center fw-bolder "
+            height="50px"
+            color="green"
+            isInteractive
+          >
+            {" "}
+            สแกนเพื่อ{nameEvent}ครุภัณฑ์
+          </Badge>
+
+          <Button appearance="primary" intent="danger" onClick={stopCammera}>
+            ย้อนกลับ
+          </Button>
         </div>
-        <div className="col-sm-3 mt-5"></div>
-      </div> */}
+      </Pane>
     </div>
   );
 }
