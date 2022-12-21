@@ -5,6 +5,7 @@ import imqr from "../../Image/QR_Code01.png";
 import { NavLink } from "react-router-dom";
 import { Button } from "evergreen-ui";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 let html5QrCode;
 const config = {
   fps: 10,
@@ -14,23 +15,17 @@ const config = {
   },
   aspectRatio: 1.0,
 };
-function ScanCheck() {
+function ScanCheck(props) {
+  const [chk, setChk] = useState(false);
   const nav = useNavigate();
+  const onClick = () => {
+    setChk(!chk);
+  };
+  ////////////////////////
   const qrCodeSuccessCallback = (decodedText, decodedResult) => {
     console.log("from Qr const", decodedText);
     window.location.href = decodedText;
   };
-  const handleStop = () => {
-    html5QrCode.stop()
-      .then((ignore) => {
-        // QR Code scanning is stopped.
-        nav("/scanpage");
-      })
-      .catch((err) => {
-        // Stop failed, handle it.
-      });
-  };
-  ////////////////////////
   useEffect(() => {
     Html5Qrcode.getCameras().then((devices) => {
       html5QrCode = new Html5Qrcode("reader");
@@ -42,7 +37,6 @@ function ScanCheck() {
             config,
             qrCodeSuccessCallback
           );
-          return;
         } else {
           html5QrCode.start(
             { facingMode: { exact: "user" } },
@@ -53,6 +47,7 @@ function ScanCheck() {
       }
     });
   });
+
   return (
     <>
       {isMobile ? (
@@ -69,7 +64,7 @@ function ScanCheck() {
               <div>เพื่อตรวจสอบครุภัณฑ์</div>
             </div>
             <div className="d-flex justify-content-center">
-              <Button onClick={handleStop} className="mt-2" intent="danger">
+              <Button onClick={onClick} className="mt-2" intent="danger">
                 Danger
               </Button>
             </div>
