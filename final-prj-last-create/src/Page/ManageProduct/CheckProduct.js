@@ -103,7 +103,7 @@ function CheckProduct(props) {
               <Button
                 appearance="minimal"
                 intent="danger"
-                onClick={() => nav("/home")}
+                onClick={() => nav(-1)}
               >
                 {" "}
                 ยกเลิก{" "}

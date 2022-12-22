@@ -112,40 +112,54 @@ function Header() {
         </div>
 
         <div className="sidemenu ">
-          <NavLink to="/home" className="link">
+          <NavLink
+            to="/home"
+            className={({ isActive }) => (isActive ? "link active" : "link ")}
+          >
             <div>
               <BiIcon.BiTable /> &nbsp; ครุภัณฑ์
             </div>
           </NavLink>
-          <NavLink to="/scanpage" className="link">
+          <NavLink
+            to="/scanpage"
+            className={({ isActive }) => (isActive ? "link active" : "link ")}
+          >
             <div>
               <BiIcon.BiQrScan /> &nbsp; สแกน QR code
             </div>
           </NavLink>
 
-          <div className="link">
+          <NavLink
+            to="/"
+            className={({ isActive }) => (isActive ? "link active" : "link ")}
+          >
             <div>
               <BiIcon.BiSitemap /> &nbsp; หน่วยงาน
             </div>{" "}
-          </div>
-          <div className="link">
+          </NavLink>
+          <NavLink
+            to="/"
+            className={({ isActive }) => (isActive ? "link active" : "link ")}
+          >
             <div>
               <BiIcon.BiUserCircle /> &nbsp; เจ้าหน้าที่
             </div>
-          </div>
-          <div className="link">
+          </NavLink>
+          <NavLink
+            to="/"
+            className={({ isActive }) => (isActive ? "link active" : "link ")}
+          >
             <div>
               {" "}
               <BiIcon.BiFile /> &nbsp; ออกรายงาน
             </div>{" "}
-          </div>
-          <NavLink to="/test" className="link">
-            <div className="text-link">
-              {" "}
-              <BiIcon.BiFile /> &nbsp; ทดสอบ Validate
-            </div>{" "}
           </NavLink>
-          <Overlay isShown={side} shouldCloseOnClick={true} onBeforeClose={Side} ></Overlay>
+
+          <Overlay
+            isShown={side}
+            shouldCloseOnClick={true}
+            onBeforeClose={Side}
+          ></Overlay>
         </div>
       </div>
     </div>

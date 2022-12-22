@@ -147,7 +147,7 @@ function ScanQR(props) {
             initCammera();
           });
         } else {
-          navigate("/scanpage");
+          navigate(-1);
         }
       });
   };
@@ -190,7 +190,7 @@ function ScanQR(props) {
           <Badge
             className="fs-5 d-flex justify-content-center align-items-center fw-bolder "
             height="50px"
-            color="green"
+            color={data == "1" ? "purple" : "yellow"}
             isInteractive
           >
             {" "}

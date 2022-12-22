@@ -124,6 +124,12 @@
   color: #ca4a00 !important;
   font-weight: 900;
 }
+.link.active{
+  border-radius: 5px;
+  background-color: #ffd2a58c;
+  color: #ca4a00 !important;
+  font-weight: 900;
+}
 .link > div {
   margin-left: 2rem;
 }
