@@ -57,35 +57,20 @@ function TestValidate(props) {
       });
   };
   //////////////////////////
+  const onSuccess = () => {
+    Swal.fire("Any fool can use a computer").then((respons) => {
+      return;
+    });
+  };
   const onScanSuccess = async (decodedText, decodedResult, existingCodes) => {
     if (decodedText.length) {
       const urll = window.location.origin;
       // alert(urll+"/product")
       const promise = decodedText.slice(0, 4);
-        if (promise === "KPRU") {
-        const Toast = Swal.mixin({
-          toast: true,
-          position: "top-end",
-          showConfirmButton: false,
-          timer: 3000,
-          timerProgressBar: true,
-          didOpen: (toast) => {
-            toast.addEventListener("mouseenter", Swal.stopTimer);
-            toast.addEventListener("mouseleave", Swal.resumeTimer);
-          },
-        });
-        Toast.fire({
-          icon: "success",
-          title: "Signed in successfully",
-        }).then((val) => {
-          stopCammera();
-          navigate(event, { state: { id: decodedText } });
-        });
-      } else {
-        alert("Can't Read QRCode");
-      }
-
+      return stopCammera(decodedText);
       // (window.location.href = urll + event);
+
+      // navigate(event, { state: { id: decodedText } });
     } else {
       alert("1234");
     }
@@ -128,7 +113,7 @@ function TestValidate(props) {
         // console.log("err", err);
       });
   };
-  const stopCammera = () => {
+  const stopCammera = (val) => {
     console.log("stopCammera");
     return htmlQrCodeRef.current
       ?.stop()
@@ -138,7 +123,12 @@ function TestValidate(props) {
         setCameraOnFlag(false);
       })
       .then((v) => {
-        navigate("/scanpage");
+        if(val.length){
+           navigate("/check", { state: { id: val } });
+        }else{
+          navigate('/scanpage')
+        }
+       
       });
   };
   useEffect(() => {
