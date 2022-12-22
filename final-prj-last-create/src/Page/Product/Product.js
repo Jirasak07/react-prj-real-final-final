@@ -17,6 +17,8 @@ import AddProductSingle from "./AddProductSingle";
 import ProductAddGroup from "./ProductAddGroup";
 import ProductDetail from "./ProductDetail";
 import Edit_Product from "./Edit_Product";
+import { useNavigate } from "react-router-dom";
+
 function Product(props) {
   const [basicModal, setBasicModal] = useState(false);
   const [countProduct, setCountProduct] = useState();
@@ -28,10 +30,15 @@ function Product(props) {
   const [edit, setEdit] = useState(false);
   const [idDetail, setIdDetail] = useState();
   const [idqr, setIdqr] = useState();
+  const nav = useNavigate()
+
   const toggleQRcode = (id) => {
     setIdqr(id);
     setQrmodal(!qrmodal);
   };
+  const goCheck=(id)=>{
+    nav("/check",{state:{id: id }} )
+  }
   const main = localStorage.getItem("main_aid");
   const [re, setRe] = useState();
   const [isShown, setIsShown] = useState(false);
@@ -165,7 +172,9 @@ function Product(props) {
               </Tooltip>
               <Tooltip arrow placement="top" title="อัพเดทข้อมูลครุภัณฑ์">
                 <div>
-                  <HiOutlineBadgeCheck className="check" />
+                  <HiOutlineBadgeCheck className="check"
+                   onClick={(e) =>goCheck(i.pid)}
+                  />
                 </div>
               </Tooltip>
               <div>

@@ -2,15 +2,4 @@
   
     height: auto;
 } */
-.top-scan {
-  position: relative;
-}
-.img-scan {
-  position: absolute;
-  width: 200px;
-  opacity: 0.3;
-  top: 35%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 1;
-}
+

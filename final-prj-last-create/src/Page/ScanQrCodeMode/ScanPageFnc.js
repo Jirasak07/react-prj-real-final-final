@@ -1,10 +1,11 @@
 import React from "react";
 import "./StyleScanPage.css";
 import { MdOutlineQrCodeScanner } from "react-icons/md";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink,useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { Button } from "evergreen-ui";
 function ScanPageFnc() {
+  const navigate =useNavigate()
   return (
     <div className=" scan">
       <div className="h-100 w-100">
@@ -29,6 +30,9 @@ function ScanPageFnc() {
             </div>
             <div className="text-scan fw-bolder">อัพเดทข้อมูล</div>
           </NavLink>
+          <div>
+            <Button appearance="primary" intent="danger" onClick={(e)=>navigate('/home')}  >ย้อนกลับ</Button>
+          </div>
         </div>
       </div>{" "}
     </div>

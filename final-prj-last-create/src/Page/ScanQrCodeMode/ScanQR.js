@@ -4,7 +4,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import { Badge, Button, Pane } from "evergreen-ui";
-import "./test.css";
+import "./StyleScanPage.css";
 import logo from "../../Image/QR_Code01.png";
 const config = {
   fps: 10,
@@ -15,13 +15,13 @@ const config = {
   aspectRatio: 1.0,
 };
 const MySwal = withReactContent(Swal);
-function TestValidate(props) {
+function ScanQR(props) {
   const navigate = useNavigate();
   const location = useLocation();
   const data = location.state?.id;
   const nameEvent = location.state.data;
   const [event, setEvent] = useState(null);
-  console.log("This is Props", props);
+
   console.log("This is Location", location);
 
   console.warn();
@@ -206,4 +206,4 @@ function TestValidate(props) {
   );
 }
 
-export default TestValidate;
+export default ScanQR;

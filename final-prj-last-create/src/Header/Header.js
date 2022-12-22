@@ -6,7 +6,7 @@ import { FaUserCircle } from "react-icons/fa";
 import "./Header.css";
 import axios from "axios";
 import Logo from "../Image/LOGO RGB PNG-สำหรับงานนำเสนอแบบดิจิติล.png";
-import { Add } from "evergreen-ui";
+import { Add, Overlay } from "evergreen-ui";
 
 function Header() {
   const [head, setHead] = useState(false);
@@ -55,10 +55,10 @@ function Header() {
   // console.log("header");
   return (
     <div className={head ? "d-none" : ""}>
-      <div
+      {/* <div
         onClick={Side}
         className={side ? "bg-overlay" : "bg-overlay bg-o"}
-      ></div>
+      ></div> */}
       <div
         className={
           nav
@@ -84,14 +84,14 @@ function Header() {
         </div>
         <div className="col-3 col-md-4 col-lg-3 col-xl-2 drop ">
           <div className="d-flex align-items-center ">
-            <div className="d-none d-md-flex username align-items-center profile text-success">
+            <div className="d-none d-md-flex username align-items-center profile ">
               {" "}
-              <FaUserCircle className="ichover" /> &nbsp;
+              <FaUserCircle className="text-success" /> &nbsp;
               {name} &nbsp;{" "}
             </div>
             <div className="log ms-3 me-2 " onClick={Logout}>
               <BiIcon.BiPowerOff className="logicon" />
-              {/* Logout */}
+              <div className="lgout">logout</div>
             </div>
           </div>
         </div>
@@ -103,6 +103,14 @@ function Header() {
         >
           <AiOutlineMenuFold />
         </div>
+        <div className="d-flex justify-content-center">
+          <div className="d-md-none d-flex username align-items-center profile ">
+            {" "}
+            <FaUserCircle className="text-success" /> &nbsp;
+            {name} &nbsp;{" "}
+          </div>
+        </div>
+
         <div className="sidemenu ">
           <NavLink to="/home" className="link">
             <div>
@@ -137,6 +145,7 @@ function Header() {
               <BiIcon.BiFile /> &nbsp; ทดสอบ Validate
             </div>{" "}
           </NavLink>
+          <Overlay isShown={side} shouldCloseOnClick={true} onBeforeClose={Side} ></Overlay>
         </div>
       </div>
     </div>
