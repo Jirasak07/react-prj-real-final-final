@@ -1,8 +1,7 @@
 import React from "react";
 import "./StyleScanPage.css";
 import { MdOutlineQrCodeScanner } from "react-icons/md";
-import { Link, NavLink,useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { NavLink,useNavigate } from "react-router-dom";
 import { Button } from "evergreen-ui";
 function ScanPageFnc() {
   const navigate =useNavigate()
@@ -13,7 +12,7 @@ function ScanPageFnc() {
           <NavLink
             to="/test"
             state={{ data: "ตรวจสอบ", id: "1" }}
-            className="Menu text-center check-scan  "
+            className="Menu text-center check-scan   "
           >
             <div className="scan-icon checki">
               <MdOutlineQrCodeScanner />

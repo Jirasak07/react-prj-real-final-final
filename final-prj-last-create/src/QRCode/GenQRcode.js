@@ -24,6 +24,7 @@ function GenQRcode(props) {
     } else {
       window.open(data);
     }
+
   };
   return (
     // <>
